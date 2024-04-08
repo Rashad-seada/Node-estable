@@ -6,6 +6,7 @@ const ClientSchema = mongoose.Schema({
     phone:{},
     gender:{},
     age:{},
+    avatarUrl:{}
 })
 
 const Client = mongoose.model("Client",ClientSchema)
@@ -18,11 +19,7 @@ function clientValidation(obj){
         gender:joi.string().required(),
         age:joi.string().required().min(1).max(2),
     })
-
-
 }
-
-
 module.exports = {
     Client,
     clientValidation

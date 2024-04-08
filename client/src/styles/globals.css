@@ -8,5 +8,6 @@
     --light-grey:#797979;
     --dark-grey:#515054;
 
-
+    text-transform: capitalize;
+    background-color: var(--dark-grey);
 }

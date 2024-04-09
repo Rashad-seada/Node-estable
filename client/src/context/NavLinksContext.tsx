@@ -1,6 +1,7 @@
 "use client"
 
-import { createContext, useContext, useState } from "react";
+import { useRouter } from "next/navigation";
+import { createContext, useContext, useEffect, useState } from "react";
 
 export type NavLinksProviderData = {
     currentPath: string,
@@ -13,8 +14,8 @@ const Context = createContext<NavLinksProviderData>(undefined)
 function NavLinksProvider({children}:Children) {
 
     
-    const path = location.pathname
-    const [currentPath,setCurrentPath] = useState<string>(path)
+
+    const [currentPath,setCurrentPath] = useState<string>('/')
 
     const changeCurrentPath = (newPath:string) :void => {
         setCurrentPath(_ => newPath)
@@ -24,6 +25,10 @@ function NavLinksProvider({children}:Children) {
         changeCurrentPath,
         currentPath
     }
+
+    useEffect(()=>{
+        setCurrentPath(window.location.pathname)
+    },[])
 
     return (
         <Context.Provider value={contextData}>

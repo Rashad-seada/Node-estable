@@ -1,35 +1,48 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 type InputProps = {
     value: string,
     setValue: (newValue:string) => void,
-    fallBack?: any,
+    fallback?: any,
     regex?: RegExp,
     className?:string,
     type:"password"|"text",
-    placeholder?:string
+    placeholder?:string,
+    setIsValueValid?:(newValue:boolean) => void
 }
 
-function Input({value,setValue,fallBack,regex,type,className,placeholder}:InputProps) {
+function Input({
+    value,
+    setValue,
+    fallback,
+    regex,
+    type,
+    className,
+    placeholder,
+    setIsValueValid
+}:InputProps) {
     
-    const [showFallBack,setShowFallBack] = useState<boolean>(false)
+    const [showFallback,setShowFallback] = useState<boolean>(false)
 
     const changeValue = (e:any) => {
         const newValue:string = e.target.value
         setValue(newValue)
-    }
 
-    useEffect(()=>{
         if (regex) {
-            if (!value.match(regex)) {
-                setShowFallBack(true)
+            if (!regex.test(newValue)) {
+                setShowFallback(true)
+                setIsValueValid(false)
             } else {
-                setShowFallBack(false)
+                setShowFallback(false)
+                setIsValueValid(true)
+
             }
         }
-    },[value])
+    }
+    
+
 
     return (
         <div className="flex flex-col w-full gap-5">
@@ -44,7 +57,7 @@ function Input({value,setValue,fallBack,regex,type,className,placeholder}:InputP
             </input>
             
             {
-                showFallBack ? fallBack : <></>
+                showFallback ? fallback : <></>
             }
         </div>
     )

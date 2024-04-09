@@ -12,10 +12,10 @@ const config: Config = {
                 
             },
             colors:{
-                "primary":"var(--primary)",
-                "smokey-white":"var(--smokey-white)",
-                "light-grey":"var(--light-grey)",
-                "dark-grey":"var(--dark-grey)",
+                "primary":"#F2BA4D",
+                "smokey-white":"#f5f5f5",
+                "light-grey":"#797979",
+                "dark-grey":"#515054",
             },
             fontFamily:{
                 poppins:"var(--poppins)",

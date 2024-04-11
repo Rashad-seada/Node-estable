@@ -1,70 +1,62 @@
 const jwt = require("jsonwebtoken")
 
 
-
 function verifyToken(req,res,next){
-
 
     const token = req.headers.token
 
     if(token){
 
-        try {
-            
-            const decoded = jwt.verify(token,process.env.Shoeib2024);
+        try{
+            const decoded = jwt.verify(token,process.env.Shoeib2024)
+            req.user = decoded
 
-                      req.user=decoded;
+            console.log(req.user)
+            next()
 
-             next()
-
-        } catch (error) {
-
-            res.status(404).json({message:"invalid token "})
-
+        }catch(error){
+            res.status(400).json({
+                status_code: -1,
+                message: "This user is not autharized",
+                error: {
+                    message : "You token is not valid"
+                }
+            })
         }
+        
+        
+    
 
-    }else{
-
-        res.status(404).json({message:"no token proved "})
-
+    }else {
+        res.status(400).json({
+            status_code: -1,
+            message: "This user is not autharized",
+            error: {
+                message : "You must provide a token to execute the method"
+            }
+        })
     }
+
 }
 
-function verifyTokenAndAuthoraization(req,res,next){
-
-    verifyToken(req,res,()=>{
-
-        if(req.user.id==req.params.id ){
-
+function verifyTokenAndAdmin(req,res,next){ 
+    TokenValidator.verifyToken(req,res,()=> {
+        if(req.user.is_seller){
             next()
+        }else {
+            res.status(400).json({
+                status_code: -1,
+                message: "This user is not autharized",
+                error: {
+                    message : "You must be a seller to use this method"
+                }
+            })
         }
-        else{
-            res.status(401).json({message:"you aren't allowed"})
 
-        }
     })
 }
 
-
-
-function verifyTokenAndAuthoration(req,res,next){
-
-    verifyToken(req,res,()=>{
-
-        if( req.user.isAdmin){
-
-            next()
-
-        }else{
-
-            res.status(400).json({message :"you are not admin"})
-            
-        }
-
-
-
-    })
-}
+//////////////////
 
 module.exports = {
     verifyToken,

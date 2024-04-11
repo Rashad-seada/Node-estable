@@ -1,8 +1,11 @@
 const mongoose=require("mongoose")
 const joi = require("joi")
 
+<<<<<<< HEAD
 const jwt = require("jsonwebtoken")
 
+=======
+>>>>>>> 047b95af1fa590270960e07597850f2917edcb84
 const userSchema =new mongoose.Schema({
    name:{
     type:String,
@@ -21,11 +24,21 @@ const userSchema =new mongoose.Schema({
     default:false
    },
    token:{
-    type:[]
+    type:[String]
    }
 })
 
 
+<<<<<<< HEAD
+=======
+    const schema =joi.object({
+        name:joi.string().min(2).max(20).required(),
+        email:joi.string().min(10).required(),
+        password:joi.string().min(2).required(),
+    })
+    return schema.validate(obj)
+}
+>>>>>>> 047b95af1fa590270960e07597850f2917edcb84
 
 function validationLoginUser(obj){
     const schema= joi.object({
@@ -43,9 +56,7 @@ userSchema.methods.generateToken = function(){
      
  }
 
-
 const User = mongoose.model("user",userSchema)
-
 
 
 module.exports = {

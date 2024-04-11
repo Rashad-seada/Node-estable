@@ -1,4 +1,4 @@
-const {User,generateToken,validationLoginUser}=require("../model/user")
+const {User,validateRegisterUser,validationLoginUser}=require("../model/user")
 //import bycrpt
 
 const bcrypt = require ("bcrypt")
@@ -8,6 +8,7 @@ const jwt = require("jsonwebtoken")
 
 const express=require("express")
 router=express.Router()
+
 
 
 

@@ -13,7 +13,8 @@ const Context = createContext<NavLinksProviderData>(undefined)
 function NavLinksProvider({children}:Children) {
 
     
-    const [currentPath,setCurrentPath] = useState<string>(location.pathname)
+    const path = location.pathname
+    const [currentPath,setCurrentPath] = useState<string>(path)
 
     const changeCurrentPath = (newPath:string) :void => {
         setCurrentPath(_ => newPath)

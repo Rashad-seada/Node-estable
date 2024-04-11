@@ -8,7 +8,7 @@ import { BiSolidDoorOpen } from 'react-icons/bi'
 function SideNav() {
 
     return (
-        <nav className='w-[25%] h-full  bg-smokey-white rounded-3xl'>
+        <nav className='w-[27.5%] h-full  bg-smokey-white rounded-3xl'>
             <div className='h-[100px]'>
                 <img className='w-[100px] mx-auto aspect-square block' src={'/svgs/logo.svg'} alt="logo" />
             </div>
@@ -36,7 +36,7 @@ function SideNav() {
             </div>
 
             <div className='h-[100px] flex justify-center items-center'>
-                <button className='border-primary duration-300 hover:bg-primary hover:text-smokey-white py-2 w-5/6 border-solid border-2 flex justify-center items-center rounded-3xl text-primary text-2xl'>
+                <button className='border-primary duration-300 hover:bg-primary hover:text-smokey-white py-2 w-5/6 border-solid border-2 flex justify-center items-center rounded-2xl text-primary text-2xl'>
                     <BiSolidDoorOpen />
                     <span>log out</span>
                 </button>

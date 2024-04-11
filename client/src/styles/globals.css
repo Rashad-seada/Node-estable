@@ -11,3 +11,11 @@
     text-transform: capitalize;
     background-color: var(--dark-grey);
 }
+
+
+
+
+input,textarea,select {
+    outline: 0;
+    border:0;
+}

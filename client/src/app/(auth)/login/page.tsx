@@ -3,13 +3,29 @@
 import Input from '@/components/shared/Input'
 import React, { useState } from 'react'
 
+
+const userNameFallback = (<>
+    <p className='text-red-500 text-md sm:text-lg'>username must be 3 chars or more and mustn't contain symbols</p>
+</>)
+
+const passwordFallback = (<>
+    <p className='text-red-500 text-md sm:text-lg'>password must contain numbers, password must be 5 chars or more and mustn't contain symbols</p>
+</>)
 function LoginPage() {
 
-    const [email,setEmail] = useState<string>('')
+    const [username,setUsername] = useState<string>('')
     const [password,setPassword] = useState<string>('')
-
+    const [isUsernameValid,setIsUsernameValid] = useState<boolean>(false)
+    const [isPasswordValid,setIsPasswordValid] = useState<boolean>(false)
+    const isInputsValid = isPasswordValid && isUsernameValid
+    const usernameRegex = /^[a-zA-Z0-9_]{3,}$/
+    const passwordRegex = /^(?=.*\d)[a-zA-Z0-9]{5,}$/
+    
+    
+    
     const handleLogin = () => {
-
+        if (!isInputsValid) return
+        
     }
 
     return (
@@ -26,10 +42,13 @@ function LoginPage() {
                     <div className='w-full sm:w-4/5 space-y-5'>
                         <Input 
                             type='text' 
-                            value={email} 
-                            setValue={setEmail}
+                            value={username} 
+                            setValue={setUsername}
                             className='h-[60px] placeholder:text-[#797979] text-[#797979] p-3 text-xl rounded-xl bg-[#CCCCCC]'
                             placeholder='User name'
+                            regex={usernameRegex}
+                            fallback={userNameFallback}
+                            setIsValueValid={setIsUsernameValid}
                         />
                         <Input 
                             type='password' 
@@ -37,11 +56,18 @@ function LoginPage() {
                             setValue={setPassword} 
                             className='h-[60px] placeholder:text-[#797979] text-[#797979] p-3 text-xl rounded-xl bg-[#CCCCCC]'
                             placeholder='Password'
+                            regex={passwordRegex}
+                            fallback={passwordFallback}
+                            setIsValueValid={setIsPasswordValid}
                         />
 
                     </div>
 
-                    <button className='text-smokey-white text-3xl mt-10 h-[60px] w-full sm:w-3/5 bg-primary rounded-xl mb-20' onClick={handleLogin}>
+                    <button 
+                        disabled={!isInputsValid} 
+                        className='text-smokey-white text-3xl mt-10 h-[60px] w-full sm:w-3/5 bg-primary rounded-xl mb-20' 
+                        onClick={handleLogin}
+                    >
                         login
                     </button>
                 </div>
@@ -50,5 +76,7 @@ function LoginPage() {
         </section>
     )
 }
+
+
 
 export default LoginPage

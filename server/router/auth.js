@@ -1,4 +1,4 @@
-const {User,validateRegisterUser,validationLoginUser}=require("../model/user")
+const {User,validationLoginUser}=require("../model/user")
 //import bycrpt
 
 const bcrypt = require ("bcrypt")
@@ -7,8 +7,7 @@ const bcrypt = require ("bcrypt")
 const jwt = require("jsonwebtoken")
 
 const express=require("express")
-router=express.Router()
-
+router = express.Router()
 
 
 
@@ -19,31 +18,95 @@ router=express.Router()
  * @access public
  */
 
-router.post("/login",async(req,res) => {
+router.post("/login",async(req,res,) => {
 
-    const {error} = validationLoginUser(req.body);
+
+    const {error}= validationLoginUser(req.body)
+
     if (error){
-        res.status(400).json({message : error.details[0].message})
+        res.status(400).json({
+                status_code: -1,
+                message: error.message,
+                error: {
+                    message: error.message
+                }
+            })
     }
- 
-    let user = await User.findOne({email:req.body.email})
-    if(!user){
-        res.status(400).json({message :" invalied email"})
-    }
+    
+    User.findOne({email: req.body.email})
+    .then(async user => {
 
-    const isPasswordMatch = await bcrypt.compare(req.body.password  , user.password)
+        if(user){
 
-    if(!isPasswordMatch){
-        res.status(400).json({message :" invalied password"})
-    }
+            const {password,__v,...other} = user._doc;
+            const validPassword = await bcrypt.compare(req.body.password,user.password)
 
-    const token = user.generateToken()
-     const {password,...other} = user._doc
+            const token = jwt.sign({
+                    id : user._id,
+                    is_seller : user.is_seller ,
+                    randomNumber : Math.random()
+                },
+                process.env.JWT_SECRET_KEY,
+            )
 
-    //  user.token.push(token)
-     user.save()
 
-     res.status(200).json({token,...other})
+
+            if(validPassword){
+
+                user.token.push(token)
+
+                user.save()
+                .then((result)=> {
+                    res.status(200).json({
+                        status_code: 1,
+                        message: "Welcome back Mr." + user.username,
+                        data: {
+                            user: {
+                                ...other,
+                                token : token
+                            }
+                        }
+                    })
+                }).catch((error)=> {
+                    res.status(500).json({
+                        status_code: 0,
+                        message: "The server is down, please try again later",
+                        error: {
+                            message: error.message
+                        }
+                    })
+                })
+
+
+            }else {
+
+                res.status(400).json({
+                    status_code: -2,
+                    message: "Please enter a valid email and password",
+                    data: null
+                })
+
+            }
+            
+        }else {
+            res.status(400).json({
+                status_code: -1,
+                message: "There are no accounts connected to this email",
+                data: null
+            })
+
+        }
+    })
+    .catch(error => {
+        res.status(500).json({
+            status_code: 0,
+            message: "The server is down, please try again later",
+            error: {
+                message: error.message
+            }
+        })
+    })
+
 })
 
 

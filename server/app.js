@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 
-const authRouter = require('./router/auth');
+const authRouter = require('./routes/auth');
 
 
 // Error handling

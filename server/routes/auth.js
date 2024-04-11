@@ -9,15 +9,13 @@ const jwt = require("jsonwebtoken")
 const express=require("express")
 router=express.Router()
 
-
-
-
 /***
  * @desc Login User
  * @route api/auth/login
  * @method post
  * @access public
  */
+
 
 router.post("/login",async(req,res) => {
 
@@ -29,14 +27,15 @@ router.post("/login",async(req,res) => {
     let user = await User.findOne({email:req.body.email})
     if(!user){
         res.status(400).json({message :" invalied email"})
+        console.log("user is user",req.body.email)
     }
 
-    const isPasswordMatch = await bcrypt.compare(req.body.password  , user.password)
-
+    const isPasswordMatch =bcrypt.compare(  req.body.password , req.params.password)
+    console.log(req.params.password)
     if(!isPasswordMatch){
+
         res.status(400).json({message :" invalied password"})
     }
-
     const token = user.generateToken()
      const {password,...other} = user._doc
 
@@ -45,6 +44,7 @@ router.post("/login",async(req,res) => {
 
      res.status(200).json({token,...other})
 })
+
 
 
 module.exports = router

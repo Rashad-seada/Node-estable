@@ -1,4 +1,4 @@
-const {User,validateRegisterUser,validationLoginUser}=require("../model/user")
+const {User,validationLoginUser}=require("../model/user")
 //import bycrpt
 
 const bcrypt = require ("bcrypt")
@@ -17,32 +17,113 @@ router=express.Router()
  */
 
 
-router.post("/login",async(req,res) => {
+router.post("/login", async(req,res,) => {
 
-    const {error} = validationLoginUser(req.body);
+
+    const {error}= validationLoginUser(req.body)
+
     if (error){
-        res.status(400).json({message : error.details[0].message})
+        res.status(400).json({
+                status_code: -1,
+                message: error.message,
+                error: {
+                    message: error.message
+                }
+            })
     }
- 
-    let user = await User.findOne({email:req.body.email})
-    if(!user){
-        res.status(400).json({message :" invalied email"})
-        console.log("user is user",req.body.email)
-    }
+    
+    User.findOne({email: req.body.email})
+    .then(async user => {
 
-    const isPasswordMatch =bcrypt.compare(  req.body.password , req.params.password)
-    console.log(req.params.password)
-    if(!isPasswordMatch){
+        if(user){
 
-        res.status(400).json({message :" invalied password"})
-    }
-    const token = user.generateToken()
-     const {password,...other} = user._doc
+            const {password,__v,...other} = user._doc;
 
-    //  user.token.push(token)
-     user.save()
+            console.log("step 1")
+            const validPassword = await bcrypt.compare(req.body.password,user.password)
 
-     res.status(200).json({token,...other})
+            console.log("step 2")
+            const token = jwt.sign({
+                    id : user._id,
+                    isAdmin : user.isAdmin ,
+                },
+                process.env.JWT_SECRET_KEY,
+            )
+
+
+            console.log("step 3")
+            if(validPassword){
+
+                console.log("step 4")
+                user.token.push(token)
+
+                console.log("step 5")
+                user.save()
+                .then((result)=> {
+                    res.status(200).json({
+                        status_code: 1,
+                        message: "Welcome back Mr." + user.username,
+                        data: {
+                            user: {
+                                ...other,
+                                token : token
+                            }
+                        }
+                    })
+                }).catch((error)=> {
+                    res.status(500).json({
+                        status_code: 0,
+                        message: "The server is down, please try again later",
+                        error: {
+                            message: error.message
+                        }
+                    })
+                })
+
+
+            }else {
+
+                res.status(400).json({
+                    status_code: -2,
+                    message: "Please enter a valid email and password",
+                    data: null
+                })
+
+            }
+            
+        }else {
+            res.status(400).json({
+                status_code: -1,
+                message: "There are no accounts connected to this email",
+                data: null
+            })
+
+        }
+    })
+    .catch(error => {
+        res.status(500).json({
+            status_code: 0,
+            message: "The server is down, please try again later",
+            error: {
+                message: error.message
+            }
+        })
+    })
+
+})
+
+
+router.get("/getPassword",async(req,res)=> {
+    const salt = await bcrypt.genSalt(10)
+    req.body.password = await bcrypt.hash( req.body.password,salt)
+
+    res.status(200).json({
+        status_code: 1,
+        message: "This is a hashed password",
+        data: {
+            password :  req.body.password
+        }
+    })
 })
 
 

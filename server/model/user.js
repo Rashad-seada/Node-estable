@@ -1,6 +1,5 @@
 const mongoose=require("mongoose")
 const joi = require("joi")
-
 const jwt = require("jsonwebtoken")
 
 const userSchema =new mongoose.Schema({
@@ -20,12 +19,12 @@ const userSchema =new mongoose.Schema({
     type:Boolean,
     default:false
    },
-   token:{
-    type:[String]
-   }
+   token :  { 
+    type: [String],
+     default: []
+    },
+
 })
-
-
 
 
 function validationLoginUser(obj){
@@ -37,9 +36,13 @@ function validationLoginUser(obj){
 }
 
 userSchema.methods.generateToken = function(){
-    return jwt.sign({id : this._id , isAdmin: this.isAdmin,randomNumber : Math.random()},process.env.JWT_SECRET_KEY )
-
- }
+    return jwt.sign({
+        id : this._id ,
+        isAdmin: this.isAdmin,
+        randomNumber : Math.random()},
+        process.env.JWT_SECRET_KEY 
+    )
+}
 
 const User = mongoose.model("user",userSchema)
 

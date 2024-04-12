@@ -1,6 +1,5 @@
-"use client"
+'use client'
 
-import { useRouter } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
 
 export type NavLinksProviderData = {
@@ -15,7 +14,7 @@ function NavLinksProvider({children}:Children) {
 
     
 
-    const [currentPath,setCurrentPath] = useState<string>('/')
+    const [currentPath,setCurrentPath] = useState<string>("/")
 
     const changeCurrentPath = (newPath:string) :void => {
         setCurrentPath(_ => newPath)
@@ -27,7 +26,7 @@ function NavLinksProvider({children}:Children) {
     }
 
     useEffect(()=>{
-        setCurrentPath(window.location.pathname)
+        setCurrentPath(location.pathname)
     },[])
 
     return (

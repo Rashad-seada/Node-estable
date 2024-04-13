@@ -3,6 +3,7 @@ require('dotenv').config({path:"./config.env"});
 const {connectingDataBase} =require("./config/db")
 const morgan = require("morgan")
 const app = express();
+const { verifyTokenAndAdmin, } = require("../server/middleware/verify-token")
 
 
 // Connecting to database
@@ -16,6 +17,7 @@ app.use(express.json());
 
 
 const authRouter = require('./routes/auth');
+const clientRouter = require('./routes/clients');
 
 
 // Error handling
@@ -38,6 +40,7 @@ app.use((req, res, next) => {
 
 //Routs
 app.use("/api/auth", authRouter)
+app.use("/api/client",verifyTokenAndAdmin, clientRouter)
 
 app.use((req,res,next)=> { 
     const error = new Error('Url route not found');

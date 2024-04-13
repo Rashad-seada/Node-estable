@@ -8,7 +8,7 @@ function verifyToken(req,res,next){
     if(token){
 
         try{
-            const decoded = jwt.verify(token,process.env.Shoeib2024)
+            const decoded = jwt.verify(token,process.env.JWT_SECRET_KEY)
             req.user = decoded
 
             console.log(req.user)
@@ -19,7 +19,7 @@ function verifyToken(req,res,next){
                 status_code: -1,
                 message: "This user is not autharized",
                 error: {
-                    message : "You token is not valid"
+                    message : error
                 }
             })
         }
@@ -40,15 +40,15 @@ function verifyToken(req,res,next){
 }
 
 function verifyTokenAndAdmin(req,res,next){ 
-    TokenValidator.verifyToken(req,res,()=> {
-        if(req.user.is_seller){
+    verifyToken(req,res,()=> {
+        if(req.user.isAdmin){
             next()
         }else {
             res.status(400).json({
                 status_code: -1,
                 message: "This user is not autharized",
                 error: {
-                    message : "You must be a seller to use this method"
+                    message : "You must be an admin to use this method"
                 }
             })
         }
@@ -60,6 +60,5 @@ function verifyTokenAndAdmin(req,res,next){
 
 module.exports = {
     verifyToken,
-    verifyTokenAndAuthoraization,
-    verifyTokenAndAuthoration
+    verifyTokenAndAdmin,
 }

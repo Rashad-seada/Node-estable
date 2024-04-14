@@ -1,4 +1,4 @@
-const { User, validationLoginUser }=require("../model/user")
+const { User, validationLoginUser }=require("../models/user")
 //import bycrpt
 
 const bcrypt = require ("bcrypt")

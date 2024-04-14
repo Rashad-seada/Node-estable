@@ -1,9 +1,9 @@
 const express= require("express");
 require('dotenv').config({path:"./config.env"});
-const {connectingDataBase} =require("./config/db")
+const {connectingDataBase} =require("./core/infrastructure/db")
 const morgan = require("morgan")
 const app = express();
-const { verifyTokenAndAdmin, } = require("../server/middleware/verify-token")
+const { verifyTokenAndAdmin, } = require("./core/middleware/verify-token")
 
 
 // Connecting to database
@@ -15,10 +15,10 @@ app.use(morgan("dev"))
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-
-const authRouter = require('./routes/auth');
-const clientRouter = require('./routes/clients');
-
+//path
+const authRouter = require('./features/auth/routers/auth');
+const clientRouter = require('./features/client/routers/clients');
+const hourseRouter = require("./features/hourse/routers/hourses")
 
 // Error handling
 app.use((req, res, next) => {
@@ -41,6 +41,7 @@ app.use((req, res, next) => {
 //Routs
 app.use("/api/auth", authRouter)
 app.use("/api/client",verifyTokenAndAdmin, clientRouter)
+app.use("/api/hourse",hourseRouter)
 
 app.use((req,res,next)=> { 
     const error = new Error('Url route not found');

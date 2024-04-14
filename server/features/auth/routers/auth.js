@@ -1,4 +1,4 @@
-const {User,validationLoginUser}=require("../model/user")
+const { User, validationLoginUser }=require("../models/user")
 //import bycrpt
 
 const bcrypt = require ("bcrypt")
@@ -8,14 +8,6 @@ const jwt = require("jsonwebtoken")
 
 const express=require("express")
 router=express.Router()
-
-/***
- * @desc Login User
- * @route api/auth/login
- * @method post
- * @access public
- */
-
 
 router.post("/login", async(req,res,) => {
 
@@ -39,10 +31,8 @@ router.post("/login", async(req,res,) => {
 
             const {password,__v,...other} = user._doc;
 
-            console.log("step 1")
             const validPassword = await bcrypt.compare(req.body.password,user.password)
 
-            console.log("step 2")
             const token = jwt.sign({
                     id : user._id,
                     isAdmin : user.isAdmin ,
@@ -51,13 +41,10 @@ router.post("/login", async(req,res,) => {
             )
 
 
-            console.log("step 3")
             if(validPassword){
 
-                console.log("step 4")
                 user.token.push(token)
 
-                console.log("step 5")
                 user.save()
                 .then((result)=> {
                     res.status(200).json({
@@ -90,7 +77,7 @@ router.post("/login", async(req,res,) => {
                 })
 
             }
-            
+
         }else {
             res.status(400).json({
                 status_code: -1,
@@ -113,7 +100,7 @@ router.post("/login", async(req,res,) => {
 })
 
 
-router.get("/getPassword",async(req,res)=> {
+router.get("/get-password",async(req,res)=> {
     const salt = await bcrypt.genSalt(10)
     req.body.password = await bcrypt.hash( req.body.password,salt)
 

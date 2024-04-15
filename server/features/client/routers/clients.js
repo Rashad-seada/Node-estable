@@ -2,7 +2,7 @@
 const express = require("express");
 router = express.Router();
 
-const ClientController = require("../controllers/client-controller").ClientController
+const ClientController = require("../controllers/client-controller")
 
 
 /**
@@ -38,7 +38,7 @@ router.get(
 * @access private
 */
 router.get(
-  "/:page",
+  "/",
    ClientController.getAllClients
 );
 

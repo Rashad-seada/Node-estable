@@ -11,7 +11,7 @@ const express = require("express");
 router = express.Router();
   
 
-export class ClientController {
+class ClientController {
 
     static async createNewClient (req, res) {
         try {
@@ -119,54 +119,46 @@ export class ClientController {
 
     static async getAllClients (req, res) {
         try {
-          const { error } = pageValidation(req.body);
-      
-          if (error) {
-            res.status(400).json({
-              status_code: -1,
-              message: error.message,
-              error: {
-                message: error.message,
-              },
-            });
-          } else {
-            // Pagination parameters
-            const pageSize = 10; // Number of documents per page
-      
-            // Calculate the number of documents to skip
-            const skip = (req.params.page - 1) * pageSize;
-      
-            Client.find({})
-              .select("-__v")
-              .skip(skip) // Skip documents
-              .limit(pageSize)
-              .then(async (docs) => {
-                const totalRecords = await Client.countDocuments();
-      
-                const maxPages = Math.ceil(totalRecords / pageSize);
-      
-                res.status(200).json({
-                  status_code: 1,
-                  message: "Got the clients successfuly",
-                  data: {
-                    current_page: req.body.page_number,
-                    max_pages: maxPages,
-                    client: docs,
-                  },
-                });
-              })
-              .catch((error) => {
-                res.status(500).json({
-                  status_code: -2,
-                  message:
-                    "There was an error when getting the client, please try again",
-                  data: null,
-                  error: {
-                    message: error.message,
-                  },
-                });
-              });
-          }
+            {
+
+                console.log(req.query.page)
+                // Pagination parameters
+                const pageSize = 10; // Number of documents per page
+          
+                // Calculate the number of documents to skip
+                const skip = (req.query.page - 1) * pageSize;
+          
+                Client.find({})
+                  .select("-__v")
+                  .skip(skip) // Skip documents
+                  .limit(pageSize)
+                  .then(async (docs) => {
+                    const totalRecords = await Client.countDocuments();
+          
+                    const maxPages = Math.ceil(totalRecords / pageSize);
+          
+                    res.status(200).json({
+                      status_code: 1,
+                      message: "Got the clients successfuly",
+                      data: {
+                        current_page: req.query.page,
+                        max_pages: maxPages,
+                        client: docs,
+                      },
+                    });
+                  })
+                  .catch((error) => {
+                    res.status(500).json({
+                      status_code: -2,
+                      message:
+                        "There was an error when getting the client, please try again",
+                      data: null,
+                      error: {
+                        message: error.message,
+                      },
+                    });
+                  });
+              }
         } catch (error) {
           res.status(500).json({
             status_code: -3,
@@ -367,3 +359,5 @@ export class ClientController {
     }
 
 } 
+
+module.exports = ClientController;

@@ -1,14 +1,19 @@
+'use client'
+
+import { AuthProviderData, useAuthProvider } from '@/context/AuthContext'
 import { redirect } from 'next/navigation'
-import React from 'react'
+import React, { useEffect } from 'react'
 
 function AuthLayout({children}:Children) {
     
 
-    const isAuthenticated :boolean = false
+    const auth :AuthProviderData = useAuthProvider()
 
-    if (isAuthenticated) {
-        return redirect("/")
-    }
+    useEffect(()=>{
+        if (auth?.isAuth) {
+            return redirect("/")
+        }
+    },[auth?.isAuth])
 
     return (
         <>

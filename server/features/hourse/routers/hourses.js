@@ -291,9 +291,10 @@ router.put("/:id",async(req,res)=>{
  * @access public
  */
 router.delete("/:id",async(req,res)=>{
-
     let hourse = await Hourse.findById(req.params.id)
+
     try {
+
         if(hourse){
             await Hourse.findByIdAndDelete(req.params.id)
 
@@ -301,17 +302,16 @@ router.delete("/:id",async(req,res)=>{
                 status_code: 4,
                 message: "Horse is deleted",
                 data: [],
-                error: {
-                  message: "null",
-                },
+                error:null,
             })
         }else{
+            const error= new Error()
             res.status(404).json({
                 status_code: -4,
                 message: "Horse Id Not Found ",
                 data: null,
                 error: {
-                  message: "error.message",
+                  message:error.message,
                 },
             })
         }
@@ -322,14 +322,10 @@ router.delete("/:id",async(req,res)=>{
             data: null,
             error: {
               message: error.message,
-            },
+            }
         })
     }
-        
-    }
-        
-
-    )
+    })
 
 
 module.exports = router;

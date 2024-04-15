@@ -4,8 +4,9 @@ import NavLinksProvider from '@/context/NavLinksContext'
 import { AiFillHome } from 'react-icons/ai'
 import { InquiryRoutes, ManagementRoutes, ProfileRoutes, ResourcesRoutes, SalesRoutes } from '@/constants/dashboardRoutes'
 import RouteGroup from './components/RouteGroup'
-import { BiSolidDoorOpen } from 'react-icons/bi'
+import LogoutButton from './components/LogoutButton'
 function SideNav() {
+
 
     return (
         <nav className='w-[27.5%] h-full  bg-smokey-white rounded-3xl'>
@@ -36,10 +37,7 @@ function SideNav() {
             </div>
 
             <div className='h-[100px] flex justify-center items-center'>
-                <button className='border-primary duration-300 hover:bg-primary hover:text-smokey-white py-2 w-5/6 border-solid border-2 flex justify-center items-center rounded-2xl text-primary text-2xl'>
-                    <BiSolidDoorOpen />
-                    <span>log out</span>
-                </button>
+                <LogoutButton/>
             </div>
         </nav>
     )

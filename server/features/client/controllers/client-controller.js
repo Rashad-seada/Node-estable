@@ -141,7 +141,7 @@ class ClientController {
                       status_code: 1,
                       message: "Got the clients successfuly",
                       data: {
-                        current_page: req.query.page,
+                        current_page: parseInt(req.query.page),
                         max_pages: maxPages,
                         client: docs,
                       },

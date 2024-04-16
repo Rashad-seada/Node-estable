@@ -18,7 +18,7 @@ function DashboardLayout({children}:Children) {
     return (
         <main className='w-full h-screen overflow-hidden flex items-center justify-center '>
             
-            <div className='w-[95%] h-[95%] flex items-center justify-center gap-5'>
+            <div className='w-[95%] h-[95%] flex items-center justify-center gap-10'>
                 <SideNav/>
                 <div className='h-full overflow-auto flex-1'>
                     {

@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import "../styles/globals.css";
 import ReactQueryProvider from "@/components/providers/ReactQueryProvider";
 import AuthProvider from "@/context/AuthContext";
+import ReactToastifyProvider from "@/components/providers/ReactToastifyProvider";
+import RoutingProvider from "@/context/RoutingContext";
 
 
 
@@ -17,9 +19,15 @@ export default function RootLayout({children}:RootLayoutProps) {
             <body>
 
                 <ReactQueryProvider>
-                    <AuthProvider>
-                        {children}
-                    </AuthProvider>
+                        <AuthProvider>
+                            
+                            <RoutingProvider>
+                                <ReactToastifyProvider>
+                                    {children}
+                                </ReactToastifyProvider>
+                            </RoutingProvider>
+                         
+                        </AuthProvider>
                 </ReactQueryProvider>
             </body>
         </html>

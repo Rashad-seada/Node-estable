@@ -304,6 +304,7 @@ router.delete("/:id",async(req,res)=>{
                 data: [],
                 error:null,
             })
+
         }else{
             const error= new Error()
             res.status(404).json({

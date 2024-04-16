@@ -75,6 +75,7 @@ router.post("/login", async(req,res,) => {
                     message: "Please enter a valid email and password",
                     data: null
                 })
+                alert(" password or email is ")
 
             }
 

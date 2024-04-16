@@ -3,7 +3,11 @@ const joi = require("joi")
 const jwt = require("jsonwebtoken")
 
 const userSchema =new mongoose.Schema({
-   
+    fullName:{
+    type:String,
+    required:false
+   }
+   ,
    email:{
     type:String,
     required:true
@@ -14,12 +18,25 @@ const userSchema =new mongoose.Schema({
    },
    isAdmin:{
     type:Boolean,
-    default:false
+    default:true
    },
-   token :  { 
+   token :  {
     type: [String],
      default: []
     },
+      mobile:{
+        type:String,
+      required:false
+    },
+    address:{
+        type:String,
+        required:false
+    },
+    
+    avatar:{
+        type:String,
+        required:false
+    }
 
 })
 

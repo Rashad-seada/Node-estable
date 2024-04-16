@@ -36,13 +36,16 @@ function verifyToken(req,res,next){
             }
         })
     }
-
 }
 
-function verifyTokenAndAdmin(req,res,next){ 
+function verifyTokenAndAdmin(req,res,next){
     verifyToken(req,res,()=> {
-        if(req.user.isAdmin){
+        console.log(req.user.isAdmin)
+
+        if(req.user.isAdmin ){
+
             next()
+
         }else {
             res.status(400).json({
                 status_code: -1,
@@ -52,12 +55,8 @@ function verifyTokenAndAdmin(req,res,next){
                 }
             })
         }
-
     })
 }
-
-//////////////////
-
 module.exports = {
     verifyToken,
     verifyTokenAndAdmin,

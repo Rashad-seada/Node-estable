@@ -6,18 +6,15 @@ import { TiArrowSortedDown } from "react-icons/ti"
 
 type DropDownListProps = {
     options:any[],
-    listValue:Option,
+    listValue:NameAndId,
     placeholder:string,
-    setListValue:(newListValue:Option)=>void,
+    setListValue:(newListValue:NameAndId)=>void,
     placeholderClassName?:string,
     listClassName?:string
 
 }
 
-type Option = {
-    name:string,
-    _id:string
-}|null
+
 
 function DropDownList({options,placeholder,listValue,placeholderClassName,listClassName,setListValue}:DropDownListProps) {
 
@@ -26,14 +23,14 @@ function DropDownList({options,placeholder,listValue,placeholderClassName,listCl
         setShowList(!showList)
     }
 
-    const changeListValue = (value:Option) => {
+    const changeListValue = (value:NameAndId) => {
         setListValue(value)
         setShowList(false)
     }
 
 
     return (
-        <div className='w-fit relative h-full'>
+        <div className='w-full relative h-full'>
             <div onClick={toggleList} className={`w-full cursor-pointer flex justify-between items-center h-full ${placeholderClassName}`}>
                 <span>{listValue?.name? listValue.name : placeholder}</span>
                 <TiArrowSortedDown className='text-xl' />
@@ -41,10 +38,10 @@ function DropDownList({options,placeholder,listValue,placeholderClassName,listCl
 
             {
                 showList && (options.length > 0) ? (
-                    <div className="absolute left-0 rounded-lg border max-h-[350px] overflow-auto h-fit w-full mt-4">
+                    <div className="absolute z-50 left-0 rounded-lg border-2 max-h-[350px] overflow-auto h-fit w-full mt-4">
                         <ul className={`w-full bg-smokey-white flex flex-col ${listClassName}`}>
                             {
-                                options.map((option:Option,idx:number) => (
+                                options.map((option:NameAndId,idx:number) => (
                                     <li
                                         onClick={()=>changeListValue(option)}
                                         key={idx}

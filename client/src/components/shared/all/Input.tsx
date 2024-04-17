@@ -8,7 +8,7 @@ type InputProps = {
     fallback?: any,
     regex?: RegExp,
     className?:string,
-    type:"password"|"text",
+    type:"password"|"text"|"number",
     placeholder?:string,
     setIsValueValid?:(newValue:boolean) => void
 }
@@ -33,11 +33,14 @@ function Input({
         if (regex) {
             if (!regex.test(newValue)) {
                 setShowFallback(true)
-                setIsValueValid(false)
+                if (setIsValueValid) {
+                    setIsValueValid(false)
+                }
             } else {
                 setShowFallback(false)
-                setIsValueValid(true)
-
+                if (setIsValueValid) {
+                    setIsValueValid(true)
+                }
             }
         }
     }
@@ -45,7 +48,7 @@ function Input({
 
 
     return (
-        <div className="flex flex-col w-full gap-5">
+        <>
             <input 
                 value={value}
                 className={`${className ? className : ''}`}
@@ -59,7 +62,7 @@ function Input({
             {
                 showFallback ? fallback : <></>
             }
-        </div>
+        </>
     )
 }
 

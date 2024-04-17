@@ -19,3 +19,14 @@ input,textarea,select {
     outline: 0;
     border:0;
 }
+
+::-webkit-scrollbar {
+    background-color: transparent;
+    width: 7px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--primary);
+    border-radius: 9999px;
+}

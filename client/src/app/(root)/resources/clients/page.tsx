@@ -1,10 +1,11 @@
 "use client"
 
-import Avatar from '@/components/shared/Avatar'
-import DropDownList from '@/components/shared/DropDownList'
-import PageContent from '@/components/shared/PageContent'
-import PageHeader from '@/components/shared/PageHeader'
-import RoutingLink from '@/components/shared/RoutingLink'
+import Avatar from '@/components/shared/all/Avatar'
+import DropDownList from '@/components/shared/all/DropDownList'
+import PageContent from '@/components/shared/all/PageContent'
+import PageHeader from '@/components/shared/all/PageHeader'
+import RoutingLink from '@/components/shared/all/RoutingLink'
+import ResourcesCard from '@/components/shared/resources/ResourcesCard'
 import { httpGetServices } from '@/services/httpGetService'
 import React, { useState } from 'react'
 import { GrAdd } from 'react-icons/gr'
@@ -16,12 +17,14 @@ function ClientsPage() {
     const clientsRoute = "/client?page=1"
     const [listValue,setListValue] = useState<any>(null)
 
-    const {data:response,status} = useQuery({
+    const {data:response,isSuccess} = useQuery({
         queryKey:["clients"],
         queryFn:async () => httpGetServices(clientsRoute)
     })
 
     console.log(response);
+
+    const isDataHere = Boolean(response?.data?.client) && isSuccess
 
     return (
         <>
@@ -56,8 +59,25 @@ function ClientsPage() {
                 </div>
             </PageHeader>
 
-            <PageContent>
-                <div></div>
+            <PageContent className='grid p-10 gap-10 grid-cols-[repeat(auto-fit,minmax(230px,1fr))]'>
+                {
+                    isDataHere ? (
+                        
+                        response?.data.client.map((client:any,idx:number) => (
+                            <ResourcesCard
+                                key={idx}
+                                titles={{
+                                    age:client.age,
+                                    gender:client.gender
+                                }}
+                                title={client.username}
+                                _id={client._id}
+                                imgUrl=''
+                            />
+                        ))
+                        
+                    ) : (<></>)
+                }
             </PageContent>
         </>
     )

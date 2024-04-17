@@ -1,5 +1,5 @@
 import React from 'react'
-import RoutingLink from '../../shared/RoutingLink'
+import RoutingLink from '../../shared/all/RoutingLink'
 import { AiFillHome } from 'react-icons/ai'
 import { InquiryRoutes, ManagementRoutes, ProfileRoutes, ResourcesRoutes, SalesRoutes } from '@/constants/dashboardRoutes'
 import RouteGroup from './components/RouteGroup'

@@ -1,10 +1,10 @@
 "use client"
 
-import Avatar from '@/components/shared/Avatar'
-import DropDownList from '@/components/shared/DropDownList'
-import PageContent from '@/components/shared/PageContent'
-import PageHeader from '@/components/shared/PageHeader'
-import RoutingLink from '@/components/shared/RoutingLink'
+import Avatar from '@/components/shared/all/Avatar'
+import DropDownList from '@/components/shared/all/DropDownList'
+import PageContent from '@/components/shared/all/PageContent'
+import PageHeader from '@/components/shared/all/PageHeader'
+import RoutingLink from '@/components/shared/all/RoutingLink'
 import { httpGetServices } from '@/services/httpGetService'
 import React, { useState } from 'react'
 import { GrAdd } from 'react-icons/gr'

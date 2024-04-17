@@ -1,8 +1,8 @@
 "use client"
-import Avatar from '@/components/shared/Avatar'
-import BackButton from '@/components/shared/BackButton'
-import PageContent from '@/components/shared/PageContent'
-import PageHeader from '@/components/shared/PageHeader'
+import Avatar from '@/components/shared/all/Avatar'
+import BackButton from '@/components/shared/all/BackButton'
+import PageContent from '@/components/shared/all/PageContent'
+import PageHeader from '@/components/shared/all/PageHeader'
 import { BASE_URL } from '@/constants/api'
 import { httpGetServices } from '@/services/httpGetService'
 import { useParams } from 'next/navigation'

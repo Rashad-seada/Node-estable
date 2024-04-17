@@ -9,7 +9,7 @@ const {
 //import token
 const express = require("express");
 router = express.Router();
-  
+
 
 class ClientController {
 
@@ -128,7 +128,15 @@ class ClientController {
                 // Calculate the number of documents to skip
                 const skip = (req.query.page - 1) * pageSize;
           
-                Client.find({})
+                const regexQuery = new RegExp(req.query.query, 'i'); // Case-insensitive regex query
+
+                Client.find({
+                  $or: [
+                    { username: { $regex: regexQuery } },
+                    { email: { $regex: regexQuery } },
+                    { phone: { $regex: regexQuery } }
+                  ]
+                })
                   .select("-__v")
                   .skip(skip) // Skip documents
                   .limit(pageSize)
@@ -141,7 +149,7 @@ class ClientController {
                       status_code: 1,
                       message: "Got the clients successfuly",
                       data: {
-                        current_page: parseInt(req.query.page),
+                        current_page: parseInt(req.query.page) || 1,
                         max_pages: maxPages,
                         client: docs,
                       },
@@ -357,6 +365,7 @@ class ClientController {
           });
         }
     }
+    
 
 } 
 

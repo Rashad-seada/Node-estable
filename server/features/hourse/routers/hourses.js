@@ -91,7 +91,7 @@ router.post("/", async (req, res) => {
 });
 
 /**
- * @desc Get Hourse
+ * @desc Get All Hourse
  * @route api/hourse
  * @method Get
  * @access public

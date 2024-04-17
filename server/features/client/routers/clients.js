@@ -81,4 +81,5 @@ router.patch(
    ClientController.updateClientMembershipStatus
 );
 
+
 module.exports = router;

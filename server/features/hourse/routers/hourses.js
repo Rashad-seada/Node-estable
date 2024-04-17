@@ -13,15 +13,10 @@ router = express.Router();
 //>>>>>>>>>>>>>>>>>>>> Start Code Here <<<<<<<<<<<<<<<<<<<<<<<<
 
 /**
-
  * @desc create New Hourse
-
  * @route api/hourse
-
  * @method Post
-
  * @access public
-
  */
 router.post("/", async (req, res) => {
 
@@ -91,29 +86,19 @@ router.post("/", async (req, res) => {
 });
 
 /**
- * @desc Get Hourse
+ * @desc Get Hourses
  * @route api/hourse
  * @method Get
  * @access public
  */
 router.get("/", async (req, res) => {
   try {
-    const { error } = pageValidation(req.body);
-
-    if (error) {
-      res.status(400).json({
-        status_code: -1,
-        message: error.message,
-        error: {
-          message: error.message,
-        },
-      });
-    } else {
+  
       // Pagination parameters
       const pageSize = 10; // Number of documents per page
 
       // Calculate the number of documents to skip
-      const skip = (req.body.page_number - 1) * pageSize;
+      const skip = (req.query.page - 1) * pageSize;
 
       Hourse.find({})
         .select("-__v")
@@ -128,7 +113,7 @@ router.get("/", async (req, res) => {
             status_code: 1,
             message: "Got the hourse successfuly",
             data: {
-              current_page: req.body.page_number,
+              current_page: parseInt(req.query.page),
               max_pages: maxPages,
               hourse: docs,
             },
@@ -145,7 +130,7 @@ router.get("/", async (req, res) => {
             },
           });
         });
-    }
+    
   } catch (error) {
     res.status(500).json({
       status_code: -3,
@@ -159,15 +144,10 @@ router.get("/", async (req, res) => {
 });
 
 /**
-
  * @desc Get Hourse By id
-
  * @route api/hourse/:id
-
-* @method Get
-
-* @access public
-
+  * @method Get
+  * @access public
 */
 router.get("/:id", async (req, res) => {
   try {
@@ -326,7 +306,7 @@ router.delete("/:id",async(req,res)=>{
             }
         })
     }
-    })
+})
 
 
 module.exports = router;

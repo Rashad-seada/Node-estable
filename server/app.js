@@ -42,8 +42,8 @@ app.use((req, res, next) => {
 //Routs
 app.use("/api/auth", authRouter)
 app.use("/api/client",verifyTokenAndAdmin, clientRouter)
-app.use("/api/hourse",hourseRouter)
-app.use("/api/admin" ,adminRouter)
+app.use("/api/hourse",verifyTokenAndAdmin,hourseRouter)
+app.use("/api/admin" ,verifyTokenAndAdmin,adminRouter)
 
 app.use((req,res,next)=> { 
     const error = new Error('Url route not found');

@@ -36,64 +36,60 @@ function AddNewClientPage() {
                 </div>
             </PageHeader>
             <PageContent className='overflow-hidden'>   
-                <div className='w-full h-full overflow-auto'>
-                    <div className='w-fit'>
-                        <div className='max-w-[600px] flex flex-col gap-10 my-16 mx-8'>
-                            <ResourcesInput
-                                value={name} 
-                                setValue={setName}
-                                placeholder="Enter Client Name"
-                                label='name'
-                                type='text'
-                            />
+                <div className='max-w-[600px] flex flex-col gap-10 my-16 mx-8'>
+                    <ResourcesInput
+                        value={name} 
+                        setValue={setName}
+                        placeholder="Enter Client Name"
+                        label='name'
+                        type='text'
+                    />
 
-                            <ResourcesInput
-                                value={email} 
-                                setValue={setEmail}
-                                placeholder="Enter Client Email"
-                                label='email'
-                                type='text'
-                            />
+                    <ResourcesInput
+                        value={email} 
+                        setValue={setEmail}
+                        placeholder="Enter Client Email"
+                        label='email'
+                        type='text'
+                    />
 
-                            <ResourcesInput
-                                value={phone} 
-                                setValue={setPhone}
-                                placeholder="Enter Client Phone"
-                                label='phone'
-                                type='number'
-                            />
+                    <ResourcesInput
+                        value={phone} 
+                        setValue={setPhone}
+                        placeholder="Enter Client Phone"
+                        label='phone'
+                        type='number'
+                    />
 
-                            <ResourcesInput
-                                value={age} 
-                                setValue={setAge}
-                                placeholder="Enter Client Age"
-                                label='age'
-                                type='number'
-                            />
-                            <ResourcesDropList
-                                listValue={gender}
-                                setListValue={setGender}
-                                options={genders}
-                                placeholder='select client gender'
-                                label='gender'
-                                
-                            />
+                    <ResourcesInput
+                        value={age} 
+                        setValue={setAge}
+                        placeholder="Enter Client Age"
+                        label='age'
+                        type='number'
+                    />
+                    <ResourcesDropList
+                        listValue={gender}
+                        setListValue={setGender}
+                        options={genders}
+                        placeholder='select client gender'
+                        label='gender'
+                        
+                    />
 
-                            <ResourcesDropList
-                                listValue={membershipStatus}
-                                setListValue={setMembershipStatus}
-                                options={memberShipStatuses}
-                                placeholder='select client membership status'
-                                label='membership'
-                                
-                            />
-                        </div>
-                    </div>
-                    <div className='w-full flex justify-center'>
-                        <button disabled={!isInputsValid} className='w-[350px] text-primary duration-300 hover:bg-primary hover:text-smokey-white font-semibold text-2xl capitalize rounded-2xl h-[60px] border border-primary'>
-                            add new client 
-                        </button>
-                    </div>
+                    <ResourcesDropList
+                        listValue={membershipStatus}
+                        setListValue={setMembershipStatus}
+                        options={memberShipStatuses}
+                        placeholder='select client membership status'
+                        label='membership'
+                        
+                    />
+                </div>
+                <div className='w-full flex justify-center'>
+                    <button disabled={!isInputsValid} className='w-[350px] text-primary duration-300 hover:bg-primary hover:text-smokey-white font-semibold text-2xl capitalize rounded-2xl h-[60px] border border-primary'>
+                        add new client 
+                    </button>
                 </div>
 
            

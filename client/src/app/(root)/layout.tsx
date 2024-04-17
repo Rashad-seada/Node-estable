@@ -20,7 +20,7 @@ function DashboardLayout({children}:Children) {
             
             <div className='w-[95%] h-[95%] flex items-center justify-center gap-10'>
                 <SideNav/>
-                <div className='h-full overflow-auto flex-1'>
+                <div className='h-full overflow-hidden flex-1'>
                     {
                         children
                     }

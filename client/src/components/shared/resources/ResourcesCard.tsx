@@ -1,7 +1,10 @@
 import React from 'react'
 import { BiSolidImageAlt } from 'react-icons/bi'
 import { FaTrash } from 'react-icons/fa'
+import { HiMiniArrowLongRight } from 'react-icons/hi2'
 import { RiPencilFill } from 'react-icons/ri'
+import RoutingLink from '../all/RoutingLink'
+import { RoutingProviderData, useRoutingProvider } from '@/context/RoutingContext'
 
 export type ResoucesCardProps = {
     imgUrl: string,
@@ -14,13 +17,16 @@ function ResourcesCard({imgUrl,title,titles,_id,}:ResoucesCardProps) {
     
     const titlesKeys = Object.keys(titles)
     
+    const RoutingData : RoutingProviderData = useRoutingProvider()
+    
+
     return (
-        <div className='h-[350px] border-opacity-40 border border-dark-grey text-center items-center justify-between w-full flex flex-col p-4 rounded-3xl'>
+        <div className='h-fit border-opacity-40 border border-dark-grey text-center items-center justify-between w-full flex flex-col  rounded-3xl'>
 
 
-            <div className='h-[175px]'>
+            <div className='h-[175px] w-full p-4'>
                 {
-                    !imgUrl ? (<BiSolidImageAlt className='w-full h-full text-dark-grey opacity-30' />) :(
+                    !imgUrl ? (<BiSolidImageAlt className='w-full text-4xl h-full text-dark-grey opacity-30' />) :(
                         <img src={imgUrl} 
                             className='w-full rounded-2xl h-[180px] object-cover' 
                             alt="horse image"
@@ -28,7 +34,7 @@ function ResourcesCard({imgUrl,title,titles,_id,}:ResoucesCardProps) {
                 }
             </div>
 
-            <div className='h-[110px]'>
+            <div className=' p-4'>
                 <div>
                     <p className='my-3 truncate text-xl text-dark-grey font-semibold'>{title}</p>
                 </div>
@@ -45,14 +51,21 @@ function ResourcesCard({imgUrl,title,titles,_id,}:ResoucesCardProps) {
                 </div>
             </div>
 
-            <div className='relative w-full flex justify-between items-center h-[50px]'>
-                <span className='absolute top-0 bg-dark-grey w-[calc(100%+2em)] left-1/2 -translate-x-1/2 opacity-40  h-[1px] '/>
+            <div className='relative border-t p-4 border-dark-grey border-opacity-40 w-full flex justify-between items-center'>
             
-                <div className='w-[60px] flex text-2xl items-center text-dark-grey h-[20px] justify-between'>
-                    <FaTrash />
+                <div className='w-[70px] flex text-2xl items-center text-dark-grey h-[20px] justify-between'>
+                    {/* <RoutingLink href={`${RoutingData?.currentPath}/${_id}/edit`}>
                     <RiPencilFill />
-
+                    </RoutingLink> */}
+                    <span className='h-[35px] w-[1.5px] bg-dark-grey opacity-40'/>
+                    <FaTrash />
                 </div>
+
+                <button className='flex h-[35px] w-[130px] justify-center gap-2 capitalize items-center p-2 rounded-lg border text-primary border-primary duration-300 hover:bg-primary hover:text-smokey-white'>
+                    <span>see more</span>
+                    <HiMiniArrowLongRight className='text-2xl'/>
+
+                </button>
             </div>
         </div>
     )

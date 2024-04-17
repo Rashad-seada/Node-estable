@@ -16,13 +16,10 @@ function RoutingProvider({children}:Children) {
 
     const changeCurrentPath = (newPath:string) :void => {
         setCurrentPath(_ => newPath)
-        localStorage.setItem("currentPath",newPath)
     }
 
     useEffect(()=>{
-        const initialPath = localStorage.getItem("currentPath") || "/"
-
-        setCurrentPath(initialPath)
+        setCurrentPath(location.pathname)
     },[])
 
 
@@ -32,6 +29,7 @@ function RoutingProvider({children}:Children) {
         currentPath
     }
 
+    console.log(currentPath);
 
     return (
         <Context.Provider value={contextData}>

@@ -7,7 +7,7 @@ const {
     pageValidation,
   } = require("../models/house");
   
-class HorseController {
+class HourseController {
 
 
 
@@ -286,4 +286,4 @@ class HorseController {
 
 }
 
-module.exports= HorseController
+module.exports= HourseController

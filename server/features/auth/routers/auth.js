@@ -141,8 +141,37 @@ router.patch("/update-admin", verifyTokenAndAdmin, async (req, res) => {
       });
     })
 })
+ router.get("/get-admin",verifyTokenAndAdmin,async(req,res)=>{
+
+  User.findById(req.user.id).select("-token -password -__v")
+  .then((docs)=>{
+    if(docs){
+      res.status(200).json({
+
+        status_code: 2,
+        message: "Success Process",
+        data: docs,
+      })
+    }else{
+
+      res.status(404).json({
+        status_code: 1,
+        message: "Can`t git Data",
+        data: null,
+        error : error. message
+      });
+    }
+  })
+  .catch((error)=>{
+    res.status(500).json({
+      status_code: -2,
+      message: "internal server error",
+      error: error.message,
+    });
+  })
 
 
+ })
 router.get("/get-password", async (req, res) => {
   const salt = await bcrypt.genSalt(10);
   req.body.password = await bcrypt.hash(req.body.password, salt);

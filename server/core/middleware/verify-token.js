@@ -11,7 +11,6 @@ function verifyToken(req,res,next){
             const decoded = jwt.verify(token,process.env.JWT_SECRET_KEY)
             req.user = decoded
 
-            console.log(req.user)
             next()
 
         }catch(error){
@@ -40,7 +39,6 @@ function verifyToken(req,res,next){
 
 function verifyTokenAndAdmin(req,res,next){
     verifyToken(req,res,()=> {
-        console.log(req.user.isAdmin)
 
         if(req.user.isAdmin ){
 

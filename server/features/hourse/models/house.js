@@ -37,11 +37,8 @@ const hourseSchema = mongoose.Schema({
     required: false,
     default : []
   },
-
 });
-
 const Hourse = mongoose.model("Hourse", hourseSchema);
-
 function pageValidation(obj){
   const schema = joi.object({
       page_number : joi.number().required().min(1),

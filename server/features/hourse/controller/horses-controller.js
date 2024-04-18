@@ -282,8 +282,6 @@ class HourseController {
             })
         }
         }
-
-
 }
 
 module.exports= HourseController

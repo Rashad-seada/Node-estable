@@ -9,33 +9,34 @@ type HorsesPageProps = {
 }
 function HorsesPageContent({isDataHere,response}:HorsesPageProps) {
     
-    //const horse = response?.data.horse
+    const horses = response?.data?.hourse
+
     
     return (
         
-        <PageContent >
+        <PageContent>
             
             <Loader isLoading={!isDataHere} size={300}>
             
                 {
-                    // !isDataHere ? ( 
-                    //     <div className='grid w-full h-full p-10 gap-10 grid-cols-[repeat(auto-fit,minmax(250px,1fr))]'>
-                    //         {
-                    //             horse.map((horse:any,idx:number) => (
-                    //                 <ResourcesCard
-                    //                     key={idx}
-                    //                     titles={{
-                    //                         age:horse.age,
-                    //                         gender:horse.gender
-                    //                     }}
-                    //                     title={horse.name}
-                    //                     _id={horse._id}
-                    //                     imgUrl=''
-                    //                 />
-                    //             ))
-                    //         }
-                    //     </div>
-                    // ) :
+                    isDataHere ? ( 
+                        <div className='grid w-full h-full p-10 gap-10 grid-cols-[repeat(auto-fit,minmax(250px,1fr))]'>
+                            {
+                                horses.map((horse:any,idx:number) => (
+                                    <ResourcesCard
+                                        key={idx}
+                                        titles={{
+                                            age:horse.age,
+                                            gender:horse.gender
+                                        }}
+                                        title={horse.hourseName}
+                                        _id={horse._id}
+                                        imgUrl=''
+                                    />
+                                ))
+                            }
+                        </div>
+                    ) :
                     <></>
                 } 
             

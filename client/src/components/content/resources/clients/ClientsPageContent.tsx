@@ -10,7 +10,7 @@ type ClientsPageProps = {
 
 function ClientsPageContent({ isDataHere, response }:ClientsPageProps) {
 
-    const client = response?.data.client
+    const client = response?.data?.client
     
     return (
         

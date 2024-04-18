@@ -16,12 +16,10 @@ function HorsesPage() {
         queryKey:["horses"],
         queryFn:async () => httpGetServices(horsesRoute)
     })
-
-    console.log(response);
     
-    const isDataHere = Boolean(response?.data?.horse) && isSuccess
+    const isDataHere = Boolean(response?.data?.hourse) && isSuccess
 
-    let listOptions = isDataHere ? toNameAndId(response.data.horse,"hourseName","_id"): []
+    let listOptions = isDataHere ? toNameAndId(response.data.hourse,"hourseName","_id"): []
     
     return (
         <>

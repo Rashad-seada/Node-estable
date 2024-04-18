@@ -21,7 +21,6 @@ const login = async (email:string,password:string) => {
 
     const response = await fetch(`${BASE_URL}${authRoute}`,options)
     const loginData = await response.json()
-        console.log(loginData);
         
     return loginData;
 }

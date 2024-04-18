@@ -1,5 +1,6 @@
 import { useAuthProvider } from "@/context/AuthContext"
 import { removeToken, removeUser } from "@/services/authServices"
+import toastify from "@/utils/toastify"
 
 export const useLogout = () => {
     const auth = useAuthProvider()
@@ -7,6 +8,7 @@ export const useLogout = () => {
         removeToken()
         removeUser()
         auth?.setIsAuth(false)
+        toastify("logged out successfully ✅")
     }
     return logoutFunc
 }

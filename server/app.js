@@ -4,7 +4,7 @@ const {connectingDataBase} =require("./core/infrastructure/db")
 const morgan = require("morgan")
 const app = express();
 const { verifyTokenAndAdmin, } = require("./core/middleware/verify-token")
-
+const cors = require('cors');
 
 // Connecting to database
 connectingDataBase()
@@ -20,6 +20,13 @@ const authRouter = require('./features/auth/routers/auth');
 const clientRouter = require('./features/client/routers/clients');
 const hourseRouter = require("./features/hourse/routers/hourses")
 const adminRouter = require("./features/admin/router/admin")
+
+
+// cors libyrary
+app.use(cors({
+    origin: 'http://localhost:3000',
+    allowedHeaders: ['Content-Type', 'Authorization', 'token'] // Add 'token' to the allowed headers
+}));
 
 // Error handling
 app.use((req, res, next) => {

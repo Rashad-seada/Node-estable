@@ -2,32 +2,34 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 
-export type NavLinksProviderData = {
+export type RoutingProviderData = {
     currentPath: string,
     changeCurrentPath:(newPath:string) => void
 } | undefined
 
-const Context = createContext<NavLinksProviderData>(undefined)
+const Context = createContext<RoutingProviderData>(undefined)
 
 
-function NavLinksProvider({children}:Children) {
-
-    
+function RoutingProvider({children}:Children) {
 
     const [currentPath,setCurrentPath] = useState<string>("/")
 
     const changeCurrentPath = (newPath:string) :void => {
         setCurrentPath(_ => newPath)
     }
-    
-    const contextData:NavLinksProviderData = {
-        changeCurrentPath,
-        currentPath
-    }
 
     useEffect(()=>{
         setCurrentPath(location.pathname)
     },[])
+
+
+
+    const contextData:RoutingProviderData = {
+        changeCurrentPath,
+        currentPath
+    }
+
+    console.log(currentPath);
 
     return (
         <Context.Provider value={contextData}>
@@ -36,7 +38,7 @@ function NavLinksProvider({children}:Children) {
     )
 }
 
-export default NavLinksProvider
+export default RoutingProvider
 
 
-export const useNavLinksProvider = () => useContext(Context);
+export const useRoutingProvider = () => useContext(Context);

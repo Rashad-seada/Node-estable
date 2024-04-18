@@ -1,5 +1,5 @@
 import { DashboardRoute } from '@/constants/dashboardRoutes'
-import NavLink from './NavLink'
+import RoutingLink from './NavLink'
 
 
 type RouteGroupProps = {
@@ -14,12 +14,12 @@ function RouteGroup({groupName,routes}: RouteGroupProps) {
                 {
                     routes.map((route:DashboardRoute,idx:number)=>(
                         <li key={idx}>
-                            <NavLink href={route.href}>
+                            <RoutingLink href={route.href}>
                                 <div className='h-[32px] flex text-xl items-center'>
                                     <span className='text-2xl mx-4'>{route.iconComponent}</span>
                                     <span>{route.name}</span>
                                 </div>
-                            </NavLink>
+                            </RoutingLink>
                         </li>
                     ))
                 }

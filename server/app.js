@@ -19,10 +19,7 @@ app.use(express.json());
 const authRouter = require('./features/auth/routers/auth');
 const clientRouter = require('./features/client/routers/clients');
 const hourseRouter = require("./features/hourse/routers/hourses")
-<<<<<<< HEAD
 const membershipTypePath = require("./features/memership-type/router/membership-type")
-=======
-const adminRouter = require("./features/admin/router/admin")
 
 
 // cors libyrary
@@ -31,7 +28,6 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization', 'token'] // Add 'token' to the allowed headers
 }));
 
->>>>>>> 534651199d83439dcb813aae2b3b2129178c6737
 // Error handling
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
@@ -53,21 +49,20 @@ app.use((req, res, next) => {
 //Routs
 app.use("/api/auth", authRouter)
 app.use("/api/client",verifyTokenAndAdmin, clientRouter)
-<<<<<<< HEAD
+
 app.use("/api/hourse",hourseRouter)
 app.use("/api/membershipType",membershipTypePath)
 app.use((req,res,next)=> {
-=======
+
 app.use("/api/hourse",verifyTokenAndAdmin,hourseRouter)
-app.use("/api/admin" ,verifyTokenAndAdmin,adminRouter)
+})
+
 
 app.use((req,res,next)=> { 
->>>>>>> 534651199d83439dcb813aae2b3b2129178c6737
     const error = new Error('Url route not found');
     error.status = 404;
     next(error);
 })
-
 app.use((error,req,res,next)=> {
     res.status(error.status || 500).json({
         status_code : 0,

@@ -1,11 +1,10 @@
-
 const express = require("express");
 const { Error } = require("mongoose");
 const {
     Hourse,
     createHourseValidation,
     pageValidation,
-  } = require("../models/house");
+  } = require("../models/hourse");
   
 class HourseController {
 
@@ -159,13 +158,6 @@ class HourseController {
                 message: "Didnt found the Hourse in our records",
                 data: null,
                 error: {
-<<<<<<< HEAD
-                  message: error.message,
-                }
-            })
-        }
-        }
-=======
                   message: "Didnt found the Hourse in our records",
                 },
               });
@@ -293,7 +285,6 @@ class HourseController {
       }
   }
 
->>>>>>> 534651199d83439dcb813aae2b3b2129178c6737
 }
 
 module.exports= HourseController

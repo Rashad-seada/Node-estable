@@ -7,18 +7,13 @@ const membershipTypeSchema = mongoose.Schema({
     displayName:{
         type:String,
         required:true
-    },
-    value:{
-        type:String,
-        required:true
     }
 })
 const membershipType = mongoose.model("membershipType",membershipTypeSchema)
 
 function membershipTypeValidation(obj){
     const schema =joi.object({
-        displayName : joi.trim().string().min(2).max(20).required(),
-        value : joi.trim().string().min(2).max(20).required()
+        displayName : joi.string().min(5).max(20).required()
 
     })
     return schema.validate(obj)

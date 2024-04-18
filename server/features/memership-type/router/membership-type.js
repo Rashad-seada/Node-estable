@@ -5,15 +5,164 @@ router = express.Router()
 const {membershipType,membershipTypeValidation} = require("../model/membership-type")
 
 router.get("/",async(req,res)=>{
-
     membershipType.find()
-    .then((docs)=>{})
-    .catch((error)=>{
-
-        
-
+    .then((docs)=>{
+        if(docs) {
+          res.status(200).json({
+              status_code: 1,
+              message: "Success process",
+              data: docs,
+            });
+        } else {
+          res.status(404).json({
+              status_code: -1,
+              message: "can`t find membership",
+              data: null,
+            });
+        }
     })
+    . catch((error)=>{
+        res.status(400).json({
+            status_code: 0,
+            message: "Can`t update ",
+            data: null,
+            error: {
+              message: error.message,
+            },
+          });
+        })
 })
 
+router.post("/",async(req,res)=>{
+
+    const {error} = membershipTypeValidation(req.body)
+    
+    if (error) {
+        res.status(400).json({
+          status_code: -1,
+          message: error.message,
+          error: {
+            message: error.message,
+          }
+        })
+      } else {
+        const Membership = new membershipType({
+            displayName:req.body.displayName
+        })
+          .save()
+    .then((docs)=>{
+        if(docs){
+            res.status(200).json({
+                status_code: 1,
+                message: "Success To Add New Membership",
+                data: docs,
+              });
+
+        }else{
+
+            res.status(200).json({
+                status_code: -1,
+                message: "can`t Add New Membership",
+                data: null,
+                error:{
+                    message:error.message
+                }
+              });
+        }
+    })
+    .catch((error)=>{
+        res.status(200).json({
+            status_code: 1,
+            message: "internal Server Error",
+            data: null,
+            error:{
+                message:error.message
+            }
+          });
+    })
+
+}})
+
+/**router.patch("/",async(req,res)=>{
+
+    const error = membershipTypeValidation (req.body)
+    if(error){
+        if (error) {
+            res.status(400).json({
+              status_code: -1,
+              message: error.message,
+              error: {
+                message: error.message,
+              }
+            })
+          }
+    }
+    
+
+    membershipType.findById(req.params.id)
+
+    .then((docs)=>{
+        if(docs){
+          if(req.body.displayName){
+            req.body.displayName = req.body.displayName
+          }
+            res.status(200).json({
+                status_code: 1,
+                message: "Updated Sucsess",
+                data: docs,
+              });
+        }else{
+            res.status(400).json({
+                status_code: 1,
+                message: " Can`t Updated",
+                data: null,
+                error:{
+                    message:error.message
+                }
+              });
+        }
+    })
+    .catch((error)=>{
+        res.status(500).json({
+            status_code: 1,
+            message: "internal server error",
+            data: null,
+            error:{
+                message:error.message
+            }
+          });
+})
+})**/
+router.delete("/:id",async(req,res)=>{
+    membershipType.findByIdAndDelete(req.params.id)
+    .then((docs)=>{
+        if(docs){
+            res.status(200).json({
+                status_code: 1,
+                message: " membership is deleted",
+                data: docs,
+              });
+        }else{
+            res.status(400).json({
+                status_code: 1,
+                message: "can`t delete membership",
+                data: null,
+                error:{
+                    message:error.message
+                }
+              });
+        }
+    })
+    .catch((error)=>{
+        res.status(500).json({
+            status_code: -4,
+            message: "cant find id ",
+            data: null,
+            error:{
+                message:error.message
+            }
+          });
+    })
+})
 
 module.exports = router

@@ -10,11 +10,6 @@ function verifyToken(req,res,next){
         try{
             const decoded = jwt.verify(token,process.env.JWT_SECRET_KEY)
             req.user = decoded
-<<<<<<< HEAD
-
-=======
-            
->>>>>>> 534651199d83439dcb813aae2b3b2129178c6737
             next()
 
         }catch(error){

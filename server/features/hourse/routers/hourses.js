@@ -4,7 +4,7 @@ const {
   Hourse,
   createHourseValidation,
   pageValidation,
-} = require("../models/house");
+} = require("../models/hourse");
 
 const HourseController =require("../controller/horses-controller")
 const express = require("express");

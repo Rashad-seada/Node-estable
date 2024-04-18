@@ -22,8 +22,9 @@ router.post("/login", async (req, res) => {
         message: error.message,
       },
     });
-  } else {
-    User.findOne({ email: req.body.email })
+  }
+
+  User.findOne({ email: req.body.email })
     .then(async (user) => {
       if (user) {
         const { password, __v, ...other } = user._doc;
@@ -62,7 +63,6 @@ router.post("/login", async (req, res) => {
               res.status(500).json({
                 status_code: 0,
                 message: "The server is down, please try again later",
-                data: null,
                 error: {
                   message: error.message,
                 },
@@ -73,19 +73,14 @@ router.post("/login", async (req, res) => {
             status_code: -2,
             message: "Please enter a valid email and password",
             data: null,
-            error: {
-              message: "Please enter a valid email and password",
-            },
           });
+          alert(" password or email is ");
         }
       } else {
         res.status(400).json({
           status_code: -1,
           message: "There are no accounts connected to this email",
           data: null,
-          error: {
-            message: "There are no accounts connected to this email",
-          },
         });
       }
     })
@@ -98,9 +93,6 @@ router.post("/login", async (req, res) => {
         },
       });
     });
-  }
-
- 
 });
 
 router.patch("/update-admin", verifyTokenAndAdmin, async (req, res) => {
@@ -113,6 +105,7 @@ router.patch("/update-admin", verifyTokenAndAdmin, async (req, res) => {
             mobile: req.body.mobile,
             address: req.body.address,
             avatar: req.body.avatar,
+            password:req.body.password
           },
         },
         { new: true }

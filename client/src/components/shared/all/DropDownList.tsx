@@ -5,13 +5,12 @@ import { TiArrowSortedDown } from "react-icons/ti"
 
 
 type DropDownListProps = {
-    options:NameAndId[],
+    options:any[],
     listValue:NameAndId,
     placeholder:string,
     setListValue:(newListValue:NameAndId)=>void,
     placeholderClassName?:string,
     listClassName?:string
-
 }
 
 

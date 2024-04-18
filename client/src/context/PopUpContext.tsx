@@ -1,36 +1,46 @@
 'use client'
 
 import PopUp from "@/components/shared/all/PopUp"
-import { createContext, useState } from "react"
-
+import { createContext, useContext, useState } from "react"
 
 export type PopUpProviderData = {
+    popUp:PopUp,
+    setPopUp:(state:PopUp) => void,
+} | undefined
+
+type PopUp = {
     isPopUpOpen: boolean,
-    setIsPopUpOpen:(state:boolean) => void,
-    popUpType: string,
-    setPopUpType:(state:string) => void
-}|undefined
+    popUpType: PopUpType,
+    message:string|null,
+    icon:any
+}
+
+type PopUpType = {
+    type: "alert" | "confirm",
+    resolveFunc:(() => void) | null,
+}
+
 
 const Context = createContext<PopUpProviderData>(undefined)
 
-
-
-
 function PopUpProvider({children}:Children) {
 
-    const [isPopUpOpen, setIsPopUpOpen] = useState<boolean>(false)
-    const [popUpType, setPopUpType] = useState<string>("confirm")
-
-
+    const [popUp,setPopUp] = useState<PopUp>({
+        isPopUpOpen:true,
+        popUpType:{
+            type:"alert",
+            resolveFunc:null,
+        },
+        message:"",
+        icon:null,
+    })
+    const contextData:PopUpProviderData = {popUp,setPopUp}
 
     return (
         <>
             <Context.Provider value={contextData}>
                 {children}
-                <PopUp
-                    isPopUpOpen={isPopUpOpen}
-                    setIsPopUpOpen={setIsPopUpOpen}
-                />
+                <PopUp />
             </Context.Provider>
         </>
     )
@@ -38,3 +48,4 @@ function PopUpProvider({children}:Children) {
 
 export default PopUpProvider
 
+export const usePopUpProvider = () => useContext(Context)

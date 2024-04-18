@@ -1,20 +1,20 @@
 "use client"
-
-import { NavLinksProviderData, useNavLinksProvider } from '@/context/NavLinksContext'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import React from 'react'
 
 type NavLinkProps = {
     href: string
     children: any,
-    className?: string
+    className?: string,
 }
 
 function NavLink({href,children,className}:NavLinkProps) {  
-    
-    const NavLinksData : NavLinksProviderData = useNavLinksProvider()
-    const isLinkActive :boolean = NavLinksData?.currentPath === href
 
+    const pathName = usePathname()
+
+    const isLinkActive :boolean = pathName === href
+    
     return (
         <div style={{
             background:isLinkActive ? 'linear-gradient(to right,var(--primary) 40%,transparent)' : "transparent",
@@ -23,7 +23,6 @@ function NavLink({href,children,className}:NavLinkProps) {
             <Link
                 href={href}
                 className={`${className || ""}`}
-                onClick={()=> NavLinksData?.changeCurrentPath(href)}
             >
                 {children}
             </Link>

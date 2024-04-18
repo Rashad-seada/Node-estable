@@ -11,7 +11,8 @@ function AuthLayout({children}:Children) {
 
     useEffect(()=>{
         if (auth?.isAuth) {
-            return redirect("/")
+            const currentPath = localStorage.getItem('currentPath') || '/'
+            return redirect(currentPath)
         }
     },[auth?.isAuth])
 

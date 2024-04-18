@@ -10,3 +10,9 @@ type RootTemplateProps = {
 type RootLayoutProps = {
     readonly children: React.ReactNode
 }
+
+
+type NameAndId = {
+    name: string,
+    id:string
+} | null

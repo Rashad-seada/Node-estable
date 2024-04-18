@@ -1,8 +1,9 @@
+import React from 'react'
 
-function page() {
+function HomePage() {
     return (
-        <div>wowoww</div>
+        <div>page</div>
     )
 }
 
-export default page
+export default HomePage

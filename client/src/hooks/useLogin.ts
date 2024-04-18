@@ -1,10 +1,11 @@
 import { BASE_URL } from "@/constants/api";
 import { AuthProviderData, useAuthProvider } from "@/context/AuthContext";
 import { setToken, setUser } from "@/services/authServices";
+import toastify from "@/utils/toastify";
 import { useMutation } from "react-query";
 
 
-const authRoute = `/api/auth/login`
+const authRoute = `/auth/login`
 
 const login = async (email:string,password:string) => {
     const options = {
@@ -20,7 +21,7 @@ const login = async (email:string,password:string) => {
 
     const response = await fetch(`${BASE_URL}${authRoute}`,options)
     const loginData = await response.json()
-    
+        
     return loginData;
 }
 function useLogin(email: string, password: string) {
@@ -35,10 +36,14 @@ function useLogin(email: string, password: string) {
                 setToken(user.token)
                 setUser(user)
                 auth?.setIsAuth(true)
+                toastify("logged in successfully ✅")
+                
+                return
             }
+            toastify("email or password might be wrong ❌")
         },
         onError:()=> {
-            console.log("authentication went wrong");
+            toastify("error on requesting data please try later")
         }
     })
 

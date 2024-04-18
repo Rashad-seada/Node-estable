@@ -14,38 +14,26 @@ router = express.Router();
 //>>>>>>>>>>>>>>>>>>>> Start Code Here <<<<<<<<<<<<<<<<<<<<<<<<
 
 /**
-
  * @desc create New Hourse
-
  * @route api/hourse
-
  * @method Post
-
  * @access public
-
  */
-router.post("/", HourseController.createNewHourse
-
-);
+router.post("/", HourseController.createNewHourse);
 
 /**
- * @desc Get All Hourse
+ * @desc Get Hourses
  * @route api/hourse
  * @method Get
  * @access public
  */
-router.get("/",HourseController.getAllHourses );
+router.get("/",HourseController.getAllHourses);
 
 /**
-
  * @desc Get Hourse By id
-
  * @route api/hourse/:id
-
-* @method Get
-
-* @access public
-
+  * @method Get
+  * @access public
 */
 router.get("/:id",HourseController.getHourseById);
 

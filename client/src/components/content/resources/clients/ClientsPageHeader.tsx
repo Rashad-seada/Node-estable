@@ -1,9 +1,9 @@
 import Avatar from '@/components/shared/all/Avatar'
 import DropDownList from '@/components/shared/all/DropDownList'
 import PageHeader from '@/components/shared/all/PageHeader'
-import RoutingLink from '@/components/shared/all/RoutingLink'
 import React from 'react'
 import { GrAdd } from 'react-icons/gr'
+import Link from 'next/link'
 
 type ClientsPageHeaderProps = {
     dropDownListOptions:NameAndId[],
@@ -28,14 +28,13 @@ function ClientsPageHeader({dropDownListOptions,dropDownListValue,setDropDownLis
                     </div>
 
                     <div className='w-[150px] cursor-pointer bg-primary rounded-lg flex justify-center items-center '>
-                        <RoutingLink
+                        <Link
                             className='flex w-full gap-2 text-smokey-white text-lg h-full items-center justify-center' 
                             href='/resources/clients/add-new' 
-                            notShowHightLight={true}
                         >
                             <GrAdd />
                             <span>add client</span>
-                        </RoutingLink>
+                        </Link>
                     </div>
                     
                     <Avatar/>

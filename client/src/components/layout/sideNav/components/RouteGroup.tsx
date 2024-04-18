@@ -1,5 +1,5 @@
 import { DashboardRoute } from '@/constants/dashboardRoutes'
-import RoutingLink from '../../../shared/all/RoutingLink'
+import RoutingLink from './NavLink'
 
 
 type RouteGroupProps = {

@@ -8,34 +8,39 @@ type HorsesPageProps = {
     response:any
 }
 function HorsesPageContent({isDataHere,response}:HorsesPageProps) {
-    //const {horse} = response?.data
+    
+    //const horse = response?.data.horse
     
     return (
         
-        <PageContent className='grid p-10 gap-10 grid-cols-[repeat(auto-fit,minmax(250px,1fr))]'>
-            {
-                isDataHere ? (
-                    // stil not finished bro :)
-                    // horses.map((horse:any,idx:number) => (
-                    //     <ResourcesCard
-                    //         key={idx}
-                    //         titles={{
-                    //             age:horse.age,
-                    //             gender:horse.gender
-                    //         }}
-                    //         title={horse.username}
-                    //         _id={horse._id}
-                    //         imgUrl=''
-                    //     />
-                    // ))
+        <PageContent >
+            
+            <Loader isLoading={!isDataHere} size={300}>
+            
+                {
+                    // !isDataHere ? ( 
+                    //     <div className='grid w-full h-full p-10 gap-10 grid-cols-[repeat(auto-fit,minmax(250px,1fr))]'>
+                    //         {
+                    //             horse.map((horse:any,idx:number) => (
+                    //                 <ResourcesCard
+                    //                     key={idx}
+                    //                     titles={{
+                    //                         age:horse.age,
+                    //                         gender:horse.gender
+                    //                     }}
+                    //                     title={horse.name}
+                    //                     _id={horse._id}
+                    //                     imgUrl=''
+                    //                 />
+                    //             ))
+                    //         }
+                    //     </div>
+                    // ) :
                     <></>
-                ) : (<>
-                    <div className='w-full h-full'>
-                        <Loader size={300}/>
-                    </div>
-                    
-                </>)
-            }
+                } 
+            
+            </Loader>
+
         </PageContent>
     )
 }

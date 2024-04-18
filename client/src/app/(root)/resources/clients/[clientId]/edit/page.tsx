@@ -10,7 +10,7 @@ import { genders } from '@/constants/genders';
 import { memberShipStatuses } from '@/constants/memberShipStatuses';
 import { httpGetServices } from '@/services/httpGetService';
 import { useParams } from 'next/navigation';
-import React, { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useQuery } from 'react-query';
 
 function ClientEditPage() {
@@ -40,7 +40,7 @@ function ClientEditPage() {
             <PageHeader>
                 <div className='flex justify-between items-center w-full'>
                     <div className='flex items-center gap-5'>
-                        <BackButton href='/resources/clients'/>
+                        <BackButton/>
                         <div className='text-smokey-white text-2xl'>
                             <span>stable's client / </span>
                             <span className='text-primary'> Edit client information</span>

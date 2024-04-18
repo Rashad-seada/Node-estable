@@ -5,7 +5,7 @@ import React from 'react'
 
 type ClientsPageProps = {
     isDataHere: boolean,
-    response:any
+    response:any,
 }
 
 function ClientsPageContent({ isDataHere, response }:ClientsPageProps) {
@@ -14,30 +14,33 @@ function ClientsPageContent({ isDataHere, response }:ClientsPageProps) {
     
     return (
         
-        <PageContent className='grid p-10 gap-10 grid-cols-[repeat(auto-fit,minmax(250px,1fr))]'>
-            {
-                isDataHere ? (
-                    
-                    client.map((client:any,idx:number) => (
-                        <ResourcesCard
-                            key={idx}
-                            titles={{
-                                age:client.age,
-                                gender:client.gender
-                            }}
-                            title={client.username}
-                            _id={client._id}
-                            imgUrl=''
-                        />
-                    ))
-                    
-                ) : (<>
-                    <div className='w-full h-full'>
-                        <Loader size={300}/>
-                    </div>
-                    
-                </>)
-            }
+        <PageContent >
+            
+            <Loader isLoading={!isDataHere} size={300}>
+            
+                {
+                    isDataHere ? ( 
+                        <div className='grid w-full h-full p-10 gap-10 grid-cols-[repeat(auto-fit,minmax(250px,1fr))]'>
+                            {
+                                client.map((client:any,idx:number) => (
+                                    <ResourcesCard
+                                        key={idx}
+                                        titles={{
+                                            age:client.age,
+                                            gender:client.gender
+                                        }}
+                                        title={client.username}
+                                        _id={client._id}
+                                        imgUrl=''
+                                    />
+                                ))
+                            }
+                        </div>
+                    ) :<></>
+                } 
+            
+            </Loader>
+
         </PageContent>
     )
 }

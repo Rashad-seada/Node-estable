@@ -21,7 +21,7 @@ input,textarea,select {
 }
 
 ::-webkit-scrollbar {
-    background-color: transparent;
+    background-color: var(--smokey-white);
     width: 7px;
     height: 10px;
 }

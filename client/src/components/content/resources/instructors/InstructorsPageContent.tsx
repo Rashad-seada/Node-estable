@@ -9,35 +9,38 @@ type ClientsPageProps = {
 }
 
 function InstructorsPageContent({isDataHere,response}:ClientsPageProps) {
-    //const instructor = response?.data.instructor
-
+     //const instructors = response?.data.instructor
     
-    return (
-        <PageContent className='grid p-10 gap-10 grid-cols-[repeat(auto-fit,minmax(250px,1fr))]'>
-            {
-                isDataHere ? (
-                    //still not finished yet
-                    // client.map((instructor:any,idx:number) => (
-                    //     <ResourcesCard
-                    //         key={idx}
-                    //         titles={{
-                    //             age:instructor.age,
-                    //             gender:instructor.gender
-                    //         }}
-                    //         title={instructor.username}
-                    //         _id={instructor._id}
-                    //         imgUrl=''
-                    //     />
-                    // ))
+     return (
+        
+        <PageContent >
+            
+            <Loader isLoading={!isDataHere} size={300}>
+            
+                {
+                    // !isDataHere ? ( 
+                    //     <div className='grid w-full h-full p-10 gap-10 grid-cols-[repeat(auto-fit,minmax(250px,1fr))]'>
+                    //         {
+                    //             instructors.map((instructor:any,idx:number) => (
+                    //                 <ResourcesCard
+                    //                     key={idx}
+                    //                     titles={{
+                    //                         age:instructor.age,
+                    //                         gender:instructor.gender
+                    //                     }}
+                    //                     title={instructor.name}
+                    //                     _id={instructor._id}
+                    //                     imgUrl=''
+                    //                 />
+                    //             ))
+                    //         }
+                    //     </div>
+                    // ) :
                     <></>
-                    
-                ) : (<>
-                    <div className='w-full h-full'>
-                        <Loader size={300}/>
-                    </div>
-                    
-                </>)
-            }
+                } 
+            
+            </Loader>
+
         </PageContent>
     )
 }

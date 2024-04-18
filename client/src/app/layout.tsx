@@ -4,9 +4,6 @@ import "../styles/globals.css";
 import ReactQueryProvider from "@/components/providers/ReactQueryProvider";
 import AuthProvider from "@/context/AuthContext";
 import ReactToastifyProvider from "@/components/providers/ReactToastifyProvider";
-import RoutingProvider from "@/context/RoutingContext";
-
-
 
 export const metadata: Metadata = {
     title: "Saifi Stable",
@@ -20,12 +17,10 @@ export default function RootLayout({children}:RootLayoutProps) {
 
                 <ReactQueryProvider>
                         <AuthProvider>
-                            
-                            <RoutingProvider>
-                                <ReactToastifyProvider>
-                                    {children}
-                                </ReactToastifyProvider>
-                            </RoutingProvider>
+                        
+                            <ReactToastifyProvider>
+                                {children}
+                            </ReactToastifyProvider>
                          
                         </AuthProvider>
                 </ReactQueryProvider>

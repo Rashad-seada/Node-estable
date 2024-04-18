@@ -1,24 +1,23 @@
+"use client"
+
+import Link from 'next/link'
+import {  usePathname } from 'next/navigation'
 import React from 'react'
 import { BiSolidImageAlt } from 'react-icons/bi'
 import { FaTrash } from 'react-icons/fa'
 import { HiMiniArrowLongRight } from 'react-icons/hi2'
 import { RiPencilFill } from 'react-icons/ri'
-import RoutingLink from '../all/RoutingLink'
-import { RoutingProviderData, useRoutingProvider } from '@/context/RoutingContext'
 
 export type ResoucesCardProps = {
     imgUrl: string,
     title:string,
     titles:any,
     _id:string,
-    //resource:string
 }
 function ResourcesCard({imgUrl,title,titles,_id,}:ResoucesCardProps) {
     
-    const titlesKeys = Object.keys(titles)
-    
-    const RoutingData : RoutingProviderData = useRoutingProvider()
-    
+    const titlesKeys = Object.keys(titles)    
+    const pathName = usePathname()
 
     return (
         <div className='h-fit border-opacity-40 border border-dark-grey text-center items-center justify-between w-full flex flex-col  rounded-3xl'>
@@ -54,9 +53,9 @@ function ResourcesCard({imgUrl,title,titles,_id,}:ResoucesCardProps) {
             <div className='relative border-t p-4 border-dark-grey border-opacity-40 w-full flex justify-between items-center'>
             
                 <div className='w-[70px] flex text-2xl items-center text-dark-grey h-[20px] justify-between'>
-                    {/* <RoutingLink href={`${RoutingData?.currentPath}/${_id}/edit`}>
-                    <RiPencilFill />
-                    </RoutingLink> */}
+                    <Link href={`${pathName}/${_id}/edit`}>
+                        <RiPencilFill />
+                    </Link>
                     <span className='h-[35px] w-[1.5px] bg-dark-grey opacity-40'/>
                     <FaTrash />
                 </div>

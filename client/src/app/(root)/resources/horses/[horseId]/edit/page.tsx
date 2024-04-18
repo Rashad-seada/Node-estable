@@ -25,7 +25,7 @@ function HorseEditPage() {
             <PageHeader>
                 <div className='flex justify-between items-center w-full'>
                     <div className='flex items-center gap-5'>
-                        <BackButton href='/resources/horses'/>
+                        <BackButton/>
                         <div className='text-smokey-white text-2xl'>
                             <span>stable's horse / </span>
                             <span className='text-primary'> Edit Horse information</span>
@@ -36,7 +36,7 @@ function HorseEditPage() {
             </PageHeader>
             <PageContent>
                 
-
+                <span></span>
                 
             </PageContent>
         </>

@@ -21,7 +21,8 @@ const login = async (email:string,password:string) => {
 
     const response = await fetch(`${BASE_URL}${authRoute}`,options)
     const loginData = await response.json()
-    
+        console.log(loginData);
+        
     return loginData;
 }
 function useLogin(email: string, password: string) {
@@ -43,7 +44,7 @@ function useLogin(email: string, password: string) {
             toastify("email or password might be wrong ❌")
         },
         onError:()=> {
-            toastify("email or password might be wrong ❌")
+            toastify("error on requesting data please try later")
         }
     })
 

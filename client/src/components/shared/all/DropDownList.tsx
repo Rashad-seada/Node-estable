@@ -30,9 +30,9 @@ function DropDownList({options,placeholder,listValue,placeholderClassName,listCl
 
 
     return (
-        <div className='w-full relative h-full'>
+        <div className='w-full max-w-[300px] relative h-full'>
             <div onClick={toggleList} className={`w-full cursor-pointer flex justify-between items-center h-full ${placeholderClassName}`}>
-                <span>{listValue?.name? listValue.name : placeholder}</span>
+                <span className="truncate">{listValue?.name? listValue.name : placeholder}</span>
                 <TiArrowSortedDown className='text-xl' />
             </div>
 
@@ -47,7 +47,7 @@ function DropDownList({options,placeholder,listValue,placeholderClassName,listCl
                                         key={idx}
                                         className="w-full flex items-center p-2 h-[30px] cursor-pointer hover:bg-zinc-300"
                                     >
-                                        {option?.name}
+                                        <p className="truncate">{option?.name}</p>
                                     </li>
                                 ))
                             }

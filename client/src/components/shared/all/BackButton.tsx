@@ -1,20 +1,25 @@
+"use client"
+
+import { useRouter } from 'next/navigation'
 import React from 'react'
 import { IoIosArrowBack } from 'react-icons/io'
-import RoutingLink from './RoutingLink'
 
-type BackButtonProps = {
-    href: string,
-}
 
-function BackButton({href}:BackButtonProps) {
+function BackButton() {
+
+    const router = useRouter()
+
+    const handleGoBack = () => {
+        router.back()
+    }
 
     return (
-        <RoutingLink notShowHightLight={true} href={href}>
+        <button onClick={handleGoBack}>
             <div
                 className='w-[35px] text-2xl bg-opacity-60 text-dark-grey bg-zinc-300 rounded-full flex justify-center items-center aspect-square'>
                 <IoIosArrowBack />
             </div>
-        </RoutingLink>
+        </button>
     )
 }
 

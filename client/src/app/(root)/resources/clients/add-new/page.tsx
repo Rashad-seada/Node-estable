@@ -26,7 +26,7 @@ function AddNewClientPage() {
             <PageHeader>
                 <div className='flex justify-between items-center w-full'>
                     <div className='flex items-center gap-5'>
-                        <BackButton href='/resources/clients'/>
+                        <BackButton />
                         <div className='text-smokey-white text-2xl'>
                             <span>stable's client / </span>
                             <span className='text-primary'> add new client</span>

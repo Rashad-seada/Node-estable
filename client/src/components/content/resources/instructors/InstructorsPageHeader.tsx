@@ -1,9 +1,9 @@
 import Avatar from '@/components/shared/all/Avatar'
 import DropDownList from '@/components/shared/all/DropDownList'
 import PageHeader from '@/components/shared/all/PageHeader'
-import RoutingLink from '@/components/shared/all/RoutingLink'
 import React from 'react'
 import { GrAdd } from 'react-icons/gr'
+import Link from 'next/link'
 
 type HorsesPageHeaderProps = {
     dropDownListOptions:NameAndId[],
@@ -28,14 +28,13 @@ function InstructorsPageHeader({dropDownListOptions,dropDownListValue,setDropDow
                     </div>
 
                     <div className='w-[150px] cursor-pointer bg-primary rounded-lg flex justify-center items-center '>
-                        <RoutingLink
+                        <Link
                             className='flex w-full gap-2 text-smokey-white text-lg h-full items-center justify-center' 
                             href='/resources/instructors/add-new' 
-                            notShowHightLight={true}
                         >
                             <GrAdd />
                             <span>add instructor</span>
-                        </RoutingLink>
+                        </Link>
                     </div>
                     
                     <Avatar/>

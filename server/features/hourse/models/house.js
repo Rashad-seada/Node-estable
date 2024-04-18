@@ -52,7 +52,7 @@ function pageValidation(obj){
 function createHourseValidation(obj){
     const schema = joi.object({
         hourseName : joi.string().required().min(1).max(100),
-        age : joi.number().required().min(1).max(2),
+        age : joi.number().required().min(0).max(100),
         catigoryId : joi.string().required().min(1).max(100),
         clientId: joi.string().required().min(1).max(100),
         groom: joi.string().required().min(1).max(100),

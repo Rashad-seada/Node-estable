@@ -10,15 +10,13 @@ export type PopUpProviderData = {
 
 type PopUp = {
     isPopUpOpen: boolean,
-    popUpType: PopUpType,
+    popUpType: "alert" | "confirm",
+    resolveFunc:(()=>void)|null,
     message:string|null,
     icon:any
 }
 
-type PopUpType = {
-    type: "alert" | "confirm",
-    resolveFunc:(() => void) | null,
-}
+
 
 
 const Context = createContext<PopUpProviderData>(undefined)
@@ -26,11 +24,9 @@ const Context = createContext<PopUpProviderData>(undefined)
 function PopUpProvider({children}:Children) {
 
     const [popUp,setPopUp] = useState<PopUp>({
-        isPopUpOpen:true,
-        popUpType:{
-            type:"alert",
-            resolveFunc:null,
-        },
+        isPopUpOpen:false,
+        popUpType:"alert",
+        resolveFunc:null,
         message:"",
         icon:null,
     })

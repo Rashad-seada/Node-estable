@@ -1,6 +1,7 @@
 import { BASE_URL } from "@/constants/api";
 import { AuthProviderData, useAuthProvider } from "@/context/AuthContext";
 import { setToken, setUser } from "@/services/authServices";
+import { httpPostService } from "@/services/httpPostService";
 import toastify from "@/utils/toastify";
 import { useMutation } from "react-query";
 
@@ -8,19 +9,12 @@ import { useMutation } from "react-query";
 const authRoute = `/auth/login`
 
 const login = async (email:string,password:string) => {
-    const options = {
-        method: "POST",
-        body:JSON.stringify({
-            email,
-            password
-        }),
-        headers: {
-            'Content-Type': 'application/json'
-        },
-    }
+    const body = JSON.stringify({
+        email,
+        password
+    })
 
-    const response = await fetch(`${BASE_URL}${authRoute}`,options)
-    const loginData = await response.json()
+    const loginData = await httpPostService(authRoute,body)
         
     return loginData;
 }

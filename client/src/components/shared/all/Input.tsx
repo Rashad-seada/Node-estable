@@ -10,7 +10,9 @@ type InputProps = {
     className?:string,
     type:"password"|"text"|"number",
     placeholder?:string,
-    setIsValueValid?:(newValue:boolean) => void
+    setIsValueValid?:(newValue:boolean) => void,
+    label?:string,
+    labelClassName?:string
 }
 
 function Input({
@@ -21,7 +23,9 @@ function Input({
     type,
     className,
     placeholder,
-    setIsValueValid
+    setIsValueValid,
+    label,
+    labelClassName
 }:InputProps) {
     
     const [showFallback,setShowFallback] = useState<boolean>(false)
@@ -49,9 +53,17 @@ function Input({
 
     return (
         <>
+            {
+                label ? (
+                    <label className={`${labelClassName ? labelClassName:""}`}>
+                        {label}
+                    </label>
+                ) : <></>
+            }
+
             <input 
                 value={value}
-                className={`${className ? className : ''}`}
+                className={`${className ? className : ''} bg-transparent`}
                 onChange={changeValue}
                 type={type}
                 placeholder={placeholder ? placeholder : ''}

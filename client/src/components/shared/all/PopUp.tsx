@@ -13,8 +13,8 @@ function PopUp() {
     }
 
     const resolveFunc = () => {
-        const isResolve = Boolean(popUpData?.popUp?.popUpType?.resolveFunc)
-        isResolve && popUpData?.popUp?.popUpType?.resolveFunc()
+        const isResolve = Boolean(popUpData?.popUp?.resolveFunc)
+        isResolve && popUpData?.popUp?.resolveFunc()
         
         closeFunc()
     }
@@ -35,7 +35,7 @@ function PopUp() {
                                 <p>{popUpData?.popUp.message}</p>
                                 <div className='flex font-semibold justify-end h-[40px] gap-5'>
                                     {
-                                        popUpData.popUp.popUpType.type === "alert" ? (
+                                        popUpData.popUp.popUpType === "alert" ? (
                                             <>
                                                 <button onClick={closeFunc} className='w-[100px] capitalize rounded-lg border border-primary duration-300 text-primary'>
                                                     cancel

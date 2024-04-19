@@ -28,12 +28,10 @@ router.post("/login", async (req, res) => {
     .then(async (user) => {
       if (user) {
         const { password, __v, ...other } = user._doc;
-
         const validPassword = await bcrypt.compare(
           req.body.password,
           user.password
         );
-
         const token = jwt.sign(
           {
             id: user._id,
@@ -44,7 +42,6 @@ router.post("/login", async (req, res) => {
 
         if (validPassword) {
           user.token.push(token);
-
           user
             .save()
             .then((result) => {
@@ -95,7 +92,7 @@ router.post("/login", async (req, res) => {
     });
 });
 
-router.patch("/update-admin/:id", verifyTokenAndAdmin, async (req, res) => {
+router.patch("/update-admin", verifyTokenAndAdmin, async (req, res) => {
   User.findByIdAndUpdate(
     req.user.id,
     {

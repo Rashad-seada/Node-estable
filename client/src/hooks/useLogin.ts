@@ -15,7 +15,7 @@ const login = async (email:string,password:string) => {
     })
 
     const loginData = await httpPostService(authRoute,body)
-        
+
     return loginData;
 }
 function useLogin(email: string, password: string) {

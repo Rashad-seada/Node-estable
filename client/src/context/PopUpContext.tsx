@@ -1,6 +1,6 @@
 'use client'
 
-import PopUp from "@/components/shared/all/PopUp"
+import PopUp from "@/components/shared/contexts/PopUp"
 import { createContext, useContext, useState } from "react"
 
 export type PopUpProviderData = {
@@ -11,7 +11,7 @@ export type PopUpProviderData = {
 type PopUp = {
     isPopUpOpen: boolean,
     popUpType: "alert" | "confirm",
-    resolveFunc:(()=>void)|null,
+    resolveFunc:(()=>void)|undefined,
     message:string|null,
     icon:any
 }
@@ -26,7 +26,7 @@ function PopUpProvider({children}:Children) {
     const [popUp,setPopUp] = useState<PopUp>({
         isPopUpOpen:false,
         popUpType:"alert",
-        resolveFunc:null,
+        resolveFunc:undefined,
         message:"",
         icon:null,
     })

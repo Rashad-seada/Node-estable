@@ -63,7 +63,6 @@ function AddNewHorsePage() {
                         options={genders}
                         placeholder='Select Client Gender'
                         label='gender'
-                        
                     />
                     <ResourcesDropList
                         listValue={groom}

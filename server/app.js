@@ -19,7 +19,9 @@ app.use(express.json());
 const authRouter = require('./features/auth/routers/auth');
 const clientRouter = require('./features/client/routers/clients');
 const hourseRouter = require("./features/hourse/routers/hourses")
-const membershipTypePath = require("./features/memership-type/router/membership-type")
+const membershipTypeRouter = require("./features/memership-type/router/membership-type")
+const membershipStatusRouter = require("./features/membership-status/router/membership-status")
+const hourseCategoryRouter = require("./features/hourse-category/router/hourse-category")
 
 
 // cors libyrary
@@ -49,13 +51,10 @@ app.use((req, res, next) => {
 //Routs
 app.use("/api/auth", authRouter)
 app.use("/api/client",verifyTokenAndAdmin, clientRouter)
-
-app.use("/api/hourse",hourseRouter)
-app.use("/api/membershipType",membershipTypePath)
-app.use((req,res,next)=> {
-
 app.use("/api/hourse",verifyTokenAndAdmin,hourseRouter)
-})
+app.use("/api/membershipType",verifyTokenAndAdmin,membershipTypeRouter)
+app.use("/api/membership-status",verifyTokenAndAdmin,membershipStatusRouter)
+app.use("/api/hourse-category",verifyTokenAndAdmin,hourseCategoryRouter)
 
 
 app.use((req,res,next)=> {
@@ -63,6 +62,7 @@ app.use((req,res,next)=> {
     error.status = 404;
     next(error);
 })
+
 app.use((error,req,res,next)=> {
     res.status(error.status || 500).json({
         status_code : 0,

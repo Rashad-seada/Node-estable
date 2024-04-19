@@ -58,7 +58,7 @@ app.use("/api/hourse",verifyTokenAndAdmin,hourseRouter)
 })
 
 
-app.use((req,res,next)=> { 
+app.use((req,res,next)=> {
     const error = new Error('Url route not found');
     error.status = 404;
     next(error);

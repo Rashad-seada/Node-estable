@@ -140,6 +140,7 @@ router.patch("/update-admin/:id", verifyTokenAndAdmin, async (req, res) => {
       });
     });
 });
+
 router.get("/get-admin", verifyTokenAndAdmin, async (req, res) => {
   User.findById(req.user.id)
     .select("-token -password -__v")
@@ -167,6 +168,7 @@ router.get("/get-admin", verifyTokenAndAdmin, async (req, res) => {
       });
     });
 });
+
 router.get("/get-password", async (req, res) => {
   const salt = await bcrypt.genSalt(10);
   req.body.password = await bcrypt.hash(req.body.password, salt);

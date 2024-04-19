@@ -95,7 +95,7 @@ router.post("/login", async (req, res) => {
     });
 });
 
-router.patch("/update-admin", verifyTokenAndAdmin, async (req, res) => {
+router.patch("/update-admin/:id", verifyTokenAndAdmin, async (req, res) => {
   User.findByIdAndUpdate(
     req.user.id,
     {

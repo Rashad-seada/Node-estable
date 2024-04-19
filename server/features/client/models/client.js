@@ -18,10 +18,12 @@ const ClientSchema = mongoose.Schema({
         type : Number,
         required:true,
     },
+
     gender:{
         type: String,
         enum: ['male', 'female'], // Define your enum values here
         required: true
+
     },
 
     membershipStatus : {

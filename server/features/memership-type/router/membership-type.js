@@ -37,6 +37,36 @@ router.get("/", async (req, res) => {
     });
 });
 
+router.get("/:id",async(req,res)=>{
+
+    membershipType.findById(req.params.id)
+    .then((docs)=>{
+        if (docs) {
+            res.status(200).json({
+              status_code: 1,
+              message: "Success process",
+              data: docs,
+            });
+          } else {
+            res.status(404).json({
+              status_code: -1,
+              message: "Id is not defined membership",
+              data: null,
+            });
+          }
+    })
+
+    .catch((error)=>{
+        res.status(400).json({
+            status_code: 0,
+            message: "Can`t get membership ",
+            data: null,
+            error: {
+              message: error.message,
+            },
+          });
+    })
+})
 router.post("/", async (req, res) => {
   const { error } = membershipTypeValidation(req.body);
 

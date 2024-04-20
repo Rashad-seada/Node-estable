@@ -1,23 +1,47 @@
 "use client"
 
+import { usePopUp } from '@/hooks/usePopUp'
+import { httpDeleteService } from '@/services/httpDeleteService'
 import Link from 'next/link'
 import {  usePathname } from 'next/navigation'
 import React from 'react'
 import { BiSolidImageAlt } from 'react-icons/bi'
+import { BsQuestionCircle } from 'react-icons/bs'
 import { FaTrash } from 'react-icons/fa'
 import { HiMiniArrowLongRight } from 'react-icons/hi2'
 import { RiPencilFill } from 'react-icons/ri'
 
-export type ResoucesCardProps = {
+export type ResourcesCardProps = {
     imgUrl: string,
     title:string,
     titles:any,
     _id:string,
+    route:string
 }
-function ResourcesCard({imgUrl,title,titles,_id,}:ResoucesCardProps) {
+function ResourcesCard({imgUrl,title,titles,_id,route}:ResourcesCardProps) {
     
     const titlesKeys = Object.keys(titles)    
     const pathName = usePathname()
+    const popUp = usePopUp()
+
+    const deleteFunc = async (e:any) => {
+        const btn = e.target as HTMLButtonElement
+        btn.disabled = true
+        const res = await httpDeleteService(`${route}/${_id}`)
+        console.log(_id);
+        
+    }
+
+    const handleDelete = (e:any) => {
+        popUp({
+            popUpIcon:<BsQuestionCircle />,
+            popUpMessage:"are you sure about deleting this item ?",
+            popUpResolveFunc:()=> deleteFunc(e),
+            popUpType:"confirm",
+            showPopUp:true,
+            popUpTitle:"delete item",
+        })
+    }
 
     return (
         <div className='h-fit border-opacity-40 border border-dark-grey text-center items-center justify-between w-full flex flex-col  rounded-3xl'>
@@ -57,7 +81,9 @@ function ResourcesCard({imgUrl,title,titles,_id,}:ResoucesCardProps) {
                         <RiPencilFill />
                     </Link>
                     <span className='h-[35px] w-[1.5px] bg-dark-grey opacity-40'/>
-                    <FaTrash />
+                    <button onClick={handleDelete}>
+                        <FaTrash/>
+                    </button>
                 </div>
 
                 <button className='flex h-[35px] w-[130px] justify-center gap-2 capitalize items-center p-2 rounded-lg border text-primary border-primary duration-300 hover:bg-primary hover:text-smokey-white'>

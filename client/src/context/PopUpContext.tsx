@@ -13,7 +13,8 @@ type PopUp = {
     popUpType: "alert" | "confirm",
     resolveFunc:(()=>void)|undefined,
     message:string|null,
-    icon:any
+    icon:any,
+    title:string
 }
 
 
@@ -29,6 +30,7 @@ function PopUpProvider({children}:Children) {
         resolveFunc:undefined,
         message:"",
         icon:null,
+        title:""
     })
     const contextData:PopUpProviderData = {popUp,setPopUp}
 

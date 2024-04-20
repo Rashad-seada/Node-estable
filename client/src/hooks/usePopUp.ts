@@ -1,12 +1,13 @@
 import { PopUpProviderData, usePopUpProvider } from "@/context/PopUpContext";
 
 
-type usePopUpParams = {
+type PopUpParams = {
     showPopUp: boolean,
     popUpType: "alert"|"confirm",
     popUpMessage: string,
     popUpIcon?: any,
     popUpResolveFunc?: (() => void) | undefined,
+    popUpTitle: string
 }
 
 export function usePopUp () {
@@ -16,14 +17,16 @@ export function usePopUp () {
         popUpMessage,
         popUpResolveFunc,
         popUpType,
-        showPopUp
-    }:usePopUpParams) {
+        showPopUp,
+        popUpTitle
+    }:PopUpParams) {
         popUpData?.setPopUp({
             isPopUpOpen: showPopUp,
             popUpType,
             resolveFunc: popUpResolveFunc,
             message: popUpMessage,
             icon: popUpIcon,
+            title: popUpTitle
         })
     }
 

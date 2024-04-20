@@ -46,7 +46,7 @@ function LoginPage() {
                             type='text' 
                             value={email} 
                             setValue={setEmail}
-                            className='h-[60px] w-full placeholder:text-[#797979] text-[#797979] p-3 text-xl rounded-xl bg-[#CCCCCC]'
+                            className='h-[60px] w-full placeholder:text-dark-grey text-dark-grey p-3 text-xl rounded-xl !bg-zinc-300'
                             placeholder='Email'
                             regex={emailRegex}
                             fallback={emailFallback}
@@ -56,7 +56,7 @@ function LoginPage() {
                             type='password' 
                             value={password}  
                             setValue={setPassword} 
-                            className='h-[60px] w-full placeholder:text-[#797979] text-[#797979] p-3 text-xl rounded-xl bg-[#CCCCCC]'
+                            className='h-[60px] w-full placeholder:text-dark-grey text-dark-grey p-3 text-xl rounded-xl !bg-zinc-300'
                             placeholder='Password'
                             regex={passwordRegex}
                             fallback={passwordFallback}

@@ -10,6 +10,7 @@ type ClientsPageProps = {
 
 function ClientsPageContent({ isDataHere, response }:ClientsPageProps) {
 
+    const clientsRoute = '/client'
     const client = response?.data?.client
     
     return (
@@ -25,6 +26,7 @@ function ClientsPageContent({ isDataHere, response }:ClientsPageProps) {
                                 client.map((client:any,idx:number) => (
                                     <ResourcesCard
                                         key={idx}
+                                        route={clientsRoute}
                                         titles={{
                                             age:client.age,
                                             gender:client.gender

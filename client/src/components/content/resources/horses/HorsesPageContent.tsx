@@ -8,7 +8,8 @@ type HorsesPageProps = {
     response:any
 }
 function HorsesPageContent({isDataHere,response}:HorsesPageProps) {
-    
+    const horsesRoute = '/hourse'
+
     const horses = response?.data?.hourse
 
     
@@ -29,6 +30,7 @@ function HorsesPageContent({isDataHere,response}:HorsesPageProps) {
                                             age:horse.age,
                                             gender:horse.gender
                                         }}
+                                        route={horsesRoute}
                                         title={horse.hourseName}
                                         _id={horse._id}
                                         imgUrl=''

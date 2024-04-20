@@ -1,6 +1,7 @@
 "use client"
 import ClientsPageContent from '@/components/content/resources/clients/ClientsPageContent'
 import ClientsPageHeader from '@/components/content/resources/clients/ClientsPageHeader'
+import { clientsRoute } from '@/constants/api'
 import { httpGetServices } from '@/services/httpGetService'
 import { toNameAndId } from '@/utils/toNameAndId'
 import React, { useState } from 'react'
@@ -8,12 +9,12 @@ import { useQuery } from 'react-query'
 
 function ClientsPage() {
 
-    const clientsRoute = "/client?page=1"
+    const clientsRoutePagination = `${clientsRoute}?page=1`
     const [listValue,setListValue] = useState<NameAndId>(null)
 
-    const {data:response,isSuccess} = useQuery({
+    const {data:response,isSuccess,refetch} = useQuery({
         queryKey:["clients"],
-        queryFn:async () => httpGetServices(clientsRoute)
+        queryFn:async () => httpGetServices(clientsRoutePagination)
     })
 
     const isDataHere = Boolean(response?.data?.client) && isSuccess
@@ -28,6 +29,7 @@ function ClientsPage() {
                 dropDownListOptions={listOptions}
             />
             <ClientsPageContent 
+                refetch={refetch}
                 isDataHere={isDataHere} 
                 response={response}
             />

@@ -23,6 +23,7 @@ const membershipTypeRouter = require("./features/memership-type/router/membershi
 const membershipStatusRouter = require("./features/membership-status/router/membership-status")
 const hourseCategoryRouter = require("./features/hourse-category/router/hourse-category")
 const instractorRouter =require("./features/instractor/router/instractor")
+const gendersRouter =require("./features/gender/router/gender")
 
 // cors libyrary
 app.use(cors({
@@ -55,7 +56,8 @@ app.use("/api/hourse",verifyTokenAndAdmin,hourseRouter)
 app.use("/api/membershipType",verifyTokenAndAdmin,membershipTypeRouter)
 app.use("/api/membership-status",verifyTokenAndAdmin,membershipStatusRouter)
 app.use("/api/hourse-category",verifyTokenAndAdmin,hourseCategoryRouter)
-app.use("/api/instractor",instractorRouter)
+app.use("/api/instractor",verifyTokenAndAdmin,instractorRouter)
+app.use("/api/gender",verifyTokenAndAdmin,gendersRouter)
 
 app.use((req,res,next)=> {
     const error = new Error('Url route not found');

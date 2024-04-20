@@ -38,7 +38,6 @@ const ClientSchema = mongoose.Schema({
         required : false,
         default : []
     }
-
 })
 
 const Client = mongoose.model("Client",ClientSchema)

@@ -82,14 +82,19 @@ router.post("/", async (req, res) => {
   } else {
     const Membership = new membershipType({
       displayName: req.body.displayName,
+      value:req.body.value
     })
       .save()
       .then((docs) => {
         if (docs) {
+
+        const {__v , ...other} = docs._doc
           res.status(200).json({
             status_code: 1,
             message: "Success To Add New Membership",
-            data: docs,
+            data: {
+            ...other
+            },
           });
         } else {
           res.status(200).json({
@@ -127,6 +132,7 @@ router.patch("/:id", async (req, res, next) => {
       {
         $set: {
           displayName: req.body.displayName,
+          value:req.body.value
         },
       },
       { new: true }

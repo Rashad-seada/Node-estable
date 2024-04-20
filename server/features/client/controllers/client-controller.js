@@ -265,7 +265,7 @@ class ClientController {
                 res.status(200).json({
                   status_code: 1,
                   message: "The clients deleted successfuly",
-                  data: docs,
+                  data: [],
                 });
               } else {
                 res.status(404).json({

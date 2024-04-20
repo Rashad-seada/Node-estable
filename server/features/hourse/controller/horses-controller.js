@@ -205,6 +205,7 @@ class HourseController {
                       note:req.body.note,
                       documents:req.body.documents
   
+  
                   } 
                 },{ new:true})
   

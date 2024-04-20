@@ -28,12 +28,16 @@ function PopUp() {
                         <span className='w-full h-full absolute top-0 left-0 bg-black opacity-50'/>
                         <div className='w-full z-10 flex flex-col justify-center items-center h-full relative'>
                             
-                            <div className='m-auto p-5 w-[90%] relative sm:w-[500px] sm:h-[340px] rounded-3xl  bg-smokey-white h-'>
-                                <div>
-                                    {popUpData?.popUp.icon}
+                            <div className='relative flex flex-col justify-between p-6 sm:w-[500px] border-2 w-[90%] border-primary sm:h-[340px] rounded-3xl  bg-smokey-white '>
+                                <div className=' w-full h-[calc(100%-40px)] flex flex-col items-center justify-center '>
+                                    <div className='w-[60px] mb-5 aspect-square flex text-primary text-7xl justify-center items-center'>
+                                        {popUpData?.popUp.icon}
+                                    </div>
+                                    <p className='text-xl font-bold mb-3 text-center text-dark-grey'>{popUpData?.popUp.title}</p>
+                                    <p className='text-md text-center font-semibold text-light-grey'>{popUpData?.popUp.message}</p>
+
                                 </div>
-                                <p className='text-3xl text-center text-dark-grey'>{popUpData?.popUp.message}</p>
-                                <div className='flex font-semibold justify-end h-[40px] gap-5'>
+                                <div className='flex font-semibold w-full justify-end h-[40px] gap-5'>
                                     {
                                         popUpData.popUp.popUpType === "confirm" ? (
                                             <>

@@ -5,10 +5,11 @@ import React from 'react'
 
 type ClientsPageProps = {
     isDataHere: boolean,
-    response:any
+    response:any,
+    refetch:()=> void
 }
 
-function InstructorsPageContent({isDataHere,response}:ClientsPageProps) {
+function InstructorsPageContent({isDataHere,response,refetch}:ClientsPageProps) {
      //const instructors = response?.data.instructor
     
      return (

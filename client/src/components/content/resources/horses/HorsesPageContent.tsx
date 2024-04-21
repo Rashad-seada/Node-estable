@@ -2,13 +2,14 @@ import PageContent from '@/components/shared/all/PageContent'
 import Loader from '@/components/shared/all/Loader'
 import ResourcesCard from '@/components/shared/resources/ResourcesCard'
 import React from 'react'
+import { horsesRoute } from '@/constants/api'
 
 type HorsesPageProps = {
     isDataHere: boolean,
-    response:any
+    response:any,
+    refetch:()=> any
 }
-function HorsesPageContent({isDataHere,response}:HorsesPageProps) {
-    const horsesRoute = '/hourse'
+function HorsesPageContent({isDataHere,response,refetch}:HorsesPageProps) {
 
     const horses = response?.data?.hourse
 
@@ -25,6 +26,7 @@ function HorsesPageContent({isDataHere,response}:HorsesPageProps) {
                             {
                                 horses.map((horse:any,idx:number) => (
                                     <ResourcesCard
+                                        refetch={refetch}
                                         key={idx}
                                         titles={{
                                             age:horse.age,

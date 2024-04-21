@@ -6,6 +6,7 @@ import PageContent from '@/components/shared/all/PageContent';
 import PageHeader from '@/components/shared/all/PageHeader';
 import ResourcesDropList from '@/components/shared/resources/ResourcesDropList';
 import ResourcesInput from '@/components/shared/resources/ResourcesInput';
+import { clientsRoute } from '@/constants/api';
 import { genders } from '@/constants/genders';
 import { memberShipStatuses } from '@/constants/memberShipStatuses';
 import { httpGetServices } from '@/services/httpGetService';
@@ -25,7 +26,7 @@ function ClientEditPage() {
     const isInputsValid = name && email && phone && age && gender && membershipStatus
 
     const {clientId} = useParams()
-    const clientRoute = `/client/${clientId}`
+    const clientRoute = `${clientsRoute}/${clientId}`
     const {status,data:response} = useQuery({
         queryFn:async() => httpGetServices(clientRoute),
         queryKey:["clients",clientId]

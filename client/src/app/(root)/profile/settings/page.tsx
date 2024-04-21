@@ -3,13 +3,13 @@
 import SettingsPageContent from '@/components/content/profile/settings/SettingsPageContent'
 import Avatar from '@/components/shared/all/Avatar'
 import PageHeader from '@/components/shared/all/PageHeader'
+import { getAdminRoute } from '@/constants/api'
 import { httpGetServices } from '@/services/httpGetService'
 import React, { useEffect, useState } from 'react'
 
 
 function SettingsPage() {
 
-    const getUserRoute = "/auth/get-admin"
     const [fullName,setFullName] = useState<string>('')
     const [mobile,setMobile] = useState<string>('')
     const [email,setEmail] = useState<string>('')
@@ -20,7 +20,7 @@ function SettingsPage() {
     useEffect(()=>{
 
         const fetchData = async () => {
-            const {data} = await httpGetServices(getUserRoute)
+            const {data} = await httpGetServices(getAdminRoute)
             setFullName(data.fullName)
             setEmail(data.email)
             setMobile(data.mobile)

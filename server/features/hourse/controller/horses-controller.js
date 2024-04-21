@@ -1,11 +1,10 @@
-const express = require("express");
 const { Error } = require("mongoose");
 const {
     Hourse,
     createHourseValidation,
-    pageValidation,
   } = require("../models/hourse");
-  
+const ApiErrorCode = require("../../../core/errors/apiError") 
+
 class HourseController {
 
   static  async createNewHourse (req, res){
@@ -18,7 +17,7 @@ class HourseController {
           
           if (error) {
             res.status(400).json({
-              status_code: -1,
+              status_code: ApiErrorCode.validation,
               message: error.message,
               error: {
                 message: error.message,
@@ -49,7 +48,7 @@ class HourseController {
               })
               .catch((error) => {
                 res.status(500).json({
-                  status_code: -2,
+                  status_code: ApiErrorCode.internalError,
                   message:
                     "There was an error when creating the Hourse, please try again",
                   data: null,
@@ -63,7 +62,7 @@ class HourseController {
       } else {
           let error = new Error()
           res.status(500).json({
-              status_code: -3,
+              status_code: ApiErrorCode.internalError,
               message: "There hourse is already found",
               data: null,
               error : {
@@ -116,7 +115,7 @@ class HourseController {
             })
             .catch((error) => {
               res.status(500).json({
-                status_code: -2,
+                status_code: ApiErrorCode.internalError,
                 message:
                   "There was an error when getting the hourse, please try again",
                 data: null,
@@ -128,7 +127,7 @@ class HourseController {
         
       } catch (error) {
         res.status(500).json({
-          status_code: -3,
+          status_code: ApiErrorCode.internalError,
           message: "There was a server internal error, please try again",
           data: null,
           error: {
@@ -154,7 +153,7 @@ class HourseController {
               });
             } else {
               res.status(404).json({
-                status_code: -4,
+                status_code: ApiErrorCode.notFound,
                 message: "Didnt found the Hourse in our records",
                 data: null,
                 error: {
@@ -165,7 +164,7 @@ class HourseController {
           })
           .catch((error) => {
             res.status(500).json({
-              status_code: -2,
+              status_code: ApiErrorCode.internalError,
               message:
                 "There was an error when getting the Hourse, please try again",
               data: null,
@@ -176,7 +175,7 @@ class HourseController {
           });
       } catch (error) {
         res.status(500).json({
-          status_code: -3,
+          status_code: ApiErrorCode.internalError,
           message: "There was a server internal error, please try again",
           data: null,
           error: {
@@ -210,7 +209,7 @@ class HourseController {
                 },{ new:true})
   
                 return  res.status(200).json({
-                  status_code: 2,
+                  status_code: 1,
                   message: "Success process",
                   data: newHourse,
                   error: {
@@ -222,7 +221,7 @@ class HourseController {
   
           } catch (error) {
               res.status(500).json({
-                  status_code: -2,
+                  status_code: ApiErrorCode.internalError,
                   message: "Validation Error",
                   data: null,
                   error: {
@@ -233,13 +232,12 @@ class HourseController {
   
       }else{
   
-          let error =new Error()
-          res.status(500).json({
-              status_code: -3,
-              message: "There was a server internal error, please try again",
+          res.status(404).json({
+              status_code: ApiErrorCode.notFound,
+              message: "didn't found the hourse you want to update",
               data: null,
               error: {
-                message: error.message,
+                message: "didn't found the hourse you want to update",
               },
             });
   
@@ -256,7 +254,7 @@ class HourseController {
               await Hourse.findByIdAndDelete(req.params.id)
   
               res.status(200).json({
-                  status_code: 4,
+                  status_code: 1,
                   message: "Horse is deleted",
                   data: [],
                   error:null,
@@ -265,7 +263,7 @@ class HourseController {
           }else{
               const error= new Error()
               res.status(404).json({
-                  status_code: -4,
+                  status_code: ApiErrorCode.notFound,
                   message: "Horse Id Not Found ",
                   data: null,
                   error: {
@@ -275,7 +273,7 @@ class HourseController {
           }
       } catch (error) {
           res.status(500).json({
-              status_code: -4,
+              status_code: ApiErrorCode.internalError,
               message: "There was a server internal error, please try again ",
               data: null,
               error: {

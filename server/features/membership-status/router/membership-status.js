@@ -1,5 +1,5 @@
 const express = require("express");
-
+const ApiErrorCode = require("../../../core/errors/apiError") 
 router = express.Router();
 
 const {
@@ -13,7 +13,7 @@ router.post("/", async (req, res) => {
 
     if(error){
         res.status(404).json({
-            status_code: -2,
+            status_code: ApiErrorCode.validation,
             message: "There is a validation error",
             data: null,
             error : {
@@ -40,15 +40,15 @@ router.post("/", async (req, res) => {
             });
           } else {
             res.status(404).json({
-              status_code: -2,
+              status_code: ApiErrorCode.notFound,
               message: "can`t find memberships status",
               data: null,
             });
           }
         })
         .catch((error) => {
-          res.status(400).json({
-            status_code: 0,
+          res.status(500).json({
+            status_code: ApiErrorCode.internalError,
             message: "There are server internal error",
             data: null,
             error: {
@@ -74,15 +74,15 @@ router.get("/", async (req, res) => {
           });
         } else {
           res.status(404).json({
-            status_code: -1,
+            status_code: ApiErrorCode.notFound,
             message: "can`t find memberships status",
             data: null,
           });
         }
       })
       .catch((error) => {
-        res.status(400).json({
-          status_code: 0,
+        res.status(500).json({
+          status_code: ApiErrorCode.internalError,
           message: "There are server internal error",
           data: null,
           error: {
@@ -104,15 +104,15 @@ router.delete("/:id", async (req, res) => {
           });
         } else {
           res.status(404).json({
-            status_code: -1,
+            status_code: ApiErrorCode.notFound,
             message: "can`t find memberships status",
             data: null,
           });
         }
       })
       .catch((error) => {
-        res.status(400).json({
-          status_code: 0,
+        res.status(500).json({
+          status_code: ApiErrorCode.internalError,
           message: "There are server internal error",
           data: null,
           error: {

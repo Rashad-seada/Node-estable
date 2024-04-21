@@ -9,6 +9,7 @@ const {
 //import token
 const express = require("express");
 router = express.Router();
+const ApiErrorCode = require("../../../core/errors/apiError") 
 
 
 class ClientController {
@@ -19,7 +20,7 @@ class ClientController {
           
           if (error) {
             res.status(400).json({
-              status_code: -1,
+              status_code: ApiErrorCode.validation,
               message: error.message,
               error: {
                 message: error.message,
@@ -47,7 +48,7 @@ class ClientController {
               })
               .catch((error) => {
                 res.status(500).json({
-                  status_code: -2,
+                  status_code: ApiErrorCode.internalError,
                   message:
                     "There was an error when creating the client, please try again",
                   data: null,
@@ -59,7 +60,7 @@ class ClientController {
           }
         } catch (error) {
           res.status(500).json({
-            status_code: -3,
+            status_code: ApiErrorCode.internalError,
             message: "There was a server internal error, please try again",
             data: null,
             error: {
@@ -85,7 +86,7 @@ class ClientController {
                 });
               } else {
                 res.status(404).json({
-                  status_code: -4,
+                  status_code: ApiErrorCode.notFound,
                   message: "Didnt found the client in our records",
                   data: null,
                   error: {
@@ -96,7 +97,7 @@ class ClientController {
             })
             .catch((error) => {
               res.status(500).json({
-                status_code: -2,
+                status_code: ApiErrorCode.internalError,
                 message:
                   "There was an error when getting the client, please try again",
                 data: null,
@@ -107,7 +108,7 @@ class ClientController {
             });
         } catch (error) {
           res.status(500).json({
-            status_code: -3,
+            status_code: ApiErrorCode.internalError,
             message: "There was a server internal error, please try again",
             data: null,
             error: {
@@ -157,7 +158,7 @@ class ClientController {
                   })
                   .catch((error) => {
                     res.status(500).json({
-                      status_code: -2,
+                      status_code: ApiErrorCode.internalError,
                       message:
                         "There was an error when getting the client, please try again",
                       data: null,
@@ -169,7 +170,7 @@ class ClientController {
               }
         } catch (error) {
           res.status(500).json({
-            status_code: -3,
+            status_code: ApiErrorCode.internalError,
             message: "There was a server internal error, please try again",
             data: null,
             error: {
@@ -185,7 +186,7 @@ class ClientController {
       
           if (error) {
             res.status(400).json({
-              status_code: -1,
+              status_code: ApiErrorCode.validation,
               message: error.message,
               error: {
                 message: error.message,
@@ -223,7 +224,7 @@ class ClientController {
                   });
                 } else {
                   res.status(404).json({
-                    status_code: -4,
+                    status_code: ApiErrorCode.notFound,
                     message: "Didn't find the client",
                     data: null,
                     error: {
@@ -234,7 +235,7 @@ class ClientController {
               })
               .catch((error) => {
                 res.status(500).json({
-                  status_code: -2,
+                  status_code: ApiErrorCode.internalError,
                   message:
                     "There was an error when getting the client, please try again",
                   data: null,
@@ -246,7 +247,7 @@ class ClientController {
           }
         } catch (error) {
           res.status(500).json({
-            status_code: -3,
+            status_code: ApiErrorCode.internalError,
             message: "There was a server internal error, please try again",
             data: null,
             error: {
@@ -269,7 +270,7 @@ class ClientController {
                 });
               } else {
                 res.status(404).json({
-                  status_code: -4,
+                  status_code: ApiErrorCode.notFound,
                   message: "Didn't find the client",
                   data: null,
                   error: {
@@ -280,7 +281,7 @@ class ClientController {
             })
             .catch((error) => {
               res.status(500).json({
-                status_code: -2,
+                status_code: ApiErrorCode.internalError,
                 message:
                   "There was an error when getting the client, please try again",
                 data: null,
@@ -291,7 +292,7 @@ class ClientController {
             });
         } catch (error) {
           res.status(500).json({
-            status_code: -3,
+            status_code: ApiErrorCode.internalError,
             message: "There was a server internal error, please try again",
             data: null,
             error: {
@@ -307,7 +308,7 @@ class ClientController {
       
           if (error) {
             res.status(400).json({
-              status_code: -1,
+              status_code: ApiErrorCode.validation,
               message: error.message,
               error: {
                 message: error.message,
@@ -333,7 +334,7 @@ class ClientController {
                   });
                 } else {
                   res.status(404).json({
-                    status_code: -4,
+                    status_code: ApiErrorCode.notFound,
                     message: "Didn't find the client",
                     data: null,
                     error: {
@@ -344,7 +345,7 @@ class ClientController {
               })
               .catch((error) => {
                 res.status(500).json({
-                  status_code: -2,
+                  status_code: ApiErrorCode.internalError,
                   message:
                     "There was an error when getting the client, please try again",
                   data: null,
@@ -356,7 +357,7 @@ class ClientController {
           }
         } catch (error) {
           res.status(500).json({
-            status_code: -3,
+            status_code: ApiErrorCode.internalError,
             message: "There was a server internal error, please try again",
             data: null,
             error: {

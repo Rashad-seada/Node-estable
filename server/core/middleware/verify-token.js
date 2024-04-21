@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken")
-
+const ApiErrorCode = require("../errors/apiError") 
 
 function verifyToken(req,res,next){
 
@@ -14,7 +14,7 @@ function verifyToken(req,res,next){
 
         }catch(error){
             res.status(400).json({
-                status_code: -1,
+                status_code: ApiErrorCode.authorization,
                 message: "This user is not autharized",
                 error: {
                     message : error
@@ -25,7 +25,7 @@ function verifyToken(req,res,next){
 
     }else {
         res.status(400).json({
-            status_code: -1,
+            status_code: ApiErrorCode.authorization,
             message: "This user is not autharized",
             error: {
                 message : "You must provide a token to execute the method"
@@ -43,7 +43,7 @@ function verifyTokenAndAdmin(req,res,next){
 
         }else {
             res.status(400).json({
-                status_code: -1,
+                status_code: ApiErrorCode.authorization,
                 message: "This user is not autharized",
                 error: {
                     message : "You must be an admin to use this method"

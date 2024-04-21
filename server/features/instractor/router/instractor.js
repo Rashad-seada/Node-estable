@@ -1,5 +1,6 @@
 const express = require("express");
 const { instractor } = require("../model/instractor");
+const ApiErrorCode = require("../../../core/errors/apiError") 
 
 router = express.Router();
 
@@ -12,14 +13,14 @@ router
       .then((docs) => {
         if (docs) {
           res.status(200).json({
-            status_code: 0,
+            status_code: 1,
             message: "Success to get instractors",
             data: docs,
             error: null,
           });
         } else {
-          res.status(400).json({
-            status_code: -1,
+          res.status(404).json({
+            status_code: ApiErrorCode.notFound,
             message: "cant get instractor data",
             data: null,
             error: {
@@ -30,7 +31,7 @@ router
       })
       .catch((error) => {
         res.status(500).json({
-          status_code: -2,
+          status_code: ApiErrorCode.internalError,
           message: "internal server error",
           data: null,
           error: {
@@ -44,9 +45,9 @@ router
       .findOne({ email: req.body.email })
       .then((docs) => {
         if (docs) {
-          res.status(404).json({
-            status_code: -1,
-            message: "instractor is already  found",
+          res.status(400).json({
+            status_code: ApiErrorCode.validation,
+            message: "instractor is already found",
             data: null,
           });
         } else {
@@ -67,8 +68,8 @@ router
               });
             })
             .catch((error) => {
-              res.status(400).json({
-                status_code: -3,
+              res.status(500).json({
+                status_code: ApiErrorCode.internalError,
                 message: "Instractor Already Found",
                 error: {
                   error: error.message,
@@ -96,13 +97,13 @@ router
       .then((docs) => {
         if (docs) {
           res.status(200).json({
-            status_code: 0,
+            status_code: 1,
             message: "Success to get instractor data",
             data: docs,
           });
         } else {
           res.status(404).json({
-            status_code: -1,
+            status_code: ApiErrorCode.notFound,
             message: "instractor Id Not Correct",
             data: null,
           });
@@ -110,7 +111,7 @@ router
       })
       .catch((error) => {
         res.status(500).json({
-          status_code: -1,
+          status_code: ApiErrorCode.internalError,
           message: "internal server error",
           data: null,
           error: {
@@ -139,7 +140,7 @@ router
               },{ new:true})
 
               return  res.status(200).json({
-                status_code: 2,
+                status_code: 1,
                 message: "Updated Success",
                 data: newInstractor,
                 error: {
@@ -148,20 +149,19 @@ router
 
         } catch (error) {
             res.status(500).json({
-                status_code: -2,
+                status_code: ApiErrorCode.internalError,
                 message: "Validation Error",
                 data: null,
                 error: {
                   message: error.message,
                 },
-              });
+            });
         }
     }else{
 
-        let error =new Error()
-        res.status(500).json({
-            status_code: -3,
-            message: "There was a server internal error, please try again",
+        res.status(404).json({
+            status_code: ApiErrorCode.notFound,
+            message: "didn't found the instractor",
             data: null,
             error: {
               message: error.message,
@@ -182,7 +182,7 @@ router
           });
         } else {
           res.status(404).json({
-            status_code: -1,
+            status_code: ApiErrorCode.notFound,
             message: "Instractor Id Not found",
             data: null,
           });
@@ -190,7 +190,7 @@ router
       })
       .catch((error) => {
         res.status(500).json({
-          status_code: -1,
+          status_code: ApiErrorCode.internalError,
           message: "internal server error",
           data: null,
           error: {

@@ -1,7 +1,6 @@
 const express = require("express");
 const ApiErrorCode = require("../../../core/errors/apiError") 
 router = express.Router();
-const ApiErrorCode = require("../../../core/errors/apiError") 
 
 const {
   Gender,
@@ -49,7 +48,7 @@ router.post("/", async (req, res) => {
           }
         })
         .catch((error) => {
-          res.status(400).json({
+          res.status(500).json({
             status_code: ApiErrorCode.internalError,
             message: "There are server internal error",
             data: null,

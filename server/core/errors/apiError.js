@@ -1,6 +1,6 @@
 
 
-class ApiErrorCode extends Error{
+class ApiErrorCode {
 
     static validation = -1;
 

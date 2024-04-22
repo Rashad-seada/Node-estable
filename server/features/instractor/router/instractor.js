@@ -9,6 +9,7 @@ router
     await instractor
       .find()
       .select("-__v")
+      
       .then((docs) => {
         if (docs) {
           res.status(200).json({

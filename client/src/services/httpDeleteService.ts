@@ -13,7 +13,6 @@ export const httpDeleteService = async (url:string) => {
             },
             method: "DELETE"
         });
-        console.log(`${BASE_URL}${url}`);
 
         if (!response.ok) {
             const res = await response.json();

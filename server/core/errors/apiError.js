@@ -1,18 +1,18 @@
 
 
-class Apierror extends Error{
+class ApiErrorCode {
 
-    constructor(message,statusCode){
+    static validation = -1;
 
-        super(message);
-        this.statusCode = statusCode;
-        this.status = `${statusCode}`.startsWith(4)?"faild":"error";
-        this.isOpretional = true;
-        
-    }
+    static notFound = -2;
+
+    static authorization = -3;
+
+    static internalError = -4;
+
 }
 
-module.exports = Apierror
+module.exports = ApiErrorCode
 
 
 

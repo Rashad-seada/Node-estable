@@ -9,34 +9,58 @@ import { BiSolidImageAlt } from 'react-icons/bi'
 import { BsQuestionCircle } from 'react-icons/bs'
 import { FaTrash } from 'react-icons/fa'
 import { HiMiniArrowLongRight } from 'react-icons/hi2'
+import { IoMdCheckmarkCircleOutline } from 'react-icons/io'
+import { MdErrorOutline } from 'react-icons/md'
 import { RiPencilFill } from 'react-icons/ri'
+import { useMutation } from 'react-query'
 
 export type ResourcesCardProps = {
     imgUrl: string,
     title:string,
     titles:any,
     _id:string,
-    route:string
+    route:string,
+    refetch: () => void
 }
-function ResourcesCard({imgUrl,title,titles,_id,route}:ResourcesCardProps) {
+function ResourcesCard({imgUrl,title,titles,_id,route,refetch}:ResourcesCardProps) {
     
     const titlesKeys = Object.keys(titles)    
     const pathName = usePathname()
     const popUp = usePopUp()
 
-    const deleteFunc = async (e:any) => {
-        const btn = e.target as HTMLButtonElement
-        btn.disabled = true
-        const res = await httpDeleteService(`${route}/${_id}`)
-        console.log(_id);
-        
-    }
+    
 
-    const handleDelete = (e:any) => {
+    const {mutate} = useMutation({
+        mutationFn: async () => httpDeleteService(`${route}/${_id}`),
+        mutationKey:["delete","resourceItem",_id],
+        onSuccess:async () => {
+            refetch()
+            popUp({
+                popUpIcon:<IoMdCheckmarkCircleOutline/>,
+                popUpMessage:"item deleted successfully",
+                popUpType:"alert",
+                showPopUp:true,
+                popUpTitle:"item deleted",
+            })
+        },
+        onError:async () => {
+            popUp({
+                popUpIcon:<MdErrorOutline />,
+                popUpMessage:"error on deleting item, please try again",
+                popUpType:"alert",
+                showPopUp:true,
+                popUpTitle:"error on item deleting",
+            })
+        }
+    })
+
+  
+
+    const handleDelete = () => {
         popUp({
             popUpIcon:<BsQuestionCircle />,
             popUpMessage:"are you sure about deleting this item ?",
-            popUpResolveFunc:()=> deleteFunc(e),
+            popUpResolveFunc:mutate,
             popUpType:"confirm",
             showPopUp:true,
             popUpTitle:"delete item",

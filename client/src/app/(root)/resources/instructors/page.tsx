@@ -2,6 +2,7 @@
 
 import InstructorsPageContent from '@/components/content/resources/instructors/InstructorsPageContent'
 import InstructorsPageHeader from '@/components/content/resources/instructors/InstructorsPageHeader'
+import { instructorsRoute } from '@/constants/api'
 import { httpGetServices } from '@/services/httpGetService'
 import { toNameAndId } from '@/utils/toNameAndId'
 import React, { useState } from 'react'
@@ -10,12 +11,12 @@ import { useQuery } from 'react-query'
 function InstructorsPage() {
 
 
-    const instructorsRoute = "/instructor?page=1"
+    const instructorsRoutePagination = `${instructorsRoute}?page=1`
     const [listValue,setListValue] = useState<any>(null)
 
-    const {data:response,isSuccess} = useQuery({
+    const {data:response,isSuccess,refetch} = useQuery({
         queryKey:["instructors"],
-        queryFn:async () => httpGetServices(instructorsRoute)
+        queryFn:async () => httpGetServices(instructorsRoutePagination)
     })
 
     console.log(response);
@@ -35,6 +36,7 @@ function InstructorsPage() {
             <InstructorsPageContent
                 isDataHere={isDataHere} 
                 response={response}
+                refetch={refetch}
             />
         </>
     )

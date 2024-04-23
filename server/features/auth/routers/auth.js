@@ -1,11 +1,10 @@
 const { User, validationLoginUser } = require("../models/user");
-//import bycrpt
 const bcrypt = require("bcrypt");
-//import token
 const jwt = require("jsonwebtoken");
+const ApiErrorCode = require("../../../core/errors/apiError") 
+
 const {
   verifyTokenAndAdmin,
-  verifyToken,
 } = require("../../../core/middleware/verify-token");
 
 const express = require("express");
@@ -16,7 +15,7 @@ router.post("/login", async (req, res) => {
 
   if (error) {
     res.status(400).json({
-      status_code: -1,
+      status_code: ApiErrorCode.validation,
       message: error.message,
       error: {
         message: error.message,
@@ -58,7 +57,7 @@ router.post("/login", async (req, res) => {
             })
             .catch((error) => {
               res.status(500).json({
-                status_code: 0,
+                status_code: ApiErrorCode.internalError,
                 message: "The server is down, please try again later",
                 error: {
                   message: error.message,
@@ -67,7 +66,7 @@ router.post("/login", async (req, res) => {
             });
         } else {
           res.status(400).json({
-            status_code: -2,
+            status_code: ApiErrorCode.validation,
             message: "Please enter a valid email and password",
             data: null,
           });
@@ -83,7 +82,7 @@ router.post("/login", async (req, res) => {
     })
     .catch((error) => {
       res.status(500).json({
-        status_code: 0,
+        status_code: ApiErrorCode.internalError,
         message: "The server is down, please try again later",
         error: {
           message: error.message,
@@ -118,7 +117,7 @@ router.patch("/update-admin", verifyTokenAndAdmin, async (req, res) => {
         });
       } else {
         res.status(404).json({
-          status_code: -1,
+          status_code: ApiErrorCode.notFound,
           message: "Didn't find the user",
           data: null,
           error: {
@@ -128,8 +127,8 @@ router.patch("/update-admin", verifyTokenAndAdmin, async (req, res) => {
       }
     })
     .catch((error) => {
-      res.status(400).json({
-        status_code: 0,
+      res.status(500).json({
+        status_code: ApiErrorCode.internalError,
         message: "Can`t update ",
         data: null,
         error: {
@@ -145,13 +144,13 @@ router.get("/get-admin", verifyTokenAndAdmin, async (req, res) => {
     .then((docs) => {
       if (docs) {
         res.status(200).json({
-          status_code: 2,
+          status_code: 1,
           message: "Success Process",
           data: docs,
         })
       } else {
         res.status(404).json({
-          status_code: 1,
+          status_code: ApiErrorCode.notFound,
           message: "Can`t git Data",
           data: null,
           error: error.message,
@@ -160,7 +159,7 @@ router.get("/get-admin", verifyTokenAndAdmin, async (req, res) => {
     })
     .catch((error) => {
       res.status(500).json({
-        status_code: -2,
+        status_code: ApiErrorCode.internalError,
         message: "internal server error",
         error: error.message,
       });

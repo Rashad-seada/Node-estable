@@ -1,4 +1,5 @@
 const express = require("express");
+const ApiErrorCode = require("../../../core/errors/apiError") 
 
 router = express.Router();
 
@@ -19,15 +20,15 @@ router.get("/", async (req, res) => {
         });
       } else {
         res.status(404).json({
-          status_code: -1,
+          status_code: ApiErrorCode.notFound,
           message: "can`t find membership",
           data: null,
         });
       }
     })
     .catch((error) => {
-      res.status(400).json({
-        status_code: 0,
+      res.status(500).json({
+        status_code: ApiErrorCode.internalError,
         message: "Can`t update ",
         data: null,
         error: {
@@ -49,7 +50,7 @@ router.get("/:id",async(req,res)=>{
             });
           } else {
             res.status(404).json({
-              status_code: -1,
+              status_code: ApiErrorCode.notFound,
               message: "Id is not defined membership",
               data: null,
             });
@@ -57,8 +58,8 @@ router.get("/:id",async(req,res)=>{
     })
 
     .catch((error)=>{
-        res.status(400).json({
-            status_code: 0,
+        res.status(500).json({
+            status_code: ApiErrorCode.internalError,
             message: "Can`t get membership ",
             data: null,
             error: {
@@ -73,7 +74,7 @@ router.post("/", async (req, res) => {
 
   if (error) {
     res.status(400).json({
-      status_code: -1,
+      status_code: ApiErrorCode.validation,
       message: error.message,
       error: {
         message: error.message,
@@ -86,8 +87,6 @@ router.post("/", async (req, res) => {
     })
       .save()
       .then((docs) => {
-        if (docs) {
-
         const {__v , ...other} = docs._doc
           res.status(200).json({
             status_code: 1,
@@ -96,20 +95,11 @@ router.post("/", async (req, res) => {
             ...other
             },
           });
-        } else {
-          res.status(200).json({
-            status_code: -1,
-            message: "can`t Add New Membership",
-            data: null,
-            error: {
-              message: error.message,
-            },
-          });
-        }
+        
       })
       .catch((error) => {
-        res.status(200).json({
-          status_code: 1,
+        res.status(500).json({
+          status_code: ApiErrorCode.internalError,
           message: "internal Server Error",
           data: null,
           error: {
@@ -123,7 +113,15 @@ router.post("/", async (req, res) => {
 router.patch("/:id", async (req, res, next) => {
   const { error } = membershipTypeValidation(req.body);
   if (error) {
-    res.status(400).json({ message: error.message });
+    res.status(400).json({
+      status_code: ApiErrorCode.validation,
+      message: error.message,
+      data: null,
+      error : {
+        message : error.message
+      }
+      
+    });
   }
 
   membershipType
@@ -146,8 +144,8 @@ router.patch("/:id", async (req, res, next) => {
           data: docs,
         });
       } else {
-        res.status(400).json({
-          status_code: 1,
+        res.status(404).json({
+          status_code: ApiErrorCode.notFound,
           message: " Membership Id Not Found  ",
           data: null,
         });
@@ -155,7 +153,7 @@ router.patch("/:id", async (req, res, next) => {
     })
     .catch((error) => {
       res.status(500).json({
-        status_code: -1,
+        status_code: ApiErrorCode.internalError,
         message: "internal Server Error ",
         data: null,
         error: {
@@ -176,8 +174,8 @@ router.delete("/:id", async (req, res) => {
           data: docs,
         });
       } else {
-        res.status(400).json({
-          status_code: 1,
+        res.status(404).json({
+          status_code: ApiErrorCode.notFound,
           message: "can`t delete membership",
           data: null,
           error: {
@@ -188,7 +186,7 @@ router.delete("/:id", async (req, res) => {
     })
     .catch((error) => {
       res.status(500).json({
-        status_code: -4,
+        status_code: ApiErrorCode.internalError,
         message: "cant find id ",
         data: null,
         error: {

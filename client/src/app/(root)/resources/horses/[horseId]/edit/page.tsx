@@ -3,7 +3,7 @@ import Avatar from '@/components/shared/all/Avatar'
 import BackButton from '@/components/shared/all/BackButton'
 import PageContent from '@/components/shared/all/PageContent'
 import PageHeader from '@/components/shared/all/PageHeader'
-import { BASE_URL } from '@/constants/api'
+import { BASE_URL, horsesRoute } from '@/constants/api'
 import { httpGetServices } from '@/services/httpGetService'
 import { useParams } from 'next/navigation'
 import React from 'react'
@@ -12,7 +12,7 @@ import { useQuery } from 'react-query'
 function HorseEditPage() {
 
     const {horseId} = useParams()
-    const horseRoute = `/hourse/${horseId}`
+    const horseRoute = `${horsesRoute}/${horseId}`
     const {status,data} = useQuery({
         queryFn:async() => httpGetServices(horseRoute),
         queryKey:["horses",horseId]

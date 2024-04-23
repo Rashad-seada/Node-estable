@@ -3,6 +3,7 @@
 import Input from '@/components/shared/all/Input'
 import Loader from '@/components/shared/all/Loader'
 import PageContent from '@/components/shared/all/PageContent'
+import { updateAdminRoute } from '@/constants/api'
 import { usePopUp } from '@/hooks/usePopUp'
 import { httpPatchService } from '@/services/httpPatchService'
 import React from 'react'
@@ -36,15 +37,14 @@ function SettingsPageContent({
     mobile,
     setMobile
 }:SettingsPageContentProps) {
-    const updateUserRoute = "/auth/update-admin"
     const popUp = usePopUp()
 
-    const handleUserUpdate =(e:any) => {
+    const handleAdminUpdate =(e:any) => {
         const btn = e.target as HTMLButtonElement
         btn.disabled = true
         
-        const updateUserData = async() => {
-            const res = await httpPatchService(updateUserRoute,JSON.stringify({
+        const updateAdminData = async() => {
+            const res = await httpPatchService(updateAdminRoute,JSON.stringify({
                 fullName,
                 mobile,
                 avatar,
@@ -58,8 +58,7 @@ function SettingsPageContent({
                 popUpType:"alert",
                 popUpMessage:"you can continue",
                 popUpTitle:"data updated successfully",
-                popUpIcon:<IoMdCheckmarkCircleOutline />
-                ,
+                popUpIcon:<IoMdCheckmarkCircleOutline />,
             })
             setFullName(data.fullName)
             setEmail(data.email)
@@ -70,7 +69,7 @@ function SettingsPageContent({
             btn.disabled = false
 
         }
-        updateUserData()
+        updateAdminData()
     }
 
     return (
@@ -131,7 +130,7 @@ function SettingsPageContent({
 
                     <button
                         className='w-[350px] mx-auto mb-[70px] text-2xl rounded-2xl duration-300 hover:text-smokey-white hover:bg-primary h-[60px] border capitalize border-primary text-primary font-semibold'
-                        onClick={handleUserUpdate}
+                        onClick={handleAdminUpdate}
                     >
                         save
                     </button>

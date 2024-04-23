@@ -12,7 +12,6 @@ router = express.Router();
 
 router.post("/login", async (req, res) => {
   const { error } = validationLoginUser(req.body);
-
   if (error) {
     res.status(400).json({
       status_code: ApiErrorCode.validation,
@@ -24,22 +23,24 @@ router.post("/login", async (req, res) => {
   }
 
   User.findOne({ email: req.body.email })
-    .then(async (user) => {
+    .then( async(user) => {
       if (user) {
         const { password, __v, ...other } = user._doc;
         const validPassword = await bcrypt.compare(
           req.body.password,
           user.password
         );
-        const token = jwt.sign(
-          {
-            id: user._id,
-            isAdmin: user.isAdmin,
-          },
-          process.env.JWT_SECRET_KEY
-        );
+        
 
         if (validPassword) {
+          const token = jwt.sign(
+            {
+              id: user._id,
+              isAdmin: user.isAdmin,
+            },
+            process.env.JWT_SECRET_KEY
+          );
+
           user.token.push(token);
           user
             .save()
@@ -70,7 +71,6 @@ router.post("/login", async (req, res) => {
             message: "Please enter a valid email and password",
             data: null,
           });
-          alert(" password or email is ");
         }
       } else {
         res.status(400).json({

@@ -196,7 +196,7 @@ class ClientController {
             });
           } else {
             const updateOps = {}; // Object to hold the fields you want to update
-      
+
             // Example fields to update
             if (req.body.username) {
               updateOps.username = req.body.username;
@@ -219,7 +219,7 @@ class ClientController {
             if (req.body.gender) {
               updateOps.gender = req.body.gender;
             }
-      
+
             Client.findOneAndUpdate(
               { _id: req.params.id },
               { $set: updateOps },

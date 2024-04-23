@@ -41,6 +41,12 @@ const userSchema =new mongoose.Schema({
 })
 
 
+userSchema.methods.generateToken = function(){
+    return jwt.sign({id : this._id , isAdmin: this.isAdmin,randomNumber : Math.random()},process.env.JWT_SECRET_KEY ,{expiresIn:"100d"})
+
+     
+ }
+
 function validationLoginUser(obj){
     const schema= joi.object({
        email:joi.string().trim().min(5).max(100).required(),

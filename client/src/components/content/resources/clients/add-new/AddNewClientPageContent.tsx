@@ -14,17 +14,16 @@ import { IoMdCheckmarkCircleOutline } from 'react-icons/io'
 import { MdErrorOutline } from 'react-icons/md'
 import { useMutation } from 'react-query'
 
-type setInputState = (newState:string) => void
 
 type AddNewClientPageContentProps = {
     name:string,
-    setName:setInputState,
+    setName:(newState:string) => void,
     email:string,
-    setEmail:setInputState,
+    setEmail:(newState:string) => void,
     phone:string,
-    setPhone:setInputState,
+    setPhone:(newState:string) => void,
     age:string,
-    setAge:setInputState,
+    setAge:(newState:string) => void,
     gender:NameAndId,
     setGender:(state:NameAndId)=> void,
     membershipStatus:NameAndId,

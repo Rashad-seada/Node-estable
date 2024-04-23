@@ -33,6 +33,8 @@ class ClientController {
               phone: req.body.phone,
               gender: req.body.gender,
               age: req.body.age,
+              membershipStatus : req.body.membershipStatus,
+              membershipType : req.body.membershipType,
             })
               .save()
               .then((docs) => {
@@ -207,6 +209,12 @@ class ClientController {
             }
             if (req.body.phone) {
               updateOps.phone = req.body.phone;
+            }
+            if (req.body.membershipStatus) {
+              updateOps.membershipStatus = req.body.membershipStatus;
+            }
+            if (req.body.membershipType) {
+              updateOps.membershipType = req.body.membershipType;
             }
       
             Client.findOneAndUpdate(

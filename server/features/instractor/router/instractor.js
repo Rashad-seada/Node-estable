@@ -120,8 +120,7 @@ router
         });
       });
   })
-
-.patch(async (req, res) => {
+  .patch(async (req, res) => {
     let Instractor = await  instractor.findById(req.params.id)
   
     if(Instractor){

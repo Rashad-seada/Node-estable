@@ -33,6 +33,13 @@ const ClientSchema = mongoose.Schema({
         default : "inactive"
     },
 
+    membershipType : {
+        type: String,
+        enum: ['family', 'individual'], // Define your enum values here
+        required: false,
+        default : "inactive"
+    },
+
     courses : {
         type : [String],
         required : false,
@@ -44,10 +51,12 @@ const Client = mongoose.model("Client",ClientSchema)
 
 function clientValidation(obj){
     const schema = joi.object({
-        username : joi.string().required().min(7).max(20),
+        username : joi.string().required().min(3).max(20),
         email : joi.string().required().min(7).max(40),
         phone : joi.string().required().min(4).max(25),
         gender : joi.string().valid('male', 'female').required(),
+        membershipStatus : joi.string().valid('active', 'inactive').required(),
+        membershipType : joi.string().valid('family', 'individual').required(),
         age: joi.number().required().min(1).max(100),
     })
     return schema.validate(obj);
@@ -62,9 +71,12 @@ function pageValidation(obj){
 
 function updateValidation(obj){
     const schema = joi.object({
-        username : joi.string().min(7).max(20),
+        username : joi.string().min(3).max(20),
         email : joi.string().min(7).max(40),
         phone : joi.string().min(4).max(25),
+        gender : joi.string().valid('male', 'female').required(),
+        membershipStatus : joi.string().valid('active', 'inactive').required(),
+        membershipType : joi.string().valid('family', 'individual').required(),
         age: joi.number().min(1).max(100),
     })
     return schema.validate(obj);

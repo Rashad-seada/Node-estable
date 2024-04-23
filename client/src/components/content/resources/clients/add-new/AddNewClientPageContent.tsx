@@ -4,6 +4,8 @@ import PageContent from '@/components/shared/all/PageContent'
 import ResourcesDropList from '@/components/shared/resources/ResourcesDropList'
 import ResourcesInput from '@/components/shared/resources/ResourcesInput'
 import { clientsRoute } from '@/constants/api'
+import { memberShipStatuses } from '@/constants/memberShipStatuses'
+import { memberShipTypes } from '@/constants/memberShipTypes'
 import { usePopUp } from '@/hooks/usePopUp'
 import { httpPostService } from '@/services/httpPostService'
 import { useRouter } from 'next/navigation'
@@ -28,8 +30,6 @@ type AddNewClientPageContentProps = {
     membershipStatus:NameAndId,
     setMembershipStatus:(state:NameAndId)=> void,
     genders:NameAndId[],
-    types:NameAndId[],
-    statuses:NameAndId[],
     isInputsValid:boolean,
     membershipType:NameAndId,
     setMembershipType:(state:NameAndId)=> void,
@@ -48,8 +48,6 @@ function AddNewClientPageContent({
     phone,
     membershipStatus,
     genders,
-    types,
-    statuses,
     age,
     membershipType,
     setMembershipType,
@@ -140,7 +138,7 @@ function AddNewClientPageContent({
                     <ResourcesDropList
                         listValue={membershipStatus}
                         setListValue={setMembershipStatus}
-                        options={statuses}
+                        options={memberShipStatuses}
                         placeholder='select client membership status'
                         label='membership status'
                         
@@ -149,7 +147,7 @@ function AddNewClientPageContent({
                     <ResourcesDropList
                         listValue={membershipType}
                         setListValue={setMembershipType}
-                        options={types}
+                        options={memberShipTypes}
                         placeholder='select client membership type'
                         label='membership type'
                     />

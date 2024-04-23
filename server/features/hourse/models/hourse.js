@@ -21,7 +21,7 @@ const hourseSchema = mongoose.Schema({
   groom: {
     type: String,
     required: false,
-    default : ""
+    default: null // Set default value as null to allow it to be nullable
   },
   gender: {
     type: String,

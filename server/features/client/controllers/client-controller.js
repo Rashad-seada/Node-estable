@@ -213,6 +213,9 @@ class ClientController {
             if (req.body.membershipStatus) {
               updateOps.membershipStatus = req.body.membershipStatus;
             }
+            if (req.body.gender) {
+              updateOps.gender = req.body.gender;
+            }
             if (req.body.membershipType) {
               updateOps.membershipType = req.body.membershipType;
             }

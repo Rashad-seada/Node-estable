@@ -210,6 +210,12 @@ class ClientController {
             if (req.body.phone) {
               updateOps.phone = req.body.phone;
             }
+            if (req.body.membershipStatus) {
+              updateOps.membershipStatus = req.body.membershipStatus;
+            }
+            if (req.body.membershipType) {
+              updateOps.membershipType = req.body.membershipType;
+            }
       
             Client.findOneAndUpdate(
               { _id: req.params.id },

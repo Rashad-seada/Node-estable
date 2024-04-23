@@ -14,7 +14,7 @@ const instractorSchema = mongoose.Schema({
     phoneNumber:{
         type:String,
         required:true
-    } ,
+    },
     age:{
         type:String,
         required:true

@@ -22,6 +22,7 @@ class ClientController {
             res.status(400).json({
               status_code: ApiErrorCode.validation,
               message: error.message,
+              data: null,
               error: {
                 message: error.message,
               },
@@ -51,8 +52,7 @@ class ClientController {
               .catch((error) => {
                 res.status(500).json({
                   status_code: ApiErrorCode.internalError,
-                  message:
-                    "There was an error when creating the client, please try again",
+                  message: "There was an error when creating the client, please try again",
                   data: null,
                   error: {
                     message: error.message,
@@ -277,7 +277,7 @@ class ClientController {
                 res.status(200).json({
                   status_code: 1,
                   message: "The clients deleted successfuly",
-                  data: [],
+                  data: docs,
                 });
               } else {
                 res.status(404).json({

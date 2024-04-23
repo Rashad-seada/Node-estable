@@ -20,7 +20,8 @@ const hourseSchema = mongoose.Schema({
   },
   groom: {
     type: String,
-    required: true,
+    required: false,
+    default : ""
   },
   gender: {
     type: String,
@@ -52,7 +53,7 @@ function createHourseValidation(obj){
         age : joi.number().required().min(0).max(100),
         catigoryId : joi.string().required().min(1).max(100),
         clientId: joi.string().required().min(1).max(100),
-        groom: joi.string().required().min(1).max(100),
+        groom: joi.string().min(1).max(100),
         gender : joi.string().valid('male', 'female').required(),
         note: joi.string().min(1).max(100),
         documents: joi.string().min(1).max(100),

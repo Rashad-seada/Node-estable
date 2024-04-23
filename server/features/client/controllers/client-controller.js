@@ -183,7 +183,7 @@ class ClientController {
     static async updateClientById (req, res) {
         try {
           const { error } = updateValidation(req.body);
-      
+
           if (error) {
             res.status(400).json({
               status_code: ApiErrorCode.validation,
@@ -193,27 +193,15 @@ class ClientController {
               },
             });
           } else {
-            const updateOps = {}; // Object to hold the fields you want to update
-      
-            // Example fields to update
-            if (req.body.username) {
-              updateOps.username = req.body.username;
-            }
-            if (req.body.email) {
-              updateOps.email = req.body.email;
-            }
-            if (req.body.age) {
-              updateOps.age = req.body.age;
-            }
-            if (req.body.phone) {
-              updateOps.phone = req.body.phone;
-            }
-      
-            Client.findOneAndUpdate(
-              { _id: req.params.id },
-              { $set: updateOps },
-              { new: true }
-            )
+            await  Client.findByIdAndUpdate(req.params.id,{
+              $set:{
+                username:req.body.username,
+                email:req.body.email,
+                phone:req.body.phone,
+                gender:req.body.gender,
+                age:req.body.age
+              } 
+            },{ new:true})
               .select("-__v")
               .then((docs) => {
                 if (docs) {

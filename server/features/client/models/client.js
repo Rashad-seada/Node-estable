@@ -19,12 +19,11 @@ const ClientSchema = mongoose.Schema({
         required:true,
     },
 
-    gender:{
+    gender: {
         type: String,
+        required: true,
         enum: ['male', 'female'], // Define your enum values here
-        required: true
-
-    },
+      },
 
     membershipStatus : {
         type: String,
@@ -66,6 +65,8 @@ function updateValidation(obj){
         email : joi.string().min(7).max(40),
         phone : joi.string().min(4).max(25),
         age: joi.number().min(1).max(100),
+        gender : joi.string().valid('male', 'female').required(),
+
     })
     return schema.validate(obj);
 }

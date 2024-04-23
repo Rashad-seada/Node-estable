@@ -5,8 +5,7 @@ import Avatar from '@/components/shared/all/Avatar'
 import BackButton from '@/components/shared/all/BackButton'
 import PageHeader from '@/components/shared/all/PageHeader'
 import { genders } from '@/constants/genders'
-import { useGetMembershipStatuses } from '@/hooks/useGetMembershipStatuses'
-import { useGetMembershipTypes } from '@/hooks/useGetMembershipTypes'
+
 
 
 import { toNameAndId } from '@/utils/toNameAndId'
@@ -22,10 +21,6 @@ function AddNewClientPage() {
     const [membershipStatus,setMembershipStatus] = useState<NameAndId>(null)
     const [membershipType,setMembershipType] = useState<NameAndId>(null)
 
-    let statuses = useGetMembershipStatuses()    
-    statuses = toNameAndId(statuses,"displayName","value")
-    let types = useGetMembershipTypes()
-    types = toNameAndId(types,"displayName","value")
     
     const isInputsValid = Boolean(name && email && phone && age && gender && membershipStatus)
 
@@ -61,8 +56,6 @@ function AddNewClientPage() {
                 membershipType={membershipType}
                 setMembershipType={setMembershipType}
                 isInputsValid={isInputsValid}
-                statuses={statuses}
-                types={types}
                 genders={genders}
                 
             />

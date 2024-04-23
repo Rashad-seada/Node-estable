@@ -19,11 +19,9 @@ function InstructorsPage() {
         queryFn:async () => httpGetServices(instructorsRoutePagination)
     })
 
-    console.log(response);
+    const isDataHere = Boolean(response?.data) && isSuccess
 
-    const isDataHere = Boolean(response?.data?.horse) && isSuccess
-
-    let listOptions = isDataHere ? toNameAndId(response.data.horse,"hourseName","_id"): []
+    let listOptions = isDataHere ? toNameAndId(response.data.horse,"instractorName","_id"): []
 
     return (
         <>

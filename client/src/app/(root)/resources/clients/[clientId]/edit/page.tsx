@@ -2,22 +2,22 @@
 
 import Avatar from '@/components/shared/all/Avatar';
 import BackButton from '@/components/shared/all/BackButton';
-import PageContent from '@/components/shared/all/PageContent';
 import PageHeader from '@/components/shared/all/PageHeader';
-import ResourcesDropList from '@/components/shared/resources/ResourcesDropList';
-import ResourcesInput from '@/components/shared/resources/ResourcesInput';
 import { clientsRoute } from '@/constants/api';
-import { genders } from '@/constants/genders';
-
 import { httpGetServices } from '@/services/httpGetService';
 import { getGender } from '@/utils/getGender';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react'
-import { memberShipStatuses } from '@/constants/memberShipStatuses';
-import { memberShipTypes } from '@/constants/memberShipTypes';
 import { getMembershipStatus } from '@/utils/getMembershipStatus';
 import { httpPatchService } from '@/services/httpPatchService';
 import { getMembershipType } from '@/utils/getMembershipType';
+import EditClientPageContent from '@/components/content/resources/clients/edit/EditClientPageContent';
+import { statusCodeIndicator } from '@/utils/statusCodeIndicator';
+import { usePopUp } from '@/hooks/usePopUp';
+import { useMutation } from 'react-query';
+import { MdErrorOutline } from 'react-icons/md';
+import { IoMdCheckmarkCircleOutline } from 'react-icons/io';
+import { useRouter } from 'next/navigation';
 
 function ClientEditPage() {
 
@@ -32,11 +32,13 @@ function ClientEditPage() {
     const [isDataHere , setIsDataHere] = useState<boolean>(false)
 
 
-    const isInputsValid = name && email && phone && age && gender && membershipStatus
+    const isInputsValid = Boolean(name && email && phone && age && gender && membershipStatus && membershipType)
 
     const {clientId} = useParams()
     const clientRoute = `${clientsRoute}/${clientId}`
     
+    const router = useRouter()
+    const popUp = usePopUp()
     useEffect(()=>{
         const fetchClient = async() => {
             const {data:{username,email,phone,age,gender,membershipStatus,membershipType}} = await httpGetServices(clientRoute)
@@ -52,8 +54,9 @@ function ClientEditPage() {
         }
         fetchClient()
     },[])
-    const handleClientUpdate = async () => {
-        const res = await httpPatchService(clientRoute,JSON.stringify(
+  
+    const {mutate} = useMutation({
+        mutationFn:async () => httpPatchService(clientRoute,JSON.stringify(
             {
                 username:name,
                 email,
@@ -63,12 +66,43 @@ function ClientEditPage() {
                 membershipStatus:membershipStatus?.name||null,
                 membershipType:membershipType?.name||null
             }
-        ))
-        console.log(gender);
-        
-        console.log(res);
-        
-    }
+        )),
+        mutationKey:["addNewClient"],
+        onSuccess:async(res)=> {
+            //still not finished
+            const status = res.status === "success" 
+            console.log(res)
+            
+            if (status) {
+                popUp({
+                    popUpMessage:"client updated successfully",
+                    popUpTitle:"client updated ",
+                    popUpIcon:<IoMdCheckmarkCircleOutline />,
+                    showPopUp:true,
+                    popUpType:"alert"
+                })
+                router.push("/resources/clients")
+            }else {
+                popUp({
+                    popUpMessage:res.message,
+                    popUpTitle:"failed ",
+                    popUpIcon:<IoMdCheckmarkCircleOutline />,
+                    showPopUp:true,
+                    popUpType:"alert"
+                })
+                router.push("/resources/clients")
+            }
+        },
+        onError:()=> {
+            popUp({
+                popUpMessage:"error occured please try again",
+                popUpTitle:"error",
+                popUpIcon:<MdErrorOutline />,
+                showPopUp:true,
+                popUpType:"alert"
+            })
+        }
+    })
 
     return (
         <>
@@ -84,81 +118,26 @@ function ClientEditPage() {
                     <Avatar/>
                 </div>
             </PageHeader>
-            <PageContent className='overflow-hidden'>   
-                {
-                    isDataHere ? (
-                        <>
-                        
-                            <div className='max-w-[600px] flex flex-col gap-10 my-16 mx-8'>
-                                <ResourcesInput
-                                    value={name} 
-                                    setValue={setName}
-                                    placeholder="Enter Client Name"
-                                    label='name'
-                                    type='text'
-                                />
-
-                                <ResourcesInput
-                                    value={email} 
-                                    setValue={setEmail}
-                                    placeholder="Enter Client Email"
-                                    label='email'
-                                    type='text'
-                                />
-
-                                <ResourcesInput
-                                    value={phone} 
-                                    setValue={setPhone}
-                                    placeholder="Enter Client Phone"
-                                    label='phone'
-                                    type='number'
-                                />
-
-                                <ResourcesInput
-                                    value={age} 
-                                    setValue={setAge}
-                                    placeholder="Enter Client Age"
-                                    label='age'
-                                    type='number'
-                                />
-                                <ResourcesDropList
-                                    listValue={gender}
-                                    setListValue={setGender}
-                                    options={genders}
-                                    placeholder='select client gender'
-                                    label='gender'
-                                    
-                                />
-
-                                <ResourcesDropList
-                                    listValue={membershipStatus}
-                                    setListValue={setMembershipStatus}
-                                    options={memberShipStatuses}
-                                    placeholder='select client membership status'
-                                    label='membership'
-                                    
-                                />
-                                  <ResourcesDropList
-                                    listValue={membershipType}
-                                    setListValue={setMembershipType}
-                                    options={memberShipTypes}
-                                    placeholder='select client membership status'
-                                    label='membership'
-                                    
-                                />
-                            </div>
-                            <div className='w-full flex justify-center'>
-                                <button onClick={handleClientUpdate} disabled={!isInputsValid} className='w-[350px] text-primary duration-300 hover:bg-primary hover:text-smokey-white font-semibold text-2xl capitalize rounded-2xl h-[60px] border border-primary'>
-                                    save client 
-                                </button>
-                            </div>
-                        
-                        </>
-                    ) : <div/>
-                }
-
-           
-            </PageContent>
+            <EditClientPageContent
+            
+                handleClientUpdate={mutate}
+                isDataHere={isDataHere}
+                isInputsValid={isInputsValid}
+                name={name}
+                setName={setName}
+                email={email}
+                setEmail={setEmail}
+                phone={phone}
+                setPhone={setPhone}
+                age={age}
+                setAge={setAge}
+                gender={gender}
+                setGender={setGender}
+                membershipStatus={membershipStatus}
+                setMembershipStatus={setMembershipStatus}
+                membershipType={membershipType}
+                setMembershipType={setMembershipType}
+            />
         </>
     )
 }

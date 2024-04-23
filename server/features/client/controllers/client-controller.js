@@ -216,6 +216,9 @@ class ClientController {
             if (req.body.membershipType) {
               updateOps.membershipType = req.body.membershipType;
             }
+            if (req.body.gender) {
+              updateOps.gender = req.body.gender;
+            }
       
             Client.findOneAndUpdate(
               { _id: req.params.id },

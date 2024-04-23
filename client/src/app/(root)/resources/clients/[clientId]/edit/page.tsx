@@ -41,16 +41,18 @@ function ClientEditPage() {
     const popUp = usePopUp()
     useEffect(()=>{
         const fetchClient = async() => {
-            const {data:{username,email,phone,age,gender,membershipStatus,membershipType}} = await httpGetServices(clientRoute)
-            
-            setName(username)
-            setEmail(email)
-            setPhone(phone)
-            setAge(age)
-            setGender(getGender(gender))
-            setMembershipStatus(getMembershipStatus(membershipStatus))
-            setMembershipType(getMembershipType(membershipType))
-            setIsDataHere(true)
+            const {data} = await httpGetServices(clientRoute)
+            if (data) {
+                const {username,email,phone,age,gender,membershipStatus,membershipType} = data
+                setName(username)
+                setEmail(email)
+                setPhone(phone)
+                setAge(age)
+                setGender(getGender(gender))
+                setMembershipStatus(getMembershipStatus(membershipStatus))
+                setMembershipType(getMembershipType(membershipType))
+                setIsDataHere(true)
+            }
         }
         fetchClient()
     },[])
@@ -69,9 +71,7 @@ function ClientEditPage() {
         )),
         mutationKey:["addNewClient"],
         onSuccess:async(res)=> {
-            //still not finished
-            const status = res.status === "success" 
-            console.log(res)
+            const status = statusCodeIndicator(res.status_code) === "success" 
             
             if (status) {
                 popUp({
@@ -90,7 +90,6 @@ function ClientEditPage() {
                     showPopUp:true,
                     popUpType:"alert"
                 })
-                router.push("/resources/clients")
             }
         },
         onError:()=> {

@@ -68,7 +68,7 @@ function ResourcesCard({imgUrl,title,titles,_id,route,refetch}:ResourcesCardProp
     }
 
     return (
-        <div className='h-fit border-opacity-40 border border-dark-grey text-center items-center justify-between w-full flex flex-col  rounded-3xl'>
+        <div className='h-fit duration-300 hover:shadow-lg border-opacity-40 border border-dark-grey text-center items-center justify-between w-full flex flex-col  rounded-3xl'>
 
 
             <div className='h-[175px] w-full p-4'>
@@ -101,11 +101,11 @@ function ResourcesCard({imgUrl,title,titles,_id,route,refetch}:ResourcesCardProp
             <div className='relative border-t p-4 border-dark-grey border-opacity-40 w-full flex justify-between items-center'>
             
                 <div className='w-[70px] flex text-2xl items-center text-dark-grey h-[20px] justify-between'>
-                    <Link href={`${pathName}/${_id}/edit`}>
+                    <Link className='hover:text-primary duration-300' href={`${pathName}/${_id}/edit`}>
                         <RiPencilFill />
                     </Link>
                     <span className='h-[35px] w-[1.5px] bg-dark-grey opacity-40'/>
-                    <button onClick={handleDelete}>
+                    <button className='hover:text-red-500 duration-300' onClick={handleDelete}>
                         <FaTrash/>
                     </button>
                 </div>

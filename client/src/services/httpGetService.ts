@@ -13,13 +13,6 @@ export const httpGetServices = async (url:string) => {
             },
             method: "GET"
         });
-
-        if (!response.ok) {
-            const res = await response.json();
-            console.log(res);
-            
-            return {status:"failed",data:null,error:res.error}
-        }
         
         return await response.json();
     } catch (error) {

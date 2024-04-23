@@ -1,25 +1,23 @@
 "use client"
 import ClientsPageContent from '@/components/content/resources/clients/ClientsPageContent'
 import ClientsPageHeader from '@/components/content/resources/clients/ClientsPageHeader'
-import { clientsRoute } from '@/constants/api'
-import { httpGetServices } from '@/services/httpGetService'
+import { useGetClients } from '@/hooks/useGetClients'
 import { toNameAndId } from '@/utils/toNameAndId'
 import React, { useState } from 'react'
-import { useQuery } from 'react-query'
 
 function ClientsPage() {
 
-    const clientsRoutePagination = `${clientsRoute}?page=1`
+    const clientsRoutePagination = `?page=1`
     const [listValue,setListValue] = useState<NameAndId>(null)
 
-    const {data:response,isSuccess,refetch} = useQuery({
-        queryKey:["clients"],
-        queryFn:async () => httpGetServices(clientsRoutePagination)
+    const {response,isSuccess,refetch}:any = useGetClients({
+        pagination:clientsRoutePagination
     })
 
     const isDataHere = Boolean(response?.data?.client) && isSuccess
 
-    let listOptions = isDataHere ? toNameAndId(response.data.client,"username","_id"): []
+    let listOptions = isDataHere ? toNameAndId(response?.data?.client,"username","_id"): []
+    
     
     return (
         <>

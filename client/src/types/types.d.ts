@@ -16,3 +16,10 @@ type NameAndId = {
     name: string,
     id:string
 } | null
+
+
+type QueryReqParameters = {
+    pagination?:string,
+    onSuccess?:((data:any)=>any)|null,
+    onError?:((data:any)=>any)|null,
+} 

@@ -15,12 +15,6 @@ export const httpPatchService = async (url:string,body:any) => {
             body
         });
 
-        if (!response.ok) {
-            const res = await response.json();
-            
-            return {status:"failed",data:null,error:res.error}
-        }
-
         return await response.json();
 
     }catch (error) {

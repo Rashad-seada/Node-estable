@@ -13,7 +13,7 @@ function ResourcesInput({value,type,setValue,label,placeholder}:ResourcesInputPr
 
     return (
         <div className='flex w-full gap-5 items-center justify-between'>
-            <div className='w-[200px] text-2xl font-semibold flex justify-between items-center'>
+            <div className='w-[200px] text-xl font-semibold flex justify-between items-center'>
                 <div className='flex items-center'>
                     <span>{label}</span>
                     <span className='text-red-500 ml-2 text-4xl'>*</span>

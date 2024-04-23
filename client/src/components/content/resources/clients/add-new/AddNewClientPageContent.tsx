@@ -3,16 +3,11 @@
 import PageContent from '@/components/shared/all/PageContent'
 import ResourcesDropList from '@/components/shared/resources/ResourcesDropList'
 import ResourcesInput from '@/components/shared/resources/ResourcesInput'
-import { clientsRoute } from '@/constants/api'
+import { genders } from '@/constants/genders'
 import { memberShipStatuses } from '@/constants/memberShipStatuses'
 import { memberShipTypes } from '@/constants/memberShipTypes'
-import { usePopUp } from '@/hooks/usePopUp'
-import { httpPostService } from '@/services/httpPostService'
-import { useRouter } from 'next/navigation'
-import React from 'react'
-import { IoMdCheckmarkCircleOutline } from 'react-icons/io'
-import { MdErrorOutline } from 'react-icons/md'
-import { useMutation } from 'react-query'
+
+
 
 
 type AddNewClientPageContentProps = {
@@ -28,10 +23,10 @@ type AddNewClientPageContentProps = {
     setGender:(state:NameAndId)=> void,
     membershipStatus:NameAndId,
     setMembershipStatus:(state:NameAndId)=> void,
-    genders:NameAndId[],
     isInputsValid:boolean,
     membershipType:NameAndId,
     setMembershipType:(state:NameAndId)=> void,
+    handleAddNewClient:()=> void
 }
 
 function AddNewClientPageContent({
@@ -46,50 +41,15 @@ function AddNewClientPageContent({
     gender,
     phone,
     membershipStatus,
-    genders,
     age,
     membershipType,
     setMembershipType,
     isInputsValid,
+    handleAddNewClient
     
 }:AddNewClientPageContentProps) {
 
-    const body = {
-        username:name,
-        email,
-        gender:gender?.name,
-        //membershipStatus:membershipStatus?.name,
-        //membershipType:membershipType?.name,
-        phone,
-        age,
-        //courses:[]
-    }
-    const popUp = usePopUp()
-    const router = useRouter()
-
-    const {mutate} = useMutation({
-        mutationFn:async () => httpPostService(clientsRoute,JSON.stringify(body)),
-        mutationKey:["addNewClient"],
-        onSuccess:()=> {
-            popUp({
-                popUpMessage:"client added successfully",
-                popUpTitle:"client added ",
-                popUpIcon:<IoMdCheckmarkCircleOutline />,
-                showPopUp:true,
-                popUpType:"alert"
-            })
-            router.push("/resources/clients")
-        },
-        onError:()=> {
-            popUp({
-                popUpMessage:"failed to add client",
-                popUpTitle:"failed",
-                popUpIcon:<MdErrorOutline />,
-                showPopUp:true,
-                popUpType:"alert"
-            })
-        }
-    })
+    
 
     return (
         <PageContent className='overflow-hidden'>   
@@ -152,7 +112,7 @@ function AddNewClientPageContent({
                     />
                 </div>
                 <div className='w-full flex justify-center'>
-                    <button onClick={()=> {isInputsValid && mutate()}} disabled={!isInputsValid} className='w-[350px] text-primary duration-300 hover:bg-primary hover:text-smokey-white font-semibold text-2xl capitalize rounded-2xl h-[60px] border border-primary'>
+                    <button onClick={()=> {isInputsValid && handleAddNewClient()}} disabled={!isInputsValid} className='w-[350px] text-primary duration-300 hover:bg-primary hover:text-smokey-white font-semibold text-2xl capitalize rounded-2xl h-[60px] border border-primary'>
                         add new client 
                     </button>
                 </div>

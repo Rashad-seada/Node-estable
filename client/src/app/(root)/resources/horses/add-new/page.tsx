@@ -1,13 +1,21 @@
 "use client"
 
+import AddNewHorsePageContent from "@/components/content/resources/horses/add-new/AddNewHorsePageContent"
 import Avatar from "@/components/shared/all/Avatar"
 import BackButton from "@/components/shared/all/BackButton"
-import PageContent from "@/components/shared/all/PageContent"
 import PageHeader from "@/components/shared/all/PageHeader"
-import ResourcesDropList from "@/components/shared/resources/ResourcesDropList"
-import ResourcesInput from "@/components/shared/resources/ResourcesInput"
-import { genders } from "@/constants/genders"
+import { clientsRoute, horsesRoute, horseCategoriesRoute } from "@/constants/api"
+import { useGetClients } from "@/hooks/useGetClients"
+import { useGetHorses } from "@/hooks/useGetHorses"
+import { usePopUp } from "@/hooks/usePopUp"
+import { httpGetServices } from "@/services/httpGetService"
+import { httpPostService } from "@/services/httpPostService"
+import { statusCodeIndicator } from "@/utils/statusCodeIndicator"
+import { toNameAndId } from "@/utils/toNameAndId"
+import { useRouter } from "next/navigation"
 import { useState } from "react"
+import { IoMdCheckmarkCircleOutline } from "react-icons/io"
+import { useMutation, useQuery } from "react-query"
 
 function AddNewHorsePage() {
     
@@ -17,9 +25,73 @@ function AddNewHorsePage() {
     const [age,setAge] = useState<string>('')
     const [gender,setGender] = useState<NameAndId>(null)
     const [groom,setGroom] = useState<NameAndId>(null)
+    const [clients,setClients] = useState<NameAndId[]|[]>([])
+    const [horses,setHorses] = useState<NameAndId[]|[]>([])
+    const [horseCategory,setHorseCategory] = useState<NameAndId>(null)
+    const [horseCategories,setHorseCategories] = useState<NameAndId[]|[]>([])
 
-    const isInputsValid = name && note && client && age && gender && groom
+    const isInputsValid = Boolean(name && note && client && age && gender )
+    const popUp = usePopUp()
+    const router = useRouter()
 
+    const {mutate}= useMutation({
+        mutationFn:async () => httpPostService(horsesRoute,JSON.stringify({
+            hourseName:name,
+            note,
+            clientId:client?.id,
+            age,
+            gender:gender?.name,
+            groom:groom?.id,
+            catigoryId:horseCategory?.id,
+        })),
+        onSuccess:async (res) => {
+            const status = statusCodeIndicator(res.status_code) === "success" 
+            
+            if (status) {
+                popUp({
+                    popUpMessage:"horse added successfully",
+                    popUpTitle:"added successfully ",
+                    popUpIcon:<IoMdCheckmarkCircleOutline />,
+                    showPopUp:true,
+                    popUpType:"alert"
+                })
+                router.push("/resources/horses")
+            }else {
+                popUp({
+                    popUpMessage:res.message,
+                    popUpTitle:"failed ",
+                    popUpIcon:<IoMdCheckmarkCircleOutline />,
+                    showPopUp:true,
+                    popUpType:"alert"
+                })
+            }
+        }
+    })
+
+    useGetClients({
+        onSuccess:(data) => {
+            const clientsOptions = toNameAndId(data.data.client,"username","_id")            
+            setClients(clientsOptions)
+        },
+    })
+
+    
+    useGetHorses({
+        onSuccess(data) {
+            const horsesOptions = toNameAndId(data.data.hourse,"hourseName","_id") 
+                                   
+            setHorses(horsesOptions)
+        },
+    })
+
+    useQuery({
+        queryKey:["allHorseCategories"],
+        queryFn:async () => httpGetServices(horseCategoriesRoute),
+        onSuccess(data) {
+            const horseCategoriesOptions = toNameAndId(data.data,"displayName","_id")                                    
+            setHorseCategories(horseCategoriesOptions)
+        },
+    })
     return (
         <>
             <PageHeader>
@@ -34,61 +106,27 @@ function AddNewHorsePage() {
                     <Avatar/>
                 </div>
             </PageHeader>
-            <PageContent className='overflow-hidden'>   
-                <div className='max-w-[600px] flex flex-col gap-10 my-16 mx-8'>
-                    <ResourcesInput
-                        value={name} 
-                        setValue={setName}
-                        placeholder="Enter Client Name"
-                        label='horse name'
-                        type='text'
-                    />
-                    <ResourcesInput
-                        value={note} 
-                        setValue={setNote}
-                        placeholder="Enter Note"
-                        label='Note'
-                        type='text'
-                    />
-                    <ResourcesInput
-                        value={age} 
-                        setValue={setAge}
-                        placeholder="Enter Client Age"
-                        label='age'
-                        type='number'
-                    />
-                    <ResourcesDropList
-                        listValue={gender}
-                        setListValue={setGender}
-                        options={genders}
-                        placeholder='Select Client Gender'
-                        label='gender'
-                    />
-                    <ResourcesDropList
-                        listValue={groom}
-                        setListValue={setGroom}
-                        options={genders}
-                        placeholder='Select Groom'
-                        label='groom'
-                        
-                    />
-                    <ResourcesDropList
-                        listValue={client}
-                        setListValue={setClient}
-                        options={[]}
-                        placeholder='Select Client '
-                        label='client'
-                        
-                    />
-                </div>
-                <div className='w-full flex justify-center'>
-                    <button disabled={!isInputsValid} className='w-[350px] text-primary duration-300 hover:bg-primary hover:text-smokey-white font-semibold text-2xl capitalize rounded-2xl h-[60px] border border-primary'>
-                        add new client 
-                    </button>
-                </div>
-
-           
-            </PageContent>
+            <AddNewHorsePageContent
+                isInputsValid={isInputsValid}
+                name={name}
+                setName={setName}
+                client={client}
+                setClient={setClient}
+                age={age}
+                setAge={setAge}
+                gender={gender}
+                setGender={setGender}
+                groom={groom}
+                setGroom={setGroom}
+                note={note}
+                setNote={setNote}
+                handleAddNewHorse={mutate}
+                clients={clients}
+                horses={horses}
+                horseCategory={horseCategory}
+                setHorseCategory={setHorseCategory}
+                horseCategories={horseCategories}
+            />
         </>
     )
 }

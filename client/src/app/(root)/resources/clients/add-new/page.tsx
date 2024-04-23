@@ -4,12 +4,16 @@ import AddNewClientPageContent from '@/components/content/resources/clients/add-
 import Avatar from '@/components/shared/all/Avatar'
 import BackButton from '@/components/shared/all/BackButton'
 import PageHeader from '@/components/shared/all/PageHeader'
+import { clientsRoute } from '@/constants/api'
 import { genders } from '@/constants/genders'
-
-
-
-import { toNameAndId } from '@/utils/toNameAndId'
+import { usePopUp } from '@/hooks/usePopUp'
+import { httpPostService } from '@/services/httpPostService'
+import { statusCodeIndicator } from '@/utils/statusCodeIndicator'
+import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
+import { IoMdCheckmarkCircleOutline } from 'react-icons/io'
+import { MdErrorOutline } from 'react-icons/md'
+import { useMutation } from 'react-query'
 
 function AddNewClientPage() {
 
@@ -25,7 +29,53 @@ function AddNewClientPage() {
     const isInputsValid = Boolean(name && email && phone && age && gender && membershipStatus)
 
 
-    
+    const body = {
+        username:name,
+        email,
+        gender:gender?.name,
+        membershipStatus:membershipStatus?.name,
+        membershipType:membershipType?.name,
+        phone,
+        age,
+    }
+    const popUp = usePopUp()
+    const router = useRouter()
+
+    const {mutate} = useMutation({
+        mutationFn:async () => httpPostService(clientsRoute,JSON.stringify(body)),
+        mutationKey:["addNewClient"],
+        onSuccess:async(res)=> {
+            const status = statusCodeIndicator(res.status_code) === "success" 
+            
+            if (status) {
+                popUp({
+                    popUpMessage:"client updated successfully",
+                    popUpTitle:"client updated ",
+                    popUpIcon:<IoMdCheckmarkCircleOutline />,
+                    showPopUp:true,
+                    popUpType:"alert"
+                })
+                router.push("/resources/clients")
+            }else {
+                popUp({
+                    popUpMessage:res.message,
+                    popUpTitle:"failed ",
+                    popUpIcon:<IoMdCheckmarkCircleOutline />,
+                    showPopUp:true,
+                    popUpType:"alert"
+                })
+            }
+        },
+        onError:()=> {
+            popUp({
+                popUpMessage:"failed to add client",
+                popUpTitle:"failed",
+                popUpIcon:<MdErrorOutline />,
+                showPopUp:true,
+                popUpType:"alert"
+            })
+        }
+    })
     return (
         <>
             <PageHeader>
@@ -56,8 +106,7 @@ function AddNewClientPage() {
                 membershipType={membershipType}
                 setMembershipType={setMembershipType}
                 isInputsValid={isInputsValid}
-                genders={genders}
-                
+                handleAddNewClient={mutate}
             />
         </>
     )

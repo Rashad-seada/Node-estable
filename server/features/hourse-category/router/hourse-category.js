@@ -93,6 +93,36 @@ router.get("/", async (req, res) => {
       });
 });
 
+router.get("/:id",async(req,res)=>{
+
+  HourseCategory.findById(req.params.id)
+  .then((docs)=>{
+    if(docs){
+      res.status(200).json({
+        status_code: 1,
+        message: "Success Process  To Get Hourse category By Id",
+        data: docs,
+      });
+    }else{
+      res.status(404).json({
+        status_code: ApiErrorCode.notFound,
+        message: " Hourse Category Id Not Found  ",
+        data: null,
+      });
+    }
+  })
+  .catch((error)=>{
+    res.status(400).json({
+      status_code: 0,
+      message: "There are server internal error",
+      data: null,
+      error: {
+        message: error.message,
+      },
+    });
+  })
+})
+
 router.delete("/:id", async (req, res) => {
   HourseCategory
       .findByIdAndDelete(req.params.id)

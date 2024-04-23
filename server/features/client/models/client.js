@@ -38,7 +38,6 @@ const ClientSchema = mongoose.Schema({
         required: false,
         default : "inactive"
     },
-
     courses : {
         type : [String],
         required : false,

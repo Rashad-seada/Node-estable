@@ -19,12 +19,11 @@ const ClientSchema = mongoose.Schema({
         required:true,
     },
 
-    gender:{
+    gender: {
         type: String,
+        required: true,
         enum: ['male', 'female'], // Define your enum values here
-        required: true
-
-    },
+      },
 
     membershipStatus : {
         type: String,
@@ -39,7 +38,6 @@ const ClientSchema = mongoose.Schema({
         required: false,
         default : "inactive"
     },
-
     courses : {
         type : [String],
         required : false,
@@ -78,6 +76,8 @@ function updateValidation(obj){
         membershipStatus : joi.string().valid('active', 'inactive').required(),
         membershipType : joi.string().valid('family', 'individual').required(),
         age: joi.number().min(1).max(100),
+        gender : joi.string().valid('male', 'female').required(),
+
     })
     return schema.validate(obj);
 }

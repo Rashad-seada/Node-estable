@@ -43,7 +43,7 @@ router.get("/:id",HourseController.getHourseById);
  * @method put
  * @access public
  */
-router.put("/:id",HourseController.updateHourse)
+router.patch("/:id",HourseController.updateHourse)
 
 /**
  * @desc  Hourse

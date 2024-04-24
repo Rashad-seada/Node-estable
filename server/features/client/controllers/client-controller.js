@@ -124,7 +124,6 @@ class ClientController {
         try {
             {
 
-                console.log(req.query.page)
                 // Pagination parameters
                 const pageSize = 10; // Number of documents per page
           
@@ -379,6 +378,6 @@ class ClientController {
     }
     
 
-} 
+}
 
 module.exports = ClientController;

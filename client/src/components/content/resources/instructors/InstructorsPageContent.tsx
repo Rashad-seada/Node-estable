@@ -11,7 +11,7 @@ type ClientsPageProps = {
 }
 
 function InstructorsPageContent({isDataHere,response,refetch}:ClientsPageProps) {
-    const instructors = response?.data
+    const instructors = response?.data.instractor
     
     return (
         

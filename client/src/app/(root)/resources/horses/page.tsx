@@ -20,7 +20,6 @@ function HorsesPage() {
         queryKey:['page',pageNumber]
     })
 
-    
     const isDataHere = Boolean(response?.data?.hourse) && isSuccess
 
     let listOptions = isDataHere ? toNameAndId(response?.data?.hourse,"hourseName","_id"): []

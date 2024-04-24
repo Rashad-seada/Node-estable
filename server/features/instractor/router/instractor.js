@@ -1,23 +1,38 @@
 const express = require("express");
 const { instractor } = require("../model/instractor");
-const ApiErrorCode = require("../../../core/errors/apiError") 
+const ApiErrorCode = require("../../../core/errors/apiError");
 
 router = express.Router();
 
 router
   .route("/")
   .get(async (req, res) => {
-    await instractor
+    const pageSize = 10; // Number of documents per page
+
+    // Calculate the number of documents to skip
+    const skip = (req.query.page - 1) * pageSize;
+
+    const regexQuery = new RegExp(req.query.query, "i"); // Case-insensitive regex query
+
+    instractor
       .find()
       .select("-__v")
-      
-      .then((docs) => {
+      .skip(skip) // Skip documents
+      .limit(pageSize)
+      .then(async (docs) => {
+        const totalRecords = await instractor.countDocuments();
+
+        const maxPages = Math.ceil(totalRecords / pageSize);
+
         if (docs) {
           res.status(200).json({
             status_code: 1,
             message: "Success to get instractors",
-            data: docs,
-            error: null,
+            data: {
+              current_page: parseInt(req.query.page) || 1,
+              max_pages: maxPages,
+              instractor: docs,
+            },
           });
         } else {
           res.status(404).json({
@@ -122,52 +137,52 @@ router
       });
   })
   .patch(async (req, res) => {
-    let Instractor = await  instractor.findById(req.params.id)
-  
-    if(Instractor){
-        try {
+    let Instractor = await instractor.findById(req.params.id);
 
-
-            const newInstractor = await  instractor.findByIdAndUpdate(req.params.id,{
-                $set:{
-                    instractorName:req.body.instractorName,
-                    email:req.body.email,
-                    catigoryId:req.body.catigoryId,
-                    age:req.body.age,
-                    gender:req.body.gender,
-                    photo:req.body.photo,
-                } 
-              },{ new:true})
-
-              return  res.status(200).json({
-                status_code: 1,
-                message: "Updated Success",
-                data: newInstractor,
-                error: {
-                  message: null,
-        }})
-
-        } catch (error) {
-            res.status(500).json({
-                status_code: ApiErrorCode.internalError,
-                message: "Validation Error",
-                data: null,
-                error: {
-                  message: error.message,
-                },
-            });
-        }
-    }else{
-
-        res.status(404).json({
-            status_code: ApiErrorCode.notFound,
-            message: "didn't found the instractor",
-            data: null,
-            error: {
-              message: error.message,
+    if (Instractor) {
+      try {
+        const newInstractor = await instractor.findByIdAndUpdate(
+          req.params.id,
+          {
+            $set: {
+              instractorName: req.body.instractorName,
+              email: req.body.email,
+              catigoryId: req.body.catigoryId,
+              age: req.body.age,
+              gender: req.body.gender,
+              photo: req.body.photo,
             },
-          });
+          },
+          { new: true }
+        );
 
+        return res.status(200).json({
+          status_code: 1,
+          message: "Updated Success",
+          data: newInstractor,
+          error: {
+            message: null,
+          },
+        });
+      } catch (error) {
+        res.status(500).json({
+          status_code: ApiErrorCode.internalError,
+          message: "Validation Error",
+          data: null,
+          error: {
+            message: error.message,
+          },
+        });
+      }
+    } else {
+      res.status(404).json({
+        status_code: ApiErrorCode.notFound,
+        message: "didn't found the instractor",
+        data: null,
+        error: {
+          message: error.message,
+        },
+      });
     }
   })
   .delete(async (req, res) => {

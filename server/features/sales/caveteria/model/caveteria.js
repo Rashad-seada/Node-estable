@@ -1,34 +1,53 @@
 
 const mongoose = require("mongoose")
-
+const joi = require("joi")
 const caveteriaSchema = mongoose.Schema({
-    menueItem:{
-        type:String
+    menueItemName:{
+        type:String,
+        required:false
     },
     quantity:{
-        type:String
+        type:String,
+        required:false
     },
     type:{
-        type:String
+        type:String,
+        required:false
     },
     price:{
-        type:Number
+        type:Number,
+        required:false
     },
     date:{
-        type:Date
+        type:Date,
+        required:false
     },
     itemName:{
-        type:String
+        type:String,
+        required:false
     },
-    payment:{},
+    payment:{
+
+    },
     client:{
-        type:String
+        type:String,
+        required:false
     },
 })
 
-const caveteria = mongoose.Schema("caveteria",caveteriaSchema)
+const caveteria = mongoose.model("caveteria",caveteriaSchema)
 
-
+function createMenueItemValidation(obj){
+    const schema =joi.object({
+        menueItemName:joi.string().required(),
+        quantity:joi.string().required(),
+        type : joi.string().required(),
+        price :joi.number().required() ,
+        date : joi.date().required(),
+    })
+    return schema.validate(obj)
+}
 module.exports ={
-    caveteria
+    caveteria,
+    createMenueItemValidation
 }

@@ -3,15 +3,18 @@ import ClientsPageContent from '@/components/content/resources/clients/ClientsPa
 import ClientsPageHeader from '@/components/content/resources/clients/ClientsPageHeader'
 import { useGetClients } from '@/hooks/useGetClients'
 import { toNameAndId } from '@/utils/toNameAndId'
+import { useSearchParams } from 'next/navigation'
 import React, { useState } from 'react'
 
 function ClientsPage() {
 
-    const clientsRoutePagination = `?page=1`
+    const searchParams = useSearchParams()
+    const pageNumber = searchParams.get("page") || "1"
+    
     const [listValue,setListValue] = useState<NameAndId>(null)
 
     const {response,isSuccess,refetch}:any = useGetClients({
-        pagination:clientsRoutePagination
+        pagination:`?page=${pageNumber}`
     })
 
     const isDataHere = Boolean(response?.data?.client) && isSuccess

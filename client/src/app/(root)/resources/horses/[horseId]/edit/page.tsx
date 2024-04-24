@@ -51,10 +51,11 @@ function HorseEditPage() {
                 setName(data.hourseName)
                 setNote(data.note)
                 let category = await getHorseCategoryById(data.catigoryId[0])
-                setHorseCategory({
+                category = Boolean(category) ? ({
                     name:category.displayName,
                     id:category._id
-                })
+                }) : null
+                setHorseCategory(category)
                 const client = await getClientById(data.clientId)
                 setClient({
                     name:client.username,

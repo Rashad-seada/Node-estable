@@ -10,7 +10,7 @@ export function useGetClients({
 }:QueryReqParameters):any {
     const queryOptions:any = {
         queryKey:["clients"],
-        queryFn:async () => httpGetServices(`${clientsRoute}${pagination? pagination : ''}`),
+        queryFn:async () => httpGetServices(`${clientsRoute}${Boolean(pagination)? pagination : ''}`),
     }
     Boolean(onSuccess) ? queryOptions.onSuccess = onSuccess : null
     Boolean(onError) ? queryOptions.onError = onError : null

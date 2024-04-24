@@ -5,6 +5,7 @@ import ReactQueryProvider from "@/components/providers/ReactQueryProvider";
 import AuthProvider from "@/context/AuthContext";
 import ReactToastifyProvider from "@/components/providers/ReactToastifyProvider";
 import PopUpProvider from "@/context/PopUpContext";
+import { Poppins } from 'next/font/google'
 
 export const metadata: Metadata = {
     title: "Saifi Stable",

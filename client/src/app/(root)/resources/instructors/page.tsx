@@ -5,18 +5,21 @@ import InstructorsPageHeader from '@/components/content/resources/instructors/In
 import { instructorsRoute } from '@/constants/api'
 import { httpGetServices } from '@/services/httpGetService'
 import { toNameAndId } from '@/utils/toNameAndId'
+import { useSearchParams } from 'next/navigation'
 import React, { useState } from 'react'
 import { useQuery } from 'react-query'
 
 function InstructorsPage() {
 
 
-    const instructorsRoutePagination = `${instructorsRoute}?page=1`
+    const searchParams = useSearchParams()
+    const pageNumber = searchParams.get("page") || "1"
+
     const [listValue,setListValue] = useState<any>(null)
 
     const {data:response,isSuccess,refetch} = useQuery({
         queryKey:["instructors"],
-        queryFn:async () => httpGetServices(instructorsRoutePagination)
+        queryFn:async () => httpGetServices(`${instructorsRoute}?page=${pageNumber}`)
     })
 
     const isDataHere = Boolean(response?.data) && isSuccess

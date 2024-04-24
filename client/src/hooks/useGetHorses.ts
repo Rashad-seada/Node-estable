@@ -9,7 +9,7 @@ export function useGetHorses({
 }:QueryReqParameters) {
     let queryOptions:any = {
         queryKey:["horses"],
-        queryFn:async () => httpGetServices(`${horsesRoute}${pagination? pagination : ''}`)
+        queryFn:async () => httpGetServices(`${horsesRoute}${Boolean(pagination)? pagination : ''}`)
     }
     Boolean(onSuccess) ? queryOptions.onSuccess = onSuccess : null
     Boolean(onError) ? queryOptions.onError = onError : null

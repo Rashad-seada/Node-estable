@@ -4,15 +4,18 @@ import HorsesPageContent from '@/components/content/resources/horses/HorsesPageC
 import HorsesPageHeader from '@/components/content/resources/horses/HorsesPageHeader'
 import { useGetHorses } from '@/hooks/useGetHorses'
 import { toNameAndId } from '@/utils/toNameAndId'
+import { useSearchParams } from 'next/navigation'
 import React, { useState } from 'react'
 
 function HorsesPage() {
 
-    const horsesRoutePagination = `?page=1`
+    const searchParams = useSearchParams()
+    const pageNumber = searchParams.get("page") || "1"
+
     const [listValue,setListValue] = useState<any>(null)
 
     const {response,isSuccess,refetch}:any = useGetHorses({
-        pagination:horsesRoutePagination
+        pagination:`?page=${pageNumber}`
     })
     
     const isDataHere = Boolean(response?.data?.hourse) && isSuccess

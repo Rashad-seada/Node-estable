@@ -14,7 +14,6 @@ function HorsesPage() {
     const {response,isSuccess,refetch}:any = useGetHorses({
         pagination:horsesRoutePagination
     })
-    
     const isDataHere = Boolean(response?.data?.hourse) && isSuccess
 
     let listOptions = isDataHere ? toNameAndId(response?.data?.hourse,"hourseName","_id"): []

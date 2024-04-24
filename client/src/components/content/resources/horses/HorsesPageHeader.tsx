@@ -27,7 +27,7 @@ function HorsesPageHeader({dropDownListOptions,dropDownListValue,setDropDownList
                         />
                     </div>
 
-                    <div className='w-[150px] cursor-pointer bg-primary rounded-lg flex justify-center items-center '>
+                    <div className='w-fit p-4 cursor-pointer bg-primary rounded-lg flex justify-center items-center '>
                         <Link className='flex w-full gap-2 text-smokey-white text-lg h-full items-center justify-center' href='/resources/horses/add-new'>
                             <GrAdd />
                             <span>add horse</span>

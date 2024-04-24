@@ -69,7 +69,7 @@ function ClientEditPage() {
                 membershipType:membershipType?.name||null
             }
         )),
-        mutationKey:["addNewClient"],
+        mutationKey:["updateClient"],
         onSuccess:async(res)=> {
             const status = statusCodeIndicator(res.status_code) === "success" 
             

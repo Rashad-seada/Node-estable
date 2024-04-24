@@ -15,6 +15,7 @@ import { toNameAndId } from "@/utils/toNameAndId"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { IoMdCheckmarkCircleOutline } from "react-icons/io"
+import { MdErrorOutline } from "react-icons/md"
 import { useMutation, useQuery } from "react-query"
 
 function AddNewHorsePage() {
@@ -44,6 +45,7 @@ function AddNewHorsePage() {
             groom:groom?.id,
             catigoryId:horseCategory?.id,
         })),
+        mutationKey:["addNewHorse"],
         onSuccess:async (res) => {
             const status = statusCodeIndicator(res.status_code) === "success" 
             
@@ -60,7 +62,7 @@ function AddNewHorsePage() {
                 popUp({
                     popUpMessage:res.message,
                     popUpTitle:"failed ",
-                    popUpIcon:<IoMdCheckmarkCircleOutline />,
+                    popUpIcon:<MdErrorOutline />,
                     showPopUp:true,
                     popUpType:"alert"
                 })

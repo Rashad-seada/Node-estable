@@ -2,6 +2,7 @@
 
 import HorsesPageContent from '@/components/content/resources/horses/HorsesPageContent'
 import HorsesPageHeader from '@/components/content/resources/horses/HorsesPageHeader'
+import PaginationButtons from '@/components/shared/all/PaginationButtons'
 import { useGetHorses } from '@/hooks/useGetHorses'
 import { toNameAndId } from '@/utils/toNameAndId'
 import { useSearchParams } from 'next/navigation'
@@ -15,8 +16,10 @@ function HorsesPage() {
     const [listValue,setListValue] = useState<any>(null)
 
     const {response,isSuccess,refetch}:any = useGetHorses({
-        pagination:`?page=${pageNumber}`
+        pagination:`?page=${pageNumber}`,
+        queryKey:['page',pageNumber]
     })
+
     
     const isDataHere = Boolean(response?.data?.hourse) && isSuccess
 
@@ -24,17 +27,28 @@ function HorsesPage() {
     
     return (
         <>
-            <HorsesPageHeader 
-                setDropDownListValue={setListValue} 
-                dropDownListValue={listValue} 
-                dropDownListOptions={listOptions}
-            />
+            <div className='w-full h-[calc(100%-80px)]'>
+                <HorsesPageHeader 
+                    setDropDownListValue={setListValue} 
+                    dropDownListValue={listValue} 
+                    dropDownListOptions={listOptions}
+                />
 
-            <HorsesPageContent 
-                isDataHere={isDataHere} 
-                response={response}
-                refetch={refetch}
-            />
+                <HorsesPageContent 
+                    isDataHere={isDataHere} 
+                    response={response}
+                    refetch={refetch}
+                />
+            </div>
+            {
+                isDataHere ? (
+                    <PaginationButtons
+                        maxPages={response.data.max_pages}
+                        currentPage={response.data.current_page}
+
+                    />
+                ): <></>
+            }
         </>
     )
 }

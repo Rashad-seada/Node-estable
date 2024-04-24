@@ -22,4 +22,5 @@ type QueryReqParameters = {
     pagination?:string,
     onSuccess?:((data:any)=>any)|null,
     onError?:((data:any)=>any)|null,
+    queryKey?:any[]
 } 

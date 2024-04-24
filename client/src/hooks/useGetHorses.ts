@@ -5,7 +5,8 @@ import { useQuery } from "react-query";
 export function useGetHorses({
     pagination,
     onSuccess,
-    onError
+    onError,
+    queryKey
 }:QueryReqParameters) {
     let queryOptions:any = {
         queryKey:["horses"],
@@ -13,6 +14,7 @@ export function useGetHorses({
     }
     Boolean(onSuccess) ? queryOptions.onSuccess = onSuccess : null
     Boolean(onError) ? queryOptions.onError = onError : null
+    Boolean(queryKey) ? queryOptions.queryKey = [...queryKey,queryOptions.queryKey] : null
 
     const {data:response,isSuccess,refetch} = useQuery(queryOptions)
     return {response,isSuccess,refetch}

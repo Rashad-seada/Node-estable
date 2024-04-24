@@ -6,14 +6,16 @@ import { useQuery } from "react-query";
 export function useGetClients({
     pagination,
     onSuccess,
-    onError
+    onError,
+    queryKey
 }:QueryReqParameters):any {
-    const queryOptions:any = {
+    let queryOptions:any = {
         queryKey:["clients"],
         queryFn:async () => httpGetServices(`${clientsRoute}${Boolean(pagination)? pagination : ''}`),
     }
     Boolean(onSuccess) ? queryOptions.onSuccess = onSuccess : null
     Boolean(onError) ? queryOptions.onError = onError : null
+    Boolean(queryKey) ? queryOptions.queryKey = [...queryKey,queryOptions.queryKey] : null
 
     const {data:response,isSuccess,refetch} = useQuery(queryOptions)
     return {response,isSuccess,refetch}

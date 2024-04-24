@@ -2,6 +2,7 @@
 
 import InstructorsPageContent from '@/components/content/resources/instructors/InstructorsPageContent'
 import InstructorsPageHeader from '@/components/content/resources/instructors/InstructorsPageHeader'
+import PaginationButtons from '@/components/shared/all/PaginationButtons'
 import { instructorsRoute } from '@/constants/api'
 import { httpGetServices } from '@/services/httpGetService'
 import { toNameAndId } from '@/utils/toNameAndId'
@@ -18,27 +19,40 @@ function InstructorsPage() {
     const [listValue,setListValue] = useState<any>(null)
 
     const {data:response,isSuccess,refetch} = useQuery({
-        queryKey:["instructors"],
+        queryKey:["instructors","page",pageNumber],
         queryFn:async () => httpGetServices(`${instructorsRoute}?page=${pageNumber}`)
     })
 
     const isDataHere = Boolean(response?.data) && isSuccess
 
     let listOptions = isDataHere ? toNameAndId(response.data.horse,"instractorName","_id"): []
-
+    console.log(response);
+    
     return (
         <>
-            <InstructorsPageHeader 
-                setDropDownListValue={setListValue} 
-                dropDownListValue={listValue} 
-                dropDownListOptions={listOptions}
-            />
-            
-            <InstructorsPageContent
-                isDataHere={isDataHere} 
-                response={response}
-                refetch={refetch}
-            />
+            <div className='w-full h-[calc(100%-80px)]'>
+                <InstructorsPageHeader 
+                    setDropDownListValue={setListValue} 
+                    dropDownListValue={listValue} 
+                    dropDownListOptions={listOptions}
+                />
+                
+                <InstructorsPageContent
+                    isDataHere={isDataHere} 
+                    response={response}
+                    refetch={refetch}
+                />
+            </div>
+            {
+                isDataHere ? (
+                    <PaginationButtons
+                        maxPages={response.data.max_pages}
+                        currentPage={response.data.current_page}
+
+                    />
+                ): <></>
+            }
+        
         </>
     )
 }

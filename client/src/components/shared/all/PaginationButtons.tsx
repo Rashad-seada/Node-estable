@@ -11,7 +11,7 @@ function PaginationButtons({maxPages,currentPage}:PaginationButtonsProps) {
 
 
     const router = useRouter()
-    const isForwardBtnDisabled = currentPage === maxPages
+    const isForwardBtnDisabled = currentPage >= maxPages
     const isPreviousBtnDisabled = currentPage === 1
     
     const goPrevious = () => {

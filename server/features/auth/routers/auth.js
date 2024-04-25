@@ -11,8 +11,17 @@ const express = require("express");
 router = express.Router();
 
 router.post("/login", async (req, res ,next) => {
-
-  User.findOne({ email: req.body.email })
+  const { error } = validationLoginUser(req.body);
+  if (error) {
+    res.status(400).json({
+      status_code: ApiErrorCode.validation,
+      message: error.message,
+      error: {
+        message: error.message,
+      },
+    });
+  }else {
+    User.findOne({ email: req.body.email })
     .then( async(user) => {
       if (user) {
         const { password, __v, ...other } = user._doc;
@@ -77,9 +86,13 @@ router.post("/login", async (req, res ,next) => {
         },
       });
     });
+  }
+
+  
 });
 
 router.patch("/update-admin", verifyTokenAndAdmin, async (req, res) => {
+  
   User.findByIdAndUpdate(
     req.user.id,
     {

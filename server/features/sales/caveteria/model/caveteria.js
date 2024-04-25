@@ -2,7 +2,7 @@
 const mongoose = require("mongoose")
 const joi = require("joi")
 const caveteriaSchema = mongoose.Schema({
-    menueItemName:{
+    menuItemName:{
         type:String,
         required:false
     },
@@ -22,24 +22,14 @@ const caveteriaSchema = mongoose.Schema({
         type:Date,
         required:false
     },
-    itemName:{
-        type:String,
-        required:false
-    },
-    payment:{
 
-    },
-    client:{
-        type:String,
-        required:false
-    },
 })
 
 const caveteria = mongoose.model("caveteria",caveteriaSchema)
 
 function createMenueItemValidation(obj){
     const schema =joi.object({
-        menueItemName:joi.string().required(),
+        menuItemName:joi.string().required(),
         quantity:joi.string().required(),
         type : joi.string().required(),
         price :joi.number().required() ,

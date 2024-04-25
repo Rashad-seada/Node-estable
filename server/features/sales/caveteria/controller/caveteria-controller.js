@@ -12,19 +12,24 @@ class caveteriaController {
 
 
     caveteria
-      .find()
+      .find({
+        $or: [
+          { type: { $regex: regexQuery } },
+          { menuItemName: { $regex: regexQuery } },
+        ]
+      })
       .skip(skip) // Skip documents
       .limit(pageSize)
-      .then((docs) => {
+      .then(async (docs) => {
         if ((docs)) {
-          const totalRecords =  caveteria.countDocuments();
-    
-              const maxPages = Math.ceil(totalRecords / pageSize);
-    
+          const totalRecords = await caveteria.countDocuments();
+
+          const maxPages = Math.ceil(totalRecords / pageSize);
+
           res.status(200).json({
             status_code: 1,
             message: "Success To Get All Menu Iten",
-            data: {
+            caveteriaItems: {
               current_page: parseInt(req.query.page) || 1,
               max_pages: maxPages,
               hourse: docs,
@@ -134,5 +139,4 @@ class caveteriaController {
   static async getAllCosumedtItem(req, res) {}
   static async createNewCosumedMenueItem(req, res) {}
 }
-
 module.exports = caveteriaController;

@@ -2,14 +2,33 @@ const { caveteria,createMenueItemValidation } = require("../model/caveteria");
 const ApiErrorCode = require("../../../../core/errors/apiError");
 class caveteriaController {
   static async getAllMenueItem(req, res) {
+     // Pagination parameters
+     const pageSize = 10; // Number of documents per page
+    
+     // Calculate the number of documents to skip
+     const skip = (req.query.page - 1) * pageSize;
+
+     const regexQuery = new RegExp(req.query.query, 'i'); // Case-insensitive regex query
+
+
     caveteria
-      .findOne({ menueItemName: req.body.menueItemName })
+      .find()
+      .skip(skip) // Skip documents
+      .limit(pageSize)
       .then((docs) => {
-        if (docs) {
+        if ((docs)) {
+          const totalRecords =  caveteria.countDocuments();
+    
+              const maxPages = Math.ceil(totalRecords / pageSize);
+    
           res.status(200).json({
             status_code: 1,
             message: "Success To Get All Menu Iten",
-            data: docs,
+            data: {
+              current_page: parseInt(req.query.page) || 1,
+              max_pages: maxPages,
+              hourse: docs,
+            },
             error: null,
           });
         } else {
@@ -45,7 +64,7 @@ class caveteriaController {
           })
     }else{
         caveteria
-      .findOne({ menueItemName: req.body.menueItemName })
+      .find({ menueItemName: req.body.menueItemName })
       .then( (docs) => {
 
         if (docs) {
@@ -92,6 +111,25 @@ class caveteriaController {
       });
     }
     
+  }
+  static async updateMenuItem (req,res){
+
+    caveteria
+    .then(async(docs)=>{
+      if(docs){
+      await  caveteria .findByIdAndUpDate( req.params.id,{
+        $set:{
+          
+        } 
+      },{ new:true})
+      
+
+
+      }
+    })
+    .catch((error)=>{
+
+    })
   }
   static async getAllCosumedtItem(req, res) {}
   static async createNewCosumedMenueItem(req, res) {}

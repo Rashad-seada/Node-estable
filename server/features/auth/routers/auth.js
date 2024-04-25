@@ -10,17 +10,7 @@ const {
 const express = require("express");
 router = express.Router();
 
-router.post("/login", async (req, res) => {
-  const { error } = validationLoginUser(req.body);
-  if (error) {
-    res.status(400).json({
-      status_code: ApiErrorCode.validation,
-      message: error.message,
-      error: {
-        message: error.message,
-      },
-    });
-  }
+router.post("/login", async (req, res ,next) => {
 
   User.findOne({ email: req.body.email })
     .then( async(user) => {
@@ -30,8 +20,6 @@ router.post("/login", async (req, res) => {
           req.body.password,
           user.password
         );
-        
-
         if (validPassword) {
           const token = jwt.sign(
             {
@@ -92,7 +80,6 @@ router.post("/login", async (req, res) => {
 });
 
 router.patch("/update-admin", verifyTokenAndAdmin, async (req, res) => {
-  
   User.findByIdAndUpdate(
     req.user.id,
     {

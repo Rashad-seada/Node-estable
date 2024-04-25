@@ -14,7 +14,8 @@ const userSchema =new mongoose.Schema({
    },
    password:{
     type:String,
-    required:true
+    required:true,
+    minlength: [6,"Password is less than 6 character "]
    },
    isAdmin:{
     type:Boolean,
@@ -50,7 +51,7 @@ userSchema.methods.generateToken = function(){
 function validationLoginUser(obj){
     const schema= joi.object({
        email:joi.string().trim().min(5).max(100).required(),
-       password:joi.string().min(6).required(),
+       password:joi.string().min(6).max(100).required(),
     })
     return schema.validate(obj);
 }

@@ -21,11 +21,11 @@ const caveteriaSchema = mongoose.Schema({
     date:{
         type:Date,
         required:false
-    },
+    }
 
-})
+},{ timestamps: true })
 
-const caveteria = mongoose.model("caveteria",caveteriaSchema)
+const Caveteria = mongoose.model("Caveteria",caveteriaSchema)
 
 function createMenueItemValidation(obj){
     const schema =joi.object({
@@ -38,6 +38,6 @@ function createMenueItemValidation(obj){
     return schema.validate(obj)
 }
 module.exports ={
-    caveteria,
+    Caveteria,
     createMenueItemValidation
 }

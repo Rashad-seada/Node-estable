@@ -1,7 +1,7 @@
-const { Caveteria, createMenueItemValidation } = require("../model/caveteria");
+const { Consume, creatconsumValidation } = require("../model/consumeModel");
 const ApiErrorCode = require("../../../../core/errors/apiError");
-class caveteriaController {
-  static async getAllMenueItem(req, res) {
+class consumeController {
+  static async getAllConsume(req, res) {
     // Pagination parameters
     const pageSize = 10; // Number of documents per page
 
@@ -10,7 +10,7 @@ class caveteriaController {
 
     const regexQuery = new RegExp(req.query.query, "i"); // Case-insensitive regex query
 
-    Caveteria.find({
+    Consume.find({
       $or: [
         { type: { $regex: regexQuery } },
         { menuItemName: { $regex: regexQuery } },
@@ -20,13 +20,13 @@ class caveteriaController {
       .limit(pageSize)
       .then(async (docs) => {
         if (docs) {
-          const totalRecords = await Caveteria.countDocuments();
+          const totalRecords = await Consume.countDocuments();
 
           const maxPages = Math.ceil(totalRecords / pageSize);
 
           res.status(200).json({
             status_code: 1,
-            message: "Success To Get All Menu Iten",
+            message: "Success To Get All Menu Item",
             caveteriaItems: {
               current_page: parseInt(req.query.page) || 1,
               max_pages: maxPages,
@@ -53,21 +53,21 @@ class caveteriaController {
         });
       });
   }
-  static async getMenuItemById(req, res) {
+  static async getConsumeById(req, res) {
 
-    await Caveteria.findById(req.params.id)
+    await Consume.findById(req.params.id)
     .then((docs)=>{
       if(docs){
         res.status(200).json({
           status_code: 0,
-          message: "Success to get MenuItem By Id",
+          message: "Success to get consumed By Id",
           data: docs,
         });
 
       }else{
         res.status(404).json({
           status_code: ApiErrorCode,
-          message: "Can`t Found Menu Item Name",
+          message: "Can`t Found consumed Item Id",
           data: null,
         });
       }
@@ -83,46 +83,46 @@ class caveteriaController {
 
     })
   }
-  static async createNewMenueItem(req, res) {
-    const { error } = createMenueItemValidation(req.body);
+  static async createNewConsume(req, res) {
+    const { error } = creatconsumValidation(req.body);
     if (error) {
       res.status(400).json({
         status_code: ApiErrorCode,
         message: "Error Validation",
         data: null,
         error: {
-          error: message.error,
+          error: error.message,
         },
       });
     } else {
-      Caveteria.find({ menuItemName: req.body.menuItemName })
+        Consume.find({ menuItemName: req.body.menuItemName })
         .then((docs) => {
           if (!docs) {
             res.status(400).json({
               status_code: ApiErrorCode.validation,
-              message: "menuItemName is already found",
+              message: "consumed is already found",
               data: null,
             });
           } else {
-            new Caveteria({
-              menuItemName: req.body.menuItemName,
-              quantity: req.body.quantity,
-              type: req.body.type,
-              price: req.body.price,
-              date: req.body.date,
+            new Consume({
+                consumedItemName: req.body.consumedItemName,
+                clientName: req.body.clientName,
+                consumedQuantity: req.body.consumedQuantity,
+                consumedPrice: req.body.consumedPrice,
+                consumedPayment: req.body.consumedPayment,
             })
               .save()
               .then((docs) => {
                 res.status(200).json({
                   status_code: 1,
-                  message: "menue item created successfuly",
+                  message: "consumed item created successfuly",
                   data: docs,
                 });
               })
               .catch((error) => {
                 res.status(500).json({
                   status_code: ApiErrorCode.internalError,
-                  message: "menue item Already Found",
+                  message: "consumed item Already Found",
                   error: {
                     error: error.message,
                   },
@@ -141,19 +141,19 @@ class caveteriaController {
         });
     }
   }
-  static async updateMenuItem(req, res) {
-    Caveteria.find({ id: req.params.id })
+  static async updateConsume(req, res) {
+    Consume.find({ id: req.params.id })
       .then(async (docs) => {
         if (docs) {
-          await Caveteria.findByIdAndUpdate(
+          await Consume.findByIdAndUpdate(
             req.params.id,
             {
               $set: {
-                menuItemName: req.body.menuItemName,
-                quantity: req.body.quantity,
-                type: req.body.type,
-                price: req.body.price,
-                date: req.body.date,
+                consumedItemName: req.body.consumedItemName,
+                clientName: req.body.clientName,
+                consumedQuantity: req.body.consumedQuantity,
+                consumedPrice: req.body.consumedPrice,
+                consumedPayment: req.body.consumedPayment,
               },
             },
             { new: true }
@@ -194,8 +194,8 @@ class caveteriaController {
         });
       });
   }
-  static async deleteMenuItem(req, res) {
-    await Caveteria.findByIdAndDelete(req.params.id)
+  static async deleteConsume(req, res) {
+    await Consume.findByIdAndDelete(req.params.id)
     .then((docs)=>{
       if(docs){
         res.status(200).json({
@@ -223,4 +223,4 @@ class caveteriaController {
     })
   }
 }
-module.exports = caveteriaController;
+module.exports ={ consumeController};

@@ -11,3 +11,6 @@ export const getAdminRoute = `${authRoute}/get-admin`
 export const memberShipStatusesRoute = '/membership-status'
 export const horseCategoriesRoute = "/hourse-category"
 export const memberShipTypesRoute = "/membershipType"
+export const cafeteriaRoute = "/caveteria"
+export const cafeteriaMenuItemRoute = `${cafeteriaRoute}/menuitem`
+export const cafeteriaConsumedItemRoute = `${cafeteriaRoute}/consume`

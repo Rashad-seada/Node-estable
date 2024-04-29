@@ -7,7 +7,6 @@
     --smokey-white:#f5f5f5;
     --light-grey:#797979;
     --dark-grey:#515054;
-
     text-transform: capitalize;
     background-color: var(--dark-grey);
 }
@@ -29,4 +28,8 @@ input,textarea,select {
 ::-webkit-scrollbar-thumb {
     background-color: var(--primary);
     border-radius: 9999px;
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+    width: 0;
 }

@@ -19,6 +19,8 @@ function ClientsPage() {
         queryKey:['page',pageNumber]
 
     })
+    console.log(response);
+    
 
     const isDataHere = Boolean(response?.data?.client) && isSuccess
 

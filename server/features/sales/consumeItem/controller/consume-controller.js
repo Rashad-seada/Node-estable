@@ -77,7 +77,7 @@ class consumeController {
         status_code: ApiErrorCode,
         message: "internal server error",
         error: {
-          error:message.error
+          error:error.message
         },
       });
 

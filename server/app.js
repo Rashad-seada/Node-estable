@@ -60,8 +60,8 @@ app.use("/api/membership-status",verifyTokenAndAdmin,membershipStatusRouter)
 app.use("/api/hourse-category",verifyTokenAndAdmin,hourseCategoryRouter)
 app.use("/api/instractor",verifyTokenAndAdmin,instractorRouter)
 app.use("/api/gender",verifyTokenAndAdmin,gendersRouter)
-app.use("/api/caveteria",menuItemRouter)
-app.use("/api/consume",consumeRouter)
+app.use("/api/caveteria/menuitem",menuItemRouter)
+app.use("/api/caveteria/consume",consumeRouter)
 
 app.use((req,res,next)=> {
     const error = new Error('Url route not found');

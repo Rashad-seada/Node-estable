@@ -30,7 +30,7 @@ class caveteriaController {
             caveteriaItems: {
               current_page: parseInt(req.query.page) || 1,
               max_pages: maxPages,
-              hourse: docs,
+              data: docs,
             },
             error: null,
           });

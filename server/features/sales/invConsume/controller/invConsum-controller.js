@@ -1,4 +1,4 @@
-const { invConsume ,createInventoryItemValidation } = require("../model/invConsum");
+const { invConsume ,createInvConsumeValidation } = require("../model/invConsum");
 const ApiErrorCode = require("../../../../core/errors/apiError");
 class InvConsumeController {
   static async getAllinvConsumeItem(req, res) {
@@ -84,7 +84,7 @@ class InvConsumeController {
     })
   }
   static async createNewinvConsumeItem(req, res) {
-    const { error } = createInventoryItemValidation(req.body);
+    const { error } = createInvConsumeValidation(req.body);
     if (error) {
       res.status(400).json({
         status_code: ApiErrorCode,
@@ -109,7 +109,7 @@ class InvConsumeController {
                 invConsumedQuantity: req.body.invConsumedQuantity,
                 invConsumedPrice: req.body.invConsumedPrice,
                 invConsumedMeasure: req.body.invConsumedMeasure,
-            })
+              })
               .save()
               .then((docs) => {
                 res.status(200).json({

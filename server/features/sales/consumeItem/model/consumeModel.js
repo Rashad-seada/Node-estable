@@ -8,9 +8,10 @@ const consumeSchema = new Schema({
     required: true,
   },
   clientId: {
-    type: null || String,
+    type: Schema.Types.ObjectId,
+    ref: "Client",
     required: true,
-    value:null
+
   },
   consumedQuantity: {
     type: Number,
@@ -36,9 +37,11 @@ function creatconsumValidation(obj){
     const schema =joi.object({
       consumedItemName:joi.string().required(),
       clientId:joi.string().required(),
-      consumedQuantity : joi.string().required(),
+      consumedQuantity : joi.number().required(),
       consumedPrice :joi.string().required() ,
       consumedPayment : joi.string().required().valid("pending","paid"),
+      type :joi.string().required() ,
+
     })
     return schema.validate(obj)
 }

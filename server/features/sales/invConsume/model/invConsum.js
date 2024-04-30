@@ -23,7 +23,17 @@ const invConsumeSchema = new Schema({
 }, { timestamps: true });
 
 const invConsume = mongoose.model('invConsume', invConsumeSchema);
+function createInvConsumeValidation(obj){
+  const schema =joi.object({
+    invConsumedItemName:joi.string().required(),
+    invConsumedQuantity:joi.number().required(),
+    invConsumedPrice : joi.number().required(),
+    invConsumedMeasure :joi.string().required()
 
+  })
+  return schema.validate(obj)
+}
 module.exports ={
-    invConsume
+    invConsume,
+    createInvConsumeValidation
 }

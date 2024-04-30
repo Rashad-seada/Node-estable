@@ -15,7 +15,7 @@ class consumeController {
         { type: { $regex: regexQuery } },
         { consumedItemName: { $regex: regexQuery } },
       ],
-    })
+    }).populate("clientId")
       .skip(skip) // Skip documents
       .limit(pageSize)
       .then(async (docs) => {
@@ -56,6 +56,7 @@ class consumeController {
   static async getConsumeById(req, res) {
 
     await Consume.findById(req.params.id)
+    .populate("clientId")
     .then((docs)=>{
       if(docs){
        
@@ -111,6 +112,7 @@ class consumeController {
                 consumedQuantity: req.body.consumedQuantity,
                 consumedPrice: req.body.consumedPrice,
                 consumedPayment: req.body.consumedPayment,
+                type:req.body.type
             })
               .save()
               .then((docs) => {

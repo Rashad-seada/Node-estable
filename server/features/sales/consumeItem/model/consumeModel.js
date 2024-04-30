@@ -23,9 +23,11 @@ const consumeSchema = new Schema({
   consumedPayment:{
     type: String,
     required: true,
+    enum:["pending","paied"]
   },
   type:{
-    
+    type:String,
+    required:true
   }
 }, { timestamps: true });
 
@@ -36,7 +38,7 @@ function creatconsumValidation(obj){
       clientId:joi.string().required(),
       consumedQuantity : joi.string().required(),
       consumedPrice :joi.string().required() ,
-      consumedPayment : joi.string().required(),
+      consumedPayment : joi.string().required().valid("pending","paied"),
     })
     return schema.validate(obj)
 }

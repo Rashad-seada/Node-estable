@@ -1,7 +1,7 @@
-const { Caveteria, createMenueItemValidation } = require("../model/caveteria");
+const { invConsume ,createInventoryItemValidation } = require("../model/invConsum");
 const ApiErrorCode = require("../../../../core/errors/apiError");
-class caveteriaController {
-  static async getAllMenueItem(req, res) {
+class InvConsunController {
+  static async getAllInventoryItem(req, res) {
     // Pagination parameters
     const pageSize = 10; // Number of documents per page
 
@@ -10,24 +10,24 @@ class caveteriaController {
 
     const regexQuery = new RegExp(req.query.query, "i"); // Case-insensitive regex query
 
-    Caveteria.find({
+    invConsume.find({
       $or: [
         { type: { $regex: regexQuery } },
-        { menuItemName: { $regex: regexQuery } },
+        { invConsumedItemName: { $regex: regexQuery } },
       ],
     })
       .skip(skip) // Skip documents
       .limit(pageSize)
       .then(async (docs) => {
         if (docs) {
-          const totalRecords = await Caveteria.countDocuments();
+          const totalRecords = await invConsume.countDocuments();
 
           const maxPages = Math.ceil(totalRecords / pageSize);
 
           res.status(200).json({
             status_code: 1,
-            message: "Success To Get All Menu Iten",
-            caveteriaItems: {
+            message: "Success To Get All invConsume Item",
+            invConsumeItems: {
               current_page: parseInt(req.query.page) || 1,
               max_pages: maxPages,
               data: docs,
@@ -37,7 +37,7 @@ class caveteriaController {
         } else {
           res.status(404).json({
             status_code: ApiErrorCode,
-            message: "Can1t Found Menu Item Name",
+            message: "Can1t Found Menu invConsume Item",
             data: null,
           });
         }
@@ -53,35 +53,38 @@ class caveteriaController {
         });
       });
   }
-  static async getMenuItemById(req, res) {
-    await Caveteria.findById(req.params.id)
-      .then((docs) => {
-        if (docs) {
-          res.status(200).json({
-            status_code: 0,
-            message: "Success to get MenuItem By Id",
-            data: docs,
-          });
-        } else {
-          res.status(404).json({
-            status_code: ApiErrorCode,
-            message: "Can`t Found Menu Item Name",
-            data: null,
-          });
-        }
-      })
-      .catch((error) => {
-        res.status(500).json({
-          status_code: ApiErrorCode,
-          message: "internal server error",
-          error: {
-            error: message.error,
-          },
+  static async getInventoryItemById(req, res) {
+
+    await invConsume.findById(req.params.id)
+    .then((docs)=>{
+      if(docs){
+        res.status(200).json({
+          status_code: 0,
+          message: "Success to get invConsume Item By Id",
+          data: docs,
         });
+
+      }else{
+        res.status(404).json({
+          status_code: ApiErrorCode,
+          message: "Can`t Found invConsume Item Name",
+          data: null,
+        });
+      }
+    })
+    .catch((error)=>{
+      res.status(500).json({
+        status_code: ApiErrorCode,
+        message: "internal server error",
+        error: {
+          error:message.error
+        },
       });
+
+    })
   }
-  static async createNewMenueItem(req, res) {
-    const { error } = createMenueItemValidation(req.body);
+  static async createNewInventoryItem(req, res) {
+    const { error } = createInventoryItemValidation(req.body);
     if (error) {
       res.status(400).json({
         status_code: ApiErrorCode,
@@ -92,34 +95,33 @@ class caveteriaController {
         },
       });
     } else {
-      Caveteria.find({ menuItemName: req.body.menuItemName })
+        invConsume.find({ invConsumedItemName: req.body.invConsumedItemName })
         .then((docs) => {
           if (!docs) {
             res.status(400).json({
               status_code: ApiErrorCode.validation,
-              message: "menuItemName is already found",
+              message: "invConsume is already found",
               data: null,
             });
           } else {
-            new Caveteria({
-              menuItemName: req.body.menuItemName,
-              quantity: req.body.quantity,
-              type: req.body.type,
-              price: req.body.price,
-              date: req.body.date,
+            new invConsume({
+                invConsumedItemName: req.body.invConsumedItemName,
+                invConsumedQuantity: req.body.invConsumedQuantity,
+                invConsumedPrice: req.body.invConsumedPrice,
+                invConsumedMeasure: req.body.invConsumedMeasure,
             })
               .save()
               .then((docs) => {
                 res.status(200).json({
                   status_code: 1,
-                  message: "menue item created successfuly",
+                  message: "invConsume item created successfuly",
                   data: docs,
                 });
               })
               .catch((error) => {
                 res.status(500).json({
                   status_code: ApiErrorCode.internalError,
-                  message: "menue item Already Found",
+                  message: "invConsume item Already Found",
                   error: {
                     error: error.message,
                   },
@@ -138,19 +140,18 @@ class caveteriaController {
         });
     }
   }
-  static async updateMenuItem(req, res) {
-    Caveteria.find({ id: req.params.id })
+  static async updateInventoryItem(req, res) {
+    invConsume.find({ id: req.params.id })
       .then(async (docs) => {
         if (docs) {
-          await Caveteria.findByIdAndUpdate(
+          await invConsume.findByIdAndUpdate(
             req.params.id,
             {
               $set: {
-                menuItemName: req.body.menuItemName,
-                quantity: req.body.quantity,
-                type: req.body.type,
-                price: req.body.price,
-                date: req.body.date,
+                invConsumedItemName: req.body.invConsumedItemName,
+                invConsumedQuantity: req.body.invConsumedQuantity,
+                invConsumedPrice: req.body.invConsumedPrice,
+                invConsumedMeasure: req.body.invConsumedMeasure,
               },
             },
             { new: true }
@@ -158,7 +159,7 @@ class caveteriaController {
             .then((docs) => {
               if (docs) {
                 res.status(200).json({
-                  status_code: 0,
+                  status_code:0,
                   message: "success",
                   data: docs,
                 });
@@ -175,7 +176,7 @@ class caveteriaController {
                 status_code: ApiErrorCode.validation,
                 message: "id is not found",
                 error: {
-                  error: error.message,
+                  error:error.message
                 },
               });
             });
@@ -186,37 +187,39 @@ class caveteriaController {
           status_code: ApiErrorCode.validation,
           message: "internal server Down",
           error: {
-            error: error.message,
+            error:error.message
           },
         });
       });
   }
-  static async deleteMenuItem(req, res) {
-    await Caveteria.findByIdAndDelete(req.params.id)
-      .then((docs) => {
-        if (docs) {
-          res.status(200).json({
-            status_code: 0,
-            message: "Menu item is deleted",
-            data: [],
-          });
-        } else {
-          res.status(404).json({
-            status_code: ApiErrorCode,
-            message: "Can`t Found Menu Item Id",
-            data: null,
-          });
-        }
-      })
-      .catch((error) => {
-        res.status(500).json({
-          status_code: ApiErrorCode,
-          message: "Internal server Error",
-          error: {
-            error: error.message,
-          },
+  static async deleteInventoryItem(req, res) {
+    await Inventory.findByIdAndDelete(req.params.id)
+    .then((docs)=>{
+      if(docs){
+        res.status(200).json({
+          status_code: 0,
+          message: "itemDescription item is deleted",
+          data: [],
         });
+      }else{
+        res.status(404).json({
+          status_code: ApiErrorCode,
+          message: "Can`t Found Menu Item Id",
+          data: null,
+        });
+      }
+
+    })
+    .catch((error)=>{
+      res.status(500).json({
+        status_code: ApiErrorCode,
+        message: "Internal server Error",
+        error:{
+          error:error.message
+        }
       });
+    })
   }
 }
-module.exports = caveteriaController;
+
+module.exports = {InvConsunController};

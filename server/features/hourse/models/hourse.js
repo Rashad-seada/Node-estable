@@ -15,8 +15,9 @@ const hourseSchema = mongoose.Schema({
     required: true,
   },
   clientId: {
-    type: String,
+    type:null || String,
     required: true,
+    value:null
   },
   groom: {
     type: String,

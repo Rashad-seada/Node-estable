@@ -106,7 +106,7 @@ class consumeController {
           } else {
             new Consume({
                 consumedItemName: req.body.consumedItemName,
-                clientName: req.body.clientName,
+                clientId: req.body.clientId,
                 consumedQuantity: req.body.consumedQuantity,
                 consumedPrice: req.body.consumedPrice,
                 consumedPayment: req.body.consumedPayment,
@@ -150,7 +150,7 @@ class consumeController {
             {
               $set: {
                 consumedItemName: req.body.consumedItemName,
-                clientName: req.body.clientName,
+                clientId: req.body.clientId,
                 consumedQuantity: req.body.consumedQuantity,
                 consumedPrice: req.body.consumedPrice,
                 consumedPayment: req.body.consumedPayment,

@@ -8,7 +8,7 @@ type InputProps = {
     fallback?: any,
     regex?: RegExp,
     className?:string,
-    type:"password"|"text"|"number",
+    type:"password"|"text"|"number"|"datetime-local",
     placeholder?:string,
     setIsValueValid?:(newValue:boolean) => void,
     label?:string,

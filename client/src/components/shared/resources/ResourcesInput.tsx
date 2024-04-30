@@ -6,7 +6,7 @@ type ResourcesInputProps = {
     setValue: (newValue: string) => void,
     label:string,
     placeholder:string,
-    type:"password"|"text"|"number"
+    type:"password"|"text"|"number"|"datetime-local"
 }
 function ResourcesInput({value,type,setValue,label,placeholder}:ResourcesInputProps) {
 

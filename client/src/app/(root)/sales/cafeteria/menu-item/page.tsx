@@ -5,6 +5,7 @@ import NavigationTabs from '@/components/shared/all/NavigationTabs';
 import PageContent from '@/components/shared/all/PageContent';
 import PaginationButtons from '@/components/shared/all/PaginationButtons';
 import Table from '@/components/shared/all/Table';
+import CafeteriaHeader from '@/components/shared/cafeteria/CafeteriaHeader';
 import { cafeteriaMenuItemRoute } from '@/constants/api';
 import { httpGetServices } from '@/services/httpGetService';
 import { useSearchParams } from 'next/navigation';
@@ -27,17 +28,17 @@ function CafeteriaMenuItems() {
 
     const tableHeadCells = [
         "menu item name",
-        "client",
-        "price",
         "quantity",
+        "type",
+        "price",
         "date"
     ]
 
     const tableBodyItemCellKeys = [
         "menuItemName",
+        "quantity",
         "type",
         "price",
-        "quantity",
         "date"
     ]
 
@@ -53,31 +54,35 @@ function CafeteriaMenuItems() {
     ]
     return (
         <>
-            <PageContent  className='overflow-y-hidden pt-10'>
+            <CafeteriaHeader/>
+        
+            <div  className='h-[calc(100%-80px)] w-full'>
+                <PageContent className='overflow-y-hidden pt-10'>
 
-                <NavigationTabs
-                    tabs={navigationTabs}
-                />
-                <Loader size={300} isLoading={!isDataHere}>
-                    <Table 
-                        tableBodyItemCellKeys={tableBodyItemCellKeys} 
-                        tableBodyItems={response?.caveteriaItems?.data} 
-                        tableHeadCells={tableHeadCells} 
-                        isCrud={true}
-                        refetch={refetch}
-                        route={cafeteriaMenuItemRoute}
+                    <NavigationTabs
+                        tabs={navigationTabs}
                     />
-                </Loader>
-            </PageContent>
-            {
-                isDataHere ? (
-                    <PaginationButtons
-                        maxPages={response.caveteriaItems.max_pages}
-                        currentPage={response.caveteriaItems.current_page}
+                    <Loader size={300} isLoading={!isDataHere}>
+                        <Table 
+                            tableBodyItemCellKeys={tableBodyItemCellKeys} 
+                            tableBodyItems={response?.caveteriaItems?.data} 
+                            tableHeadCells={tableHeadCells} 
+                            isCrud={true}
+                            refetch={refetch}
+                            route={cafeteriaMenuItemRoute}
+                        />
+                    </Loader>
+                </PageContent>
+                {
+                    isDataHere ? (
+                        <PaginationButtons
+                            maxPages={response.caveteriaItems.max_pages}
+                            currentPage={response.caveteriaItems.current_page}
 
-                    />
-                ): <></>
-            }
+                        />
+                    ): <></>
+                }
+            </div>
         </>
     )
 }

@@ -18,7 +18,7 @@ function NavigationTabs({tabs}:NavigationTabsProps) {
     const pathname = usePathname()
 
     return (
-        <div className='max-w-[750px] mx-auto flex font-semibold text-2xl border-primary border h-[60px] rounded-3xl overflow-hidden w-[80%]'>
+        <div className='w-[750px] mx-auto flex font-semibold text-2xl border-primary border h-[60px] rounded-3xl overflow-hidden '>
             {
                 tabs.map((tab:NavigationTab,idx:number) => {
                     const isTabActive = pathname.includes(tab.href)

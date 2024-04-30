@@ -36,21 +36,27 @@ function CafeteriaConsumedItems() {
     ]
 
     const tableBodyItemCellKeys = [
-        "menuItemName",
-        "client",
+        "consumedItemName",
+        "clientId",
         "consumedQuantity",
         "consumedPrice",
         "consumedPayment",
         "date"
     ]
+    const tableBodyItems = response?.caveteriaItems?.data.map((item:any) => ({
+        ...item,
+        clientId:item.clientId?.username || "no-client",
+        date:item.date
+    }))
+    
     const navigationTabs = [
-        {
-            href:"consumed-item",
-            label:"consumed items"
-        },
         {
             href:"menu-item",
             label:"menu items"
+        },
+        {
+            href:"consumed-item",
+            label:"consumed items"
         },
     ]
     return (
@@ -64,7 +70,7 @@ function CafeteriaConsumedItems() {
                     <Loader size={300} isLoading={!isDataHere}>
                         <Table 
                             tableBodyItemCellKeys={tableBodyItemCellKeys} 
-                            tableBodyItems={response?.caveteriaItems?.data} 
+                            tableBodyItems={tableBodyItems} 
                             tableHeadCells={tableHeadCells} 
                             isCrud={true}
                             refetch={refetch}

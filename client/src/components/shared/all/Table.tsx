@@ -82,7 +82,7 @@ function Table({tableHeadCells,tableBodyItems,isCrud,tableBodyItemCellKeys,route
                                 </th>
                             ))
                         }
-                        <th className="w-[100px]"></th>
+                        <th className="w-[100px] px-5"></th>
                     </tr>
                 </thead>
 
@@ -99,7 +99,7 @@ function Table({tableHeadCells,tableBodyItems,isCrud,tableBodyItemCellKeys,route
                                         ))
                                     }
                                         
-                                    <td>
+                                    <td className="px-5">
                                         {
                                             isCrud ? (
                                                 <div className="flex w-fit gap-2 ml-auto h-[40px] items-center text-xl">

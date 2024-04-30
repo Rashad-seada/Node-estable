@@ -84,7 +84,7 @@ export const SalesRoutes : DashboardRoute[] = [
         name:"cafeteria"
     },
     {
-        href:"/sales/inventory",
+        href:"/sales/inventory/item",
         iconComponent:<MdInventory2 />,
         name:"inventory"
     },

@@ -24,7 +24,6 @@ function AddNewClientPage() {
     const [gender,setGender] = useState<NameAndId>(null)
     const [membershipStatus,setMembershipStatus] = useState<NameAndId>(null)
     const [membershipType,setMembershipType] = useState<NameAndId>(null)
-
     
     const isInputsValid = Boolean(name && email && phone && age && gender && membershipStatus)
 

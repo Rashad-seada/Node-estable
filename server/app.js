@@ -27,6 +27,7 @@ const gendersRouter =require("./features/gender/router/gender")
 const menuItemRouter =require("./features/sales/caveteria/router/caveteria")
 const consumeRouter = require("./features/sales/consumeItem/router/consumeRoutes")
 const inventoryRouter = require("./features/sales/inventory/router/inventory")
+const InvConsumeRouter = require("./features/sales/invConsume/router/invConsum")
 
 // cors libyrary
 app.use(cors({
@@ -65,6 +66,10 @@ app.use("/api/gender",verifyTokenAndAdmin,gendersRouter)
 app.use("/api/caveteria/menuitem",menuItemRouter)
 app.use("/api/caveteria/consume",consumeRouter)
 app.use("/api/inventory/inventoryitem",inventoryRouter)
+app.use("/api/inventory/InvConsume",InvConsumeRouter)
+
+
+
 app.use((req,res,next)=> {
     const error = new Error('Url route not found');
     error.status = 404;

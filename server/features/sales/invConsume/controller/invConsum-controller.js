@@ -1,7 +1,7 @@
 const { invConsume ,createInventoryItemValidation } = require("../model/invConsum");
 const ApiErrorCode = require("../../../../core/errors/apiError");
-class InvConsunController {
-  static async getAllInventoryItem(req, res) {
+class InvConsumeController {
+  static async getAllinvConsumeItem(req, res) {
     // Pagination parameters
     const pageSize = 10; // Number of documents per page
 
@@ -53,7 +53,7 @@ class InvConsunController {
         });
       });
   }
-  static async getInventoryItemById(req, res) {
+  static async getinvConsumetemById(req, res) {
 
     await invConsume.findById(req.params.id)
     .then((docs)=>{
@@ -83,7 +83,7 @@ class InvConsunController {
 
     })
   }
-  static async createNewInventoryItem(req, res) {
+  static async createNewinvConsumeItem(req, res) {
     const { error } = createInventoryItemValidation(req.body);
     if (error) {
       res.status(400).json({
@@ -140,7 +140,7 @@ class InvConsunController {
         });
     }
   }
-  static async updateInventoryItem(req, res) {
+  static async updateinvConsumeItem(req, res) {
     invConsume.find({ id: req.params.id })
       .then(async (docs) => {
         if (docs) {
@@ -192,13 +192,13 @@ class InvConsunController {
         });
       });
   }
-  static async deleteInventoryItem(req, res) {
-    await Inventory.findByIdAndDelete(req.params.id)
+  static async deleteinvConsumeItem(req, res) {
+    await invConsume.findByIdAndDelete(req.params.id)
     .then((docs)=>{
       if(docs){
         res.status(200).json({
           status_code: 0,
-          message: "itemDescription item is deleted",
+          message: "invConsume item is deleted",
           data: [],
         });
       }else{
@@ -221,5 +221,6 @@ class InvConsunController {
     })
   }
 }
-
-module.exports = {InvConsunController};
+module.exports = {
+    InvConsumeController
+};

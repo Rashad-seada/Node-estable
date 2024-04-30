@@ -6,7 +6,7 @@ const { Schema } = mongoose;
 const invConsumeSchema = new Schema({
   invConsumedItemName: {
     type: String,
-    required: true, 
+    required: true,
   },
   invConsumedQuantity: {
     type: Number,

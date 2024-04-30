@@ -26,6 +26,8 @@ const instractorRouter =require("./features/instractor/router/instractor")
 const gendersRouter =require("./features/gender/router/gender")
 const menuItemRouter =require("./features/sales/caveteria/router/caveteria")
 const consumeRouter = require("./features/sales/consumeItem/router/consumeRoutes")
+const inventoryRouter = require("./features/sales/inventory/router/inventory")
+
 // cors libyrary
 app.use(cors({
     origin: 'http://localhost:3000',
@@ -62,7 +64,7 @@ app.use("/api/instractor",verifyTokenAndAdmin,instractorRouter)
 app.use("/api/gender",verifyTokenAndAdmin,gendersRouter)
 app.use("/api/caveteria/menuitem",menuItemRouter)
 app.use("/api/caveteria/consume",consumeRouter)
-
+app.use("/api/inventory/inventoryitem",inventoryRouter)
 app.use((req,res,next)=> {
     const error = new Error('Url route not found');
     error.status = 404;

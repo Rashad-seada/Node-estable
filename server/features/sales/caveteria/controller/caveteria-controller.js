@@ -91,7 +91,7 @@ class caveteriaController {
         message: "Error Validation",
         data: null,
         error: {
-          error: message.error,
+          error:error.message,
         },
       });
     } else {

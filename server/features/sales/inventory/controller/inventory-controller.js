@@ -1,7 +1,7 @@
-const { Consume, creatconsumValidation } = require("../model/consumeModel");
+const { Inventory ,createInventoryItemValidation } = require("../model/inventory");
 const ApiErrorCode = require("../../../../core/errors/apiError");
-class consumeController {
-  static async getAllConsume(req, res) {
+class InventoryController {
+  static async getAllInventoryItem(req, res) {
     // Pagination parameters
     const pageSize = 10; // Number of documents per page
 
@@ -10,23 +10,23 @@ class consumeController {
 
     const regexQuery = new RegExp(req.query.query, "i"); // Case-insensitive regex query
 
-    Consume.find({
+    Inventory.find({
       $or: [
         { type: { $regex: regexQuery } },
-        { consumedItemName: { $regex: regexQuery } },
+        { menuItemName: { $regex: regexQuery } },
       ],
     })
       .skip(skip) // Skip documents
       .limit(pageSize)
       .then(async (docs) => {
         if (docs) {
-          const totalRecords = await Consume.countDocuments();
+          const totalRecords = await Inventory.countDocuments();
 
           const maxPages = Math.ceil(totalRecords / pageSize);
 
           res.status(200).json({
             status_code: 1,
-            message: "Success To Get All Menu Item",
+            message: "Success To Get All Inventory Item",
             caveteriaItems: {
               current_page: parseInt(req.query.page) || 1,
               max_pages: maxPages,
@@ -37,7 +37,7 @@ class consumeController {
         } else {
           res.status(404).json({
             status_code: ApiErrorCode,
-            message: "Can1t Found Menu Item Name",
+            message: "Can1t Found Menu Inventory Item",
             data: null,
           });
         }
@@ -53,22 +53,21 @@ class consumeController {
         });
       });
   }
-  static async getConsumeById(req, res) {
+  static async getInventoryItemById(req, res) {
 
-    await Consume.findById(req.params.id)
+    await Inventory.findById(req.params.id)
     .then((docs)=>{
       if(docs){
-       
         res.status(200).json({
           status_code: 0,
-          message: "Success to get consumed By Id",
+          message: "Success to get Inventory Item By Id",
           data: docs,
         });
 
       }else{
         res.status(404).json({
           status_code: ApiErrorCode,
-          message: "Can`t Found consumed Item Id",
+          message: "Can`t Found Inventory Item Name",
           data: null,
         });
       }
@@ -78,14 +77,14 @@ class consumeController {
         status_code: ApiErrorCode,
         message: "internal server error",
         error: {
-          error:error.message
+          error:message.error
         },
       });
 
     })
   }
-  static async createNewConsume(req, res) {
-    const { error } = creatconsumValidation(req.body);
+  static async createNewInventoryItem(req, res) {
+    const { error } = createInventoryItemValidation(req.body);
     if (error) {
       res.status(400).json({
         status_code: ApiErrorCode,
@@ -96,34 +95,36 @@ class consumeController {
         },
       });
     } else {
-        Consume.find({ menuItemName: req.body.menuItemName })
+        Inventory.find({ itemName: req.body.itemName })
         .then((docs) => {
           if (!docs) {
             res.status(400).json({
               status_code: ApiErrorCode.validation,
-              message: "consumed is already found",
+              message: "menuItemName is already found",
               data: null,
             });
           } else {
-            new Consume({
-                consumedItemName: req.body.consumedItemName,
-                clientId: req.body.clientId,
-                consumedQuantity: req.body.consumedQuantity,
-                consumedPrice: req.body.consumedPrice,
-                consumedPayment: req.body.consumedPayment,
+            new Inventory({
+            itemName: req.body.itemName,
+              quantity: req.body.quantity,
+              itemDescription: req.body.itemDescription,
+              type: req.body.type,
+              price: req.body.price,
+              measure: req.body.measure,
+
             })
               .save()
               .then((docs) => {
                 res.status(200).json({
                   status_code: 1,
-                  message: "consumed item created successfuly",
+                  message: "Inventory item created successfuly",
                   data: docs,
                 });
               })
               .catch((error) => {
                 res.status(500).json({
                   status_code: ApiErrorCode.internalError,
-                  message: "consumed item Already Found",
+                  message: "Inventory item Already Found",
                   error: {
                     error: error.message,
                   },
@@ -142,19 +143,21 @@ class consumeController {
         });
     }
   }
-  static async updateConsume(req, res) {
-    Consume.find({ id: req.params.id })
+  static async updateInventoryItem(req, res) {
+    Inventory.find({ id: req.params.id })
       .then(async (docs) => {
         if (docs) {
-          await Consume.findByIdAndUpdate(
+          await Inventory.findByIdAndUpdate(
             req.params.id,
             {
               $set: {
-                consumedItemName: req.body.consumedItemName,
-                clientId: req.body.clientId,
-                consumedQuantity: req.body.consumedQuantity,
-                consumedPrice: req.body.consumedPrice,
-                consumedPayment: req.body.consumedPayment,
+                itemName: req.body.itemName,
+                quantity: req.body.quantity,
+                type: req.body.type,
+                price: req.body.price,
+                measure: req.body.measure,
+                itemDescription: req.body.itemDescription,
+
               },
             },
             { new: true }
@@ -195,13 +198,13 @@ class consumeController {
         });
       });
   }
-  static async deleteConsume(req, res) {
-    await Consume.findByIdAndDelete(req.params.id)
+  static async deleteInventoryItem(req, res) {
+    await Inventory.findByIdAndDelete(req.params.id)
     .then((docs)=>{
       if(docs){
         res.status(200).json({
           status_code: 0,
-          message: "Menu item is deleted",
+          message: "itemDescription item is deleted",
           data: [],
         });
       }else{
@@ -224,4 +227,5 @@ class consumeController {
     })
   }
 }
-module.exports ={ consumeController};
+
+module.exports = {InventoryController};

@@ -18,13 +18,11 @@ const ClientSchema = mongoose.Schema({
         type : Number,
         required:true,
     },
-
     gender: {
         type: String,
         required: true,
         enum: ['male', 'female'], // Define your enum values here
       },
-
     membershipStatus : {
         type: String,
         enum: ['active', 'inactive'], // Define your enum values here

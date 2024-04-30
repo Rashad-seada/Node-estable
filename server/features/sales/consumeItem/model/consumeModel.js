@@ -23,6 +23,9 @@ const consumeSchema = new Schema({
   consumedPayment:{
     type: String,
     required: true,
+  },
+  type:{
+    
   }
 }, { timestamps: true });
 

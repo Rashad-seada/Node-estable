@@ -79,7 +79,7 @@ export const ResourcesRoutes : DashboardRoute[] = [
 
 export const SalesRoutes : DashboardRoute[] = [
     {
-        href:"/sales/cafeteria/consumed-item",
+        href:"/sales/cafeteria/menu-item",
         iconComponent:<BsFillCupHotFill />,
         name:"cafeteria"
     },

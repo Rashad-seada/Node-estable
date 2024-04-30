@@ -1,6 +1,7 @@
 "use client"
 
 import Loader from '@/components/shared/all/Loader'
+import NavigationTabs from '@/components/shared/all/NavigationTabs'
 import PageContent from '@/components/shared/all/PageContent'
 import PaginationButtons from '@/components/shared/all/PaginationButtons'
 import Table from '@/components/shared/all/Table'
@@ -20,14 +21,13 @@ function CafeteriaConsumedItems() {
         queryFn:async () => httpGetServices(`${cafeteriaConsumedItemRoute}?page=${pageNumber}`),
         queryKey:["cafeteria","consumedItems",'page',pageNumber]
     })
-    console.log(response);
     
     const isDataHere = Boolean(response?.caveteriaItems?.data) && isSuccess
 
 
     const tableHeadCells = [
         "menu item name",
-        "client",
+        "type",
         "quantity",
         "price",
         "payment",
@@ -35,29 +35,40 @@ function CafeteriaConsumedItems() {
     ]
 
     const tableBodyItemCellKeys = [
-        "clientName",
-        "consumedItemName",
-        "consumedPayment",
-        "consumedPrice",
+        "menuItemName",
+        "type",
         "consumedQuantity",
+        "consumedPrice",
+        "consumedPayment",
         "date"
+    ]
+    const navigationTabs = [
+        {
+            href:"consumed-item",
+            label:"consumed items"
+        },
+        {
+            href:"menu-item",
+            label:"menu items"
+        },
     ]
     return (
         <>
-            <div className='w-full h-[calc(100%-80px)]'>
-                <PageContent className='overflow-hidden'>
-                    <Loader size={300} isLoading={!isDataHere}>
-                        <Table 
-                            tableBodyItemCellKeys={tableBodyItemCellKeys} 
-                            tableBodyItems={response?.caveteriaItems?.data} 
-                            tableHeadCells={tableHeadCells} 
-                            isCrud={true}
-                            refetch={refetch}
-                            route={cafeteriaConsumedItemRoute}
-                        />
-                    </Loader>
-                </PageContent>
-            </div>
+            <PageContent className='overflow-y-hidden pt-10'>
+                <NavigationTabs
+                    tabs={navigationTabs}
+                />
+                <Loader size={300} isLoading={!isDataHere}>
+                    <Table 
+                        tableBodyItemCellKeys={tableBodyItemCellKeys} 
+                        tableBodyItems={response?.caveteriaItems?.data} 
+                        tableHeadCells={tableHeadCells} 
+                        isCrud={true}
+                        refetch={refetch}
+                        route={cafeteriaConsumedItemRoute}
+                    />
+                </Loader>
+            </PageContent>
             {
                 isDataHere ? (
                     <PaginationButtons

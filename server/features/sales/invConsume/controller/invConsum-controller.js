@@ -16,6 +16,7 @@ class InvConsumeController {
         { invConsumedItemName: { $regex: regexQuery } },
       ],
     })
+    .populate("hourseId")
       .skip(skip) // Skip documents
       .limit(pageSize)
       .then(async (docs) => {
@@ -56,6 +57,7 @@ class InvConsumeController {
   static async getinvConsumetemById(req, res) {
 
     await invConsume.findById(req.params.id)
+    .populate("hourseId")
     .then((docs)=>{
       if(docs){
         res.status(200).json({
@@ -110,6 +112,7 @@ class InvConsumeController {
                 invConsumedPrice: req.body.invConsumedPrice,
                 invConsumedMeasure: req.body.invConsumedMeasure,
                 date: req.body.date,
+                hourseId: req.body.hourseId,
 
               })
               .save()
@@ -155,6 +158,7 @@ class InvConsumeController {
                 invConsumedPrice: req.body.invConsumedPrice,
                 invConsumedMeasure: req.body.invConsumedMeasure,
                 date: req.body.date,
+                hourseId: req.body.hourseId,
               },
             },
             { new: true }

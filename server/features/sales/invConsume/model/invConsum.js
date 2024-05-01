@@ -4,6 +4,11 @@ const joi = require ("joi")
 const { Schema } = mongoose;
 
 const invConsumeSchema = new Schema({
+  hourseId : {
+    type : mongoose.Types.ObjectId,
+    ref: "Hourse",
+    required: true,
+  },
   invConsumedItemName: {
     type: String,
     required: true,
@@ -33,7 +38,8 @@ function createInvConsumeValidation(obj){
     invConsumedQuantity:joi.number().required(),
     invConsumedPrice : joi.number().required(),
     invConsumedMeasure :joi.string().required(),
-    date:joi.string().required()
+    date: joi.string().required(),
+    hourseId : joi.string().required(),
 
   })
   return schema.validate(obj)

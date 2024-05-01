@@ -103,6 +103,7 @@ class InventoryController {
               message: "menuItemName is already found",
               data: null,
             });
+            
           } else {
             new Inventory({
             itemName: req.body.itemName,

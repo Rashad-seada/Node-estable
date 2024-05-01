@@ -27,7 +27,7 @@ class InventoryController {
           res.status(200).json({
             status_code: 1,
             message: "Success To Get All Inventory Item",
-            caveteriaItems: {
+            inventoryItems: {
               current_page: parseInt(req.query.page) || 1,
               max_pages: maxPages,
               data: docs,
@@ -37,7 +37,7 @@ class InventoryController {
         } else {
           res.status(404).json({
             status_code: ApiErrorCode,
-            message: "Can1t Found Menu Inventory Item",
+            message: "Can`t Found Menu Inventory Item",
             data: null,
           });
         }
@@ -111,7 +111,6 @@ class InventoryController {
               type: req.body.type,
               price: req.body.price,
               measure: req.body.measure,
-
             })
               .save()
               .then((docs) => {

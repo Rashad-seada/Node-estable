@@ -112,7 +112,10 @@ class consumeController {
                 consumedQuantity: req.body.consumedQuantity,
                 consumedPrice: req.body.consumedPrice,
                 consumedPayment: req.body.consumedPayment,
-                type:req.body.type
+                type:req.body.type,
+
+
+                date: req.body.date
             })
               .save()
               .then((docs) => {
@@ -157,6 +160,8 @@ class consumeController {
                 consumedQuantity: req.body.consumedQuantity,
                 consumedPrice: req.body.consumedPrice,
                 consumedPayment: req.body.consumedPayment,
+
+   date: req.body.date
               },
             },
             { new: true }

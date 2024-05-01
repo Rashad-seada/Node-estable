@@ -29,7 +29,6 @@ function createInvConsumeValidation(obj){
     invConsumedQuantity:joi.number().required(),
     invConsumedPrice : joi.number().required(),
     invConsumedMeasure :joi.string().required()
-
   })
   return schema.validate(obj)
 }

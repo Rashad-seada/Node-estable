@@ -48,7 +48,7 @@ function AddNewInventoryItemPage() {
                     showPopUp:true,
                     popUpType:"alert"
                 })
-                router.push("/sales/inventory/item")
+                router.push("/sales/inventory/inventory-item")
             }else {
                 popUp({
                     popUpMessage:res.message,

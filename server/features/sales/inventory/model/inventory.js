@@ -30,6 +30,10 @@ const inventorySchema = new Schema({
     type: String,
     required: true
   },
+  date:{
+    type:String,
+    required:true
+  }
 });
 
 const Inventory = mongoose.model('Inventory', inventorySchema);
@@ -43,7 +47,7 @@ function createInventoryItemValidation(obj){
         price :joi.number().required() ,
         itemDescription : joi.string().required(),
         measure : joi.string().required(),
-
+        date:joi.string().required()
     })
     return schema.validate(obj)
 }

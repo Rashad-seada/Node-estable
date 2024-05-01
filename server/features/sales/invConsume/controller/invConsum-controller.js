@@ -109,6 +109,8 @@ class InvConsumeController {
                 invConsumedQuantity: req.body.invConsumedQuantity,
                 invConsumedPrice: req.body.invConsumedPrice,
                 invConsumedMeasure: req.body.invConsumedMeasure,
+                date: req.body.date,
+
               })
               .save()
               .then((docs) => {
@@ -152,6 +154,7 @@ class InvConsumeController {
                 invConsumedQuantity: req.body.invConsumedQuantity,
                 invConsumedPrice: req.body.invConsumedPrice,
                 invConsumedMeasure: req.body.invConsumedMeasure,
+                date: req.body.date,
               },
             },
             { new: true }

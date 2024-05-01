@@ -19,6 +19,10 @@ const invConsumeSchema = new Schema({
   invConsumedMeasure:{
     type: String,
     required: true,
+  },
+  date:{
+    type:String,
+    required:true
   }
 }, { timestamps: true });
 
@@ -28,7 +32,9 @@ function createInvConsumeValidation(obj){
     invConsumedItemName:joi.string().required(),
     invConsumedQuantity:joi.number().required(),
     invConsumedPrice : joi.number().required(),
-    invConsumedMeasure :joi.string().required()
+    invConsumedMeasure :joi.string().required(),
+    date:joi.string().required()
+
   })
   return schema.validate(obj)
 }

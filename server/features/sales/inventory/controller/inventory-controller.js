@@ -111,6 +111,7 @@ class InventoryController {
               type: req.body.type,
               price: req.body.price,
               measure: req.body.measure,
+              date:req.body.date
             })
               .save()
               .then((docs) => {
@@ -156,7 +157,7 @@ class InventoryController {
                 price: req.body.price,
                 measure: req.body.measure,
                 itemDescription: req.body.itemDescription,
-
+                date:req.body.date
               },
             },
             { new: true }

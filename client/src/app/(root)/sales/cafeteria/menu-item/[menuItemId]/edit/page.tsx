@@ -35,7 +35,6 @@ function MenuItemEditPage() {
     useEffect(() => {
         const fetchMenuItem = async () => {
             const {data} = await httpGetServices(menuItemIdRoute)
-            console.log(data);
             
             if (Boolean(data)) {
                 setItemName(data.menuItemName)

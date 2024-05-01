@@ -29,7 +29,12 @@ const consumeSchema = new Schema({
   type:{
     type:String,
     required:true
-  }
+  },
+date:{
+
+ type:String,
+    required:true
+}
 }, { timestamps: true });
 
 const Consume = mongoose.model('Consume', consumeSchema);
@@ -41,6 +46,8 @@ function creatconsumValidation(obj){
       consumedPrice :joi.string().required() ,
       consumedPayment : joi.string().required().valid("pending","paid"),
       type :joi.string().required() ,
+ date :joi.string().required() ,
+
 
     })
     return schema.validate(obj)

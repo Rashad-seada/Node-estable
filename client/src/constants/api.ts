@@ -14,3 +14,6 @@ export const memberShipTypesRoute = "/membershipType"
 export const cafeteriaRoute = "/caveteria"
 export const cafeteriaMenuItemRoute = `${cafeteriaRoute}/menuitem`
 export const cafeteriaConsumedItemRoute = `${cafeteriaRoute}/consume`
+export const inventoryRoute = '/inventory'
+export const inventoryItemsRoute = `${inventoryRoute}/inventoryitem`
+export const inventoryConsumedItemsRoute = `${inventoryRoute}/InvConsume`

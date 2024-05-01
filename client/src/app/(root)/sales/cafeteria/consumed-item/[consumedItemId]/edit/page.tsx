@@ -1,22 +1,28 @@
 "use client"
 
-import AddConsumedItemPageContent from "@/components/content/sales/consumed-item/AddConsumedItemPageContent"
+import EditConsumedItemPageContent from "@/components/content/sales/consumed-item/EditConsumedItemPageContent"
 import Avatar from "@/components/shared/all/Avatar"
 import BackButton from "@/components/shared/all/BackButton"
 import PageHeader from "@/components/shared/all/PageHeader"
 import { cafeteriaConsumedItemRoute } from "@/constants/api"
 import { useGetClients } from "@/hooks/useGetClients"
 import { usePopUp } from "@/hooks/usePopUp"
-import { httpPostService } from "@/services/httpPostService"
+import { httpGetServices } from "@/services/httpGetService"
+import { httpPatchService } from "@/services/httpPatchService"
+import { getCafeteriaItemType } from "@/utils/getCafeteriaItemType"
+import { getCafeteriaPayment } from "@/utils/getCafeteriaPayment"
 import { statusCodeIndicator } from "@/utils/statusCodeIndicator"
 import { toNameAndId } from "@/utils/toNameAndId"
+import { useParams } from "next/navigation"
 import { useRouter } from "next/navigation"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { IoMdCheckmarkCircleOutline } from "react-icons/io"
 import { MdErrorOutline } from "react-icons/md"
 import { useMutation } from "react-query"
 
-function AddNewConsumedItemPage() {
+function EditMenuItemPage() {
+
+
     const [itemName,setItemName] = useState<string>("")
     const [quantity,setQuantity] = useState<string>("")
     const [type,setType] = useState<NameAndId>(null)
@@ -30,7 +36,28 @@ function AddNewConsumedItemPage() {
 
     const popUp = usePopUp()
     const router = useRouter()
+    const {consumedItemId} = useParams()
+    const consumedItemIdRoute = `${cafeteriaConsumedItemRoute}/${consumedItemId}`
 
+    useEffect(() => {
+        const fetchConsumedItem = async () => {
+            const res = await httpGetServices(consumedItemIdRoute)
+            if (Boolean(res.data)) {
+                const itemData = res.data
+                setItemName(itemData.consumedItemName)
+                setQuantity(itemData.consumedQuantity)
+                setPayment(getCafeteriaPayment(itemData.consumedPayment))
+                setType(getCafeteriaItemType(itemData.type))
+                setPrice(itemData.consumedPrice)
+                setClient({
+                    name:itemData.clientId.username,
+                    id:itemData.clientId._id
+                })
+            }
+            
+        }
+        fetchConsumedItem()
+    },[])
     useGetClients({
         onSuccess:async (res) => {
             const resData = await res
@@ -43,12 +70,12 @@ function AddNewConsumedItemPage() {
     })
 
     const {mutate} = useMutation({
-        mutationFn:async () => httpPostService(cafeteriaConsumedItemRoute,JSON.stringify({
+        mutationFn:async () => httpPatchService(consumedItemIdRoute,JSON.stringify({
             consumedItemName:itemName,
             consumedQuantity:quantity,
             type:type?.name,
             consumedPrice:price,
-            //date,
+            date,
             clientId:client?.id,
             consumedPayment:payment?.name
         })),
@@ -57,7 +84,7 @@ function AddNewConsumedItemPage() {
             
             if (status) {
                 popUp({
-                    popUpMessage:"item added successfully",
+                    popUpMessage:"item updated successfully",
                     popUpTitle:"added successfully ",
                     popUpIcon:<IoMdCheckmarkCircleOutline />,
                     showPopUp:true,
@@ -84,7 +111,6 @@ function AddNewConsumedItemPage() {
             })
         }
     })
-
     return (
         <>
             <PageHeader>
@@ -93,14 +119,14 @@ function AddNewConsumedItemPage() {
                         <BackButton />
                         <div className='text-smokey-white text-2xl'>
                             <span>stable's client / </span>
-                            <span className='text-primary'> add consumed item</span>
+                            <span className='text-primary'>edit consumed item</span>
                         </div>
                     </div>
                     <Avatar/>
                 </div>
             </PageHeader>
-            <AddConsumedItemPageContent
-                handleAddNewConsumedItem={mutate}
+            <EditConsumedItemPageContent
+                handleUpdateConsumedItem={mutate}
                 itemName={itemName}
                 setItemName={setItemName}
                 quantity={quantity}
@@ -122,4 +148,4 @@ function AddNewConsumedItemPage() {
     )
 }
 
-export default AddNewConsumedItemPage
+export default EditMenuItemPage

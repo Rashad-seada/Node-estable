@@ -4,8 +4,8 @@ import ResourcesInput from '@/components/shared/resources/ResourcesInput'
 import React from 'react'
 
 
-type AddNewConsumedItemPageContentProps = {
-    handleAddNewConsumedInventoryItem: () => void,
+type EditInvConsumedItemPageContentProps = {
+    handleUpdateConsumedInventoryItem: () => void,
     itemName:string,
     setItemName: (newState: string) => void,
     quantity:string,
@@ -19,8 +19,8 @@ type AddNewConsumedItemPageContentProps = {
     setHorse: (newState:NameAndId) => void,
     horse:NameAndId
 }
-function AddNewConsumedItemPageContent({
-    handleAddNewConsumedInventoryItem,
+function EditInvConsumedItemPageContent({
+    handleUpdateConsumedInventoryItem,
     itemName,
     setItemName,
     quantity,
@@ -34,7 +34,7 @@ function AddNewConsumedItemPageContent({
     setHorse,
     horse
 
-}:AddNewConsumedItemPageContentProps) {
+}:EditInvConsumedItemPageContentProps) {
     return (
         <PageContent>
             <div className='max-w-[600px] flex flex-col gap-10 my-16 mx-8'>
@@ -76,12 +76,12 @@ function AddNewConsumedItemPageContent({
         
             </div>
             <div className='w-full flex justify-center'>
-                <button onClick={()=> isInputsValid && handleAddNewConsumedInventoryItem()} disabled={!isInputsValid} className='w-[350px] text-primary duration-300 hover:bg-primary hover:text-smokey-white font-semibold text-2xl capitalize rounded-2xl h-[60px] border border-primary'>
-                    add item
+                <button onClick={()=> isInputsValid && handleUpdateConsumedInventoryItem()} disabled={!isInputsValid} className='w-[350px] text-primary duration-300 hover:bg-primary hover:text-smokey-white font-semibold text-2xl capitalize rounded-2xl h-[60px] border border-primary'>
+                    save item
                 </button>
             </div>
         </PageContent>
     )
 }
 
-export default AddNewConsumedItemPageContent
+export default EditInvConsumedItemPageContent

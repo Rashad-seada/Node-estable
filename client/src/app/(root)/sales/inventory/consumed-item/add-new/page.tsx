@@ -26,7 +26,6 @@ function AddNewConsumedItemPage() {
     const [horses , setHorses] = useState<NameAndId[]|[]>([])
 
     const isInputsValid = Boolean(itemName && quantity && price && measure && horse)
-console.log(isInputsValid);
 
     const popUp = usePopUp()
     const router = useRouter()

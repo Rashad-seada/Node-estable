@@ -1,66 +1,64 @@
 "use client"
 
+import InventoryHeader from "@/components/content/sales/inventory/InventoryHeader"
 import Loader from "@/components/shared/all/Loader"
 import NavigationTabs from "@/components/shared/all/NavigationTabs"
 import PageContent from "@/components/shared/all/PageContent"
 import PaginationButtons from "@/components/shared/all/PaginationButtons"
 import Table from "@/components/shared/all/Table"
-import { inventoryConsumedItemsRoute, inventoryItemsRoute } from "@/constants/api"
+import { inventoryConsumedItemsRoute } from "@/constants/api"
 import { httpGetServices } from "@/services/httpGetService"
-import { useSearchParams } from "next/navigation"
+import { usePathname, useSearchParams } from "next/navigation"
 import { useQuery } from "react-query"
 
 function ConsumedItemsInventoryPage() {
     const searchParams = useSearchParams()
     const pageNumber = searchParams.get("page") || "1"
-    
+    const pathname = usePathname()
 
     const {data:response,isSuccess,refetch}:any = useQuery({
         queryFn:async () => httpGetServices(`${inventoryConsumedItemsRoute}?page=${pageNumber}`),
-        queryKey:["cafeteria","consumedItems",'page',pageNumber]
+        queryKey:["inventory","consumedItems",'page',pageNumber]
     })
-    
-    console.log(response);
-    
-    const isDataHere = Boolean(response?.caveteriaItems?.data) && isSuccess
+        
+    const isDataHere = Boolean(response?.invConsumeItems?.data) && isSuccess
 
 
     const tableHeadCells = [
+        "horse name",
         "item name",
-        "client",
         "quantity",
         "price",
-        "payment",
-        "date"
+        "measure"
     ]
 
     const tableBodyItemCellKeys = [
-        "consumedItemName",
-        "clientId",
-        "consumedQuantity",
-        "consumedPrice",
-        "consumedPayment",
-        "date"
+        "hourseId",
+        "invConsumedItemName",
+        "invConsumedQuantity",
+        "invConsumedPrice",
+        "invConsumedMeasure"
     ]
-    const tableBodyItems = response?.caveteriaItems?.data.map((item:any) => ({
+    const tableBodyItems = response?.invConsumeItems?.data.map((item:any) => ({
         ...item,
-        clientId:item.clientId?.username || "no-client",
-        date:item.date
+        hourseId:item.hourseId?.hourseName || "no-horse"
     }))
+    
     
     const navigationTabs = [
         {
-            href:"menu-item",
-            label:"menu items"
+            href:`inventory-item`,
+            label:"items"
         },
         {
-            href:"consumed-item",
+            href:`consumed-item`,
             label:"consumed items"
         },
     ]
+
     return (
         <>
-            {/* <CafeteriaHeader/>
+            <InventoryHeader/>
             <div className='h-[calc(100%-80px)] w-full'>
                 <PageContent className='overflow-y-hidden pt-10'>
                     <NavigationTabs
@@ -73,20 +71,20 @@ function ConsumedItemsInventoryPage() {
                             tableHeadCells={tableHeadCells} 
                             isCrud={true}
                             refetch={refetch}
-                            route={cafeteriaConsumedItemRoute}
+                            route={inventoryConsumedItemsRoute}
                         />
                     </Loader>
                 </PageContent>
                 {
                     isDataHere ? (
                         <PaginationButtons
-                            maxPages={response.caveteriaItems.max_pages}
-                            currentPage={response.caveteriaItems.current_page}
+                            maxPages={response.invConsumeItems.max_pages}
+                            currentPage={response.invConsumeItems.current_page}
 
                         />
                     ): <></>
                 }
-            </div> */}
+            </div>
         </>
     )
 }

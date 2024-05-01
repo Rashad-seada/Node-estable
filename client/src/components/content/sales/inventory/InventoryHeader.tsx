@@ -1,18 +1,17 @@
-"use client"
+import Avatar from '@/components/shared/all/Avatar'
+import PageHeader from '@/components/shared/all/PageHeader'
+import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React from 'react'
-import PageHeader from '../all/PageHeader'
-import Link from 'next/link'
-import Avatar from '../all/Avatar'
 import { GrAdd } from 'react-icons/gr'
 
-function CafeteriaHeader() {
+function InventoryHeader() {
     const pathname = usePathname()
 
     return (
         <PageHeader>
             <div className='w-full flex justify-between items-center'>
-                <h4 className='text-smokey-white text-2xl'>stable's cafeteria</h4>
+                <h4 className='text-smokey-white text-2xl'>stable's inventory</h4>
                 <div className='flex h-[35px] gap-5'>
 
                     <div className='w-fit p-4 cursor-pointer bg-primary rounded-lg flex justify-center items-center '>
@@ -28,7 +27,6 @@ function CafeteriaHeader() {
         </PageHeader>
       
     )
-    
 }
 
-export default CafeteriaHeader
+export default InventoryHeader

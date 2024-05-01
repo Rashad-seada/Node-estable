@@ -1,6 +1,6 @@
 "use client"
 
-import AddConsumedItemPageContent from "@/components/content/sales/consumed-item/AddConsumedItemPageContent"
+import AddConsumedItemPageContent from "@/components/content/sales/cafeteria/consumed-item/AddConsumedItemPageContent"
 import Avatar from "@/components/shared/all/Avatar"
 import BackButton from "@/components/shared/all/BackButton"
 import PageHeader from "@/components/shared/all/PageHeader"
@@ -48,7 +48,7 @@ function AddNewConsumedItemPage() {
             consumedQuantity:quantity,
             type:type?.name,
             consumedPrice:price,
-            //date,
+            date,
             clientId:client?.id,
             consumedPayment:payment?.name
         })),
@@ -92,7 +92,7 @@ function AddNewConsumedItemPage() {
                     <div className='flex items-center gap-5'>
                         <BackButton />
                         <div className='text-smokey-white text-2xl'>
-                            <span>stable's client / </span>
+                            <span>stable's cafeteria / </span>
                             <span className='text-primary'> add consumed item</span>
                         </div>
                     </div>

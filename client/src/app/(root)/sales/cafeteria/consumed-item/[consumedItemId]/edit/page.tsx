@@ -1,6 +1,6 @@
 "use client"
 
-import EditConsumedItemPageContent from "@/components/content/sales/consumed-item/EditConsumedItemPageContent"
+import EditConsumedItemPageContent from "@/components/content/sales/cafeteria/consumed-item/EditConsumedItemPageContent"
 import Avatar from "@/components/shared/all/Avatar"
 import BackButton from "@/components/shared/all/BackButton"
 import PageHeader from "@/components/shared/all/PageHeader"
@@ -11,6 +11,7 @@ import { httpGetServices } from "@/services/httpGetService"
 import { httpPatchService } from "@/services/httpPatchService"
 import { getCafeteriaItemType } from "@/utils/getCafeteriaItemType"
 import { getCafeteriaPayment } from "@/utils/getCafeteriaPayment"
+import { getIsoDate } from "@/utils/getIsoDate"
 import { statusCodeIndicator } from "@/utils/statusCodeIndicator"
 import { toNameAndId } from "@/utils/toNameAndId"
 import { useParams } from "next/navigation"
@@ -48,6 +49,8 @@ function EditMenuItemPage() {
                 setQuantity(itemData.consumedQuantity)
                 setPayment(getCafeteriaPayment(itemData.consumedPayment))
                 setType(getCafeteriaItemType(itemData.type))
+                
+                setDate(getIsoDate(itemData.date))
                 setPrice(itemData.consumedPrice)
                 setClient({
                     name:itemData.clientId.username,
@@ -118,7 +121,7 @@ function EditMenuItemPage() {
                     <div className='flex items-center gap-5'>
                         <BackButton />
                         <div className='text-smokey-white text-2xl'>
-                            <span>stable's client / </span>
+                            <span>stable's cafeteria / </span>
                             <span className='text-primary'>edit consumed item</span>
                         </div>
                     </div>

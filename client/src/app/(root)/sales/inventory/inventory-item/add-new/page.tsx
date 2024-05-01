@@ -1,37 +1,41 @@
 "use client"
-import AddNewMenuItemPageContent from '@/components/content/sales/cafeteria/menu-item/AddNewMenuItemPageContent'
+import AddNewInvItemPageContent from '@/components/content/sales/inventory/inventory-item/AddNewInvItemPageContent'
 import Avatar from '@/components/shared/all/Avatar'
 import BackButton from '@/components/shared/all/BackButton'
 import PageHeader from '@/components/shared/all/PageHeader'
-import React from 'react'
-import { usePopUp } from "@/hooks/usePopUp"
-import { useRouter } from "next/navigation"
-import { useState } from "react"
-import { useMutation } from "react-query"
-import { cafeteriaMenuItemRoute } from '@/constants/api'
+import { inventoryItemsRoute } from '@/constants/api'
+import { usePopUp } from '@/hooks/usePopUp'
 import { httpPostService } from '@/services/httpPostService'
+import { statusCodeIndicator } from '@/utils/statusCodeIndicator'
+import { useRouter } from 'next/navigation'
+import React, { useState } from 'react'
 import { IoMdCheckmarkCircleOutline } from 'react-icons/io'
 import { MdErrorOutline } from 'react-icons/md'
-import { statusCodeIndicator } from '@/utils/statusCodeIndicator'
+import { useMutation } from 'react-query'
 
-function AddNewMenuItemPage() {
+function AddNewInventoryItemPage() {
     const [itemName,setItemName] = useState<string>("")
     const [quantity,setQuantity] = useState<string>("")
     const [type,setType] = useState<NameAndId>(null)
     const [price,setPrice] = useState<string>("")
-    const [date,setDate] = useState<string>("")
-    const isInputsValid = Boolean(itemName && quantity && type && price && date)
+    //const [date,setDate] = useState<string>("no-date")
+    const [description,setDescription] = useState<string>("")
+    const [measure,setMeasure] = useState<string>("")
+
+    const isInputsValid = Boolean(itemName && quantity && type && price && measure && description && description)
 
     const popUp = usePopUp()
     const router = useRouter()
 
     const {mutate} = useMutation({
-        mutationFn:async () => httpPostService(cafeteriaMenuItemRoute,JSON.stringify({
-            menuItemName:itemName,
+        mutationFn:async () => httpPostService(inventoryItemsRoute,JSON.stringify({
+            itemName,
             quantity,
             type:type?.name,
             price,
-            date
+            date:"no-date",
+            measure,
+            itemDescription:description
         })),
         onSuccess:(res) => {
             const status = statusCodeIndicator(res.status_code) === "success" 
@@ -44,7 +48,7 @@ function AddNewMenuItemPage() {
                     showPopUp:true,
                     popUpType:"alert"
                 })
-                router.push("/sales/cafeteria/menu-item")
+                router.push("/sales/inventory/item")
             }else {
                 popUp({
                     popUpMessage:res.message,
@@ -73,29 +77,31 @@ function AddNewMenuItemPage() {
                     <div className='flex items-center gap-5'>
                         <BackButton />
                         <div className='text-smokey-white text-2xl'>
-                            <span>stable's cafeteria / </span>
-                            <span className='text-primary'> add new menu item</span>
+                            <span>stable's inventory / </span>
+                            <span className='text-primary'> add new item</span>
                         </div>
                     </div>
                     <Avatar/>
                 </div>
             </PageHeader>
-            <AddNewMenuItemPageContent
-                handleAddNewMenuItem={mutate}
+            <AddNewInvItemPageContent
+                handleAddNewInventoryItem={mutate}
                 itemName={itemName}
                 setItemName={setItemName}
                 quantity={quantity}
                 setQuantity={setQuantity}
                 price={price}
                 setPrice={setPrice}
-                date={date}
-                setDate={setDate}
                 type={type}
                 setType={setType}
-                isInputsValid={isInputsValid}            
+                isInputsValid={isInputsValid}  
+                measure={measure}
+                setMeasure={setMeasure}
+                description={description}
+                setDescription={setDescription}          
             />
         </>
     )
 }
 
-export default AddNewMenuItemPage
+export default AddNewInventoryItemPage

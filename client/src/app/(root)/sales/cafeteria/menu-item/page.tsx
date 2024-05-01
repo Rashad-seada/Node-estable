@@ -5,18 +5,18 @@ import NavigationTabs from '@/components/shared/all/NavigationTabs';
 import PageContent from '@/components/shared/all/PageContent';
 import PaginationButtons from '@/components/shared/all/PaginationButtons';
 import Table from '@/components/shared/all/Table';
-import CafeteriaHeader from '@/components/shared/cafeteria/CafeteriaHeader';
+import CafeteriaHeader from '@/components/content/sales/cafeteria/CafeteriaHeader';
 import { cafeteriaMenuItemRoute } from '@/constants/api';
 import { httpGetServices } from '@/services/httpGetService';
-import { useSearchParams } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import React from 'react'
 import { useQuery } from 'react-query';
+import { getReadableDate } from '@/utils/getReadableDate';
 
 function CafeteriaMenuItems() {
     
     const searchParams = useSearchParams()
     const pageNumber = searchParams.get("page") || "1"
-    
 
     const {data:response,isSuccess,refetch}:any = useQuery({
         queryFn:async () => httpGetServices(`${cafeteriaMenuItemRoute}?page=${pageNumber}`),
@@ -42,6 +42,11 @@ function CafeteriaMenuItems() {
         "date"
     ]
 
+    const tableBodyItems = response?.caveteriaItems?.data.map((item:any) => ({
+        ...item,
+        date:getReadableDate(item.date)
+    }))
+
     const navigationTabs = [
         {
             href:"menu-item",
@@ -65,7 +70,7 @@ function CafeteriaMenuItems() {
                     <Loader size={300} isLoading={!isDataHere}>
                         <Table 
                             tableBodyItemCellKeys={tableBodyItemCellKeys} 
-                            tableBodyItems={response?.caveteriaItems?.data} 
+                            tableBodyItems={tableBodyItems} 
                             tableHeadCells={tableHeadCells} 
                             isCrud={true}
                             refetch={refetch}

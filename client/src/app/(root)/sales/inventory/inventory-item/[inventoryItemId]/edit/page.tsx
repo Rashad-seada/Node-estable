@@ -1,61 +1,45 @@
 "use client"
 
-import EditMenuItemPageContent from "@/components/content/sales/cafeteria/menu-item/EditMenuItemPageContent"
+import EditInvItemPageContent from "@/components/content/sales/inventory/inventory-item/EditInvItemPageContent"
 import Avatar from "@/components/shared/all/Avatar"
 import BackButton from "@/components/shared/all/BackButton"
 import PageHeader from "@/components/shared/all/PageHeader"
-import { cafeteriaMenuItemRoute } from "@/constants/api"
+import { inventoryItemsRoute } from "@/constants/api"
 import { usePopUp } from "@/hooks/usePopUp"
 import { httpGetServices } from "@/services/httpGetService"
 import { httpPatchService } from "@/services/httpPatchService"
-import { getCafeteriaItemType } from "@/utils/getCafeteriaItemType"
-import { getIsoDate } from "@/utils/getIsoDate"
 import { statusCodeIndicator } from "@/utils/statusCodeIndicator"
-import { useParams } from "next/navigation"
-import { useRouter } from "next/navigation"
+import { useParams, useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { IoMdCheckmarkCircleOutline } from "react-icons/io"
 import { MdErrorOutline } from "react-icons/md"
 import { useMutation } from "react-query"
 
-function MenuItemEditPage() {
-    
-    const {menuItemId} = useParams()
-    const menuItemIdRoute = `${cafeteriaMenuItemRoute}/${menuItemId}`
-    
+function EditInventoryItemPage() {
     const [itemName,setItemName] = useState<string>("")
     const [quantity,setQuantity] = useState<string>("")
     const [type,setType] = useState<NameAndId>(null)
     const [price,setPrice] = useState<string>("")
-    const [date,setDate] = useState<string>("")
-    const isInputsValid = Boolean(itemName && quantity && type && price && date)
+    //const [date,setDate] = useState<string>("no-date")
+    const [description,setDescription] = useState<string>("")
+    const [measure,setMeasure] = useState<string>("")
+
+    const isInputsValid = Boolean(itemName) && Boolean(quantity) && Boolean(type) && Boolean(price) && Boolean(measure) && Boolean(description) && Boolean(description)
 
     const popUp = usePopUp()
     const router = useRouter()
-
-    useEffect(() => {
-        const fetchMenuItem = async () => {
-            const {data} = await httpGetServices(menuItemIdRoute)
-            
-            if (Boolean(data)) {
-                setItemName(data.menuItemName)
-                setType(getCafeteriaItemType(data.type))
-                
-                setDate(getIsoDate(data.date))
-                setPrice(data.price)
-                setQuantity(data.quantity)
-            }
-        }
-        fetchMenuItem()
-    },[])
+    const {inventoryItemId} = useParams()
+    const inventoryItemIdRoute = `${inventoryItemsRoute}/${inventoryItemId}`
 
     const {mutate} = useMutation({
-        mutationFn:async () => httpPatchService(menuItemIdRoute,JSON.stringify({
-            menuItemName:itemName,
+        mutationFn:async () => httpPatchService(inventoryItemIdRoute,JSON.stringify({
+            itemName,
             quantity,
             type:type?.name,
             price,
-            date
+            //date:"no-date",
+            measure,
+            itemDescription:description
         })),
         onSuccess:(res) => {
             const status = statusCodeIndicator(res.status_code) === "success" 
@@ -68,11 +52,11 @@ function MenuItemEditPage() {
                     showPopUp:true,
                     popUpType:"alert"
                 })
-                router.push("/sales/cafeteria/menu-item")
+                router.push("/sales/inventory/item")
             }else {
                 popUp({
                     popUpMessage:res.message,
-                    popUpTitle:"failed",
+                    popUpTitle:"failed ",
                     popUpIcon:<IoMdCheckmarkCircleOutline />,
                     showPopUp:true,
                     popUpType:"alert"
@@ -90,6 +74,25 @@ function MenuItemEditPage() {
         }
     })
 
+
+    useEffect(() => {
+        const fetchInvItemData = async () => {
+            const inventoryItemData = await httpGetServices(inventoryItemIdRoute)
+            if (Boolean(inventoryItemData.data)) {
+                const data = inventoryItemData.data                
+                setItemName(data.itemName)
+                setQuantity(data.quantity)
+                setType(data.type)
+                setPrice(data.price)
+                //setDate(data.date)
+                setDescription(data.itemDescription)
+                setMeasure(data.measure)
+            }
+            
+        }   
+        fetchInvItemData()
+    },[])
+
     return (
         <>
             <PageHeader>
@@ -97,29 +100,31 @@ function MenuItemEditPage() {
                     <div className='flex items-center gap-5'>
                         <BackButton />
                         <div className='text-smokey-white text-2xl'>
-                            <span>stable's cafeteria / </span>
+                            <span>stable's inventory / </span>
                             <span className='text-primary'>edit item</span>
                         </div>
                     </div>
                     <Avatar/>
                 </div>
             </PageHeader>
-            <EditMenuItemPageContent
+            <EditInvItemPageContent
+                handleEditInventoryItem={mutate}
                 itemName={itemName}
                 setItemName={setItemName}
                 quantity={quantity}
                 setQuantity={setQuantity}
-                type={type}
-                setType={setType}
                 price={price}
                 setPrice={setPrice}
-                date={date}
-                setDate={setDate}
-                isInputsValid={isInputsValid}
-                handleUpdateMenuItem={mutate}
+                type={type}
+                setType={setType}
+                isInputsValid={isInputsValid}  
+                measure={measure}
+                setMeasure={setMeasure}
+                description={description}
+                setDescription={setDescription}          
             />
         </>
     )
 }
 
-export default MenuItemEditPage
+export default EditInventoryItemPage

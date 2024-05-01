@@ -1,37 +1,44 @@
 "use client"
-import AddNewMenuItemPageContent from '@/components/content/sales/cafeteria/menu-item/AddNewMenuItemPageContent'
+
+import AddNewInvConsumedItemPageContent from '@/components/content/sales/inventory/consumed-item/AddNewInvConsumedItemPageContent'
 import Avatar from '@/components/shared/all/Avatar'
 import BackButton from '@/components/shared/all/BackButton'
 import PageHeader from '@/components/shared/all/PageHeader'
-import React from 'react'
-import { usePopUp } from "@/hooks/usePopUp"
-import { useRouter } from "next/navigation"
-import { useState } from "react"
-import { useMutation } from "react-query"
-import { cafeteriaMenuItemRoute } from '@/constants/api'
+import { inventoryConsumedItemsRoute } from '@/constants/api'
+import { useGetHorses } from '@/hooks/useGetHorses'
+import { usePopUp } from '@/hooks/usePopUp'
 import { httpPostService } from '@/services/httpPostService'
+import { statusCodeIndicator } from '@/utils/statusCodeIndicator'
+import { toNameAndId } from '@/utils/toNameAndId'
+import { useRouter } from 'next/navigation'
+import React, { useState } from 'react'
 import { IoMdCheckmarkCircleOutline } from 'react-icons/io'
 import { MdErrorOutline } from 'react-icons/md'
-import { statusCodeIndicator } from '@/utils/statusCodeIndicator'
+import { useMutation } from 'react-query'
 
-function AddNewMenuItemPage() {
+function AddNewConsumedItemPage() {
     const [itemName,setItemName] = useState<string>("")
     const [quantity,setQuantity] = useState<string>("")
-    const [type,setType] = useState<NameAndId>(null)
     const [price,setPrice] = useState<string>("")
-    const [date,setDate] = useState<string>("")
-    const isInputsValid = Boolean(itemName && quantity && type && price && date)
+    //const [date,setDate] = useState<string>("no-date")
+    const [measure,setMeasure] = useState<string>("")
+    const [horse,setHorse] = useState<NameAndId>(null)
+    const [horses , setHorses] = useState<NameAndId[]|[]>([])
+
+    const isInputsValid = Boolean(itemName && quantity && price && measure && horse)
+console.log(isInputsValid);
 
     const popUp = usePopUp()
     const router = useRouter()
 
     const {mutate} = useMutation({
-        mutationFn:async () => httpPostService(cafeteriaMenuItemRoute,JSON.stringify({
-            menuItemName:itemName,
-            quantity,
-            type:type?.name,
-            price,
-            date
+        mutationFn:async () => httpPostService(inventoryConsumedItemsRoute,JSON.stringify({
+            invConsumedItemName:itemName,
+            invConsumedQuantity:quantity,
+            invConsumedPrice:price,
+            date:"no-date",
+            invConsumedMeasure:measure,
+            hourseId:horse?.id
         })),
         onSuccess:(res) => {
             const status = statusCodeIndicator(res.status_code) === "success" 
@@ -44,7 +51,7 @@ function AddNewMenuItemPage() {
                     showPopUp:true,
                     popUpType:"alert"
                 })
-                router.push("/sales/cafeteria/menu-item")
+                router.push("/sales/inventory/consumed-item")
             }else {
                 popUp({
                     popUpMessage:res.message,
@@ -66,6 +73,13 @@ function AddNewMenuItemPage() {
         }
     })
 
+    useGetHorses({
+        onSuccess:(res)=>{
+            const horses = toNameAndId(res?.data?.hourse,"hourseName","_id")
+            setHorses(horses)
+        }
+    })
+
     return (
         <>
             <PageHeader>
@@ -73,29 +87,30 @@ function AddNewMenuItemPage() {
                     <div className='flex items-center gap-5'>
                         <BackButton />
                         <div className='text-smokey-white text-2xl'>
-                            <span>stable's cafeteria / </span>
-                            <span className='text-primary'> add new menu item</span>
+                            <span>stable's inventory / </span>
+                            <span className='text-primary'> add new consumed item</span>
                         </div>
                     </div>
                     <Avatar/>
                 </div>
             </PageHeader>
-            <AddNewMenuItemPageContent
-                handleAddNewMenuItem={mutate}
+            <AddNewInvConsumedItemPageContent
+                handleAddNewConsumedInventoryItem={mutate}
                 itemName={itemName}
                 setItemName={setItemName}
                 quantity={quantity}
                 setQuantity={setQuantity}
                 price={price}
                 setPrice={setPrice}
-                date={date}
-                setDate={setDate}
-                type={type}
-                setType={setType}
-                isInputsValid={isInputsValid}            
+                isInputsValid={isInputsValid}  
+                measure={measure}
+                setMeasure={setMeasure}
+                horse={horse}
+                setHorse={setHorse}
+                horses={horses}          
             />
         </>
     )
 }
 
-export default AddNewMenuItemPage
+export default AddNewConsumedItemPage

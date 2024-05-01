@@ -113,6 +113,7 @@ class InventoryController {
               measure: req.body.measure,
               date:req.body.date
             })
+
               .save()
               .then((docs) => {
                 res.status(200).json({

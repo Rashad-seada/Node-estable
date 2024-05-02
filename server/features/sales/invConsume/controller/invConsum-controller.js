@@ -113,7 +113,6 @@ class InvConsumeController {
                 invConsumedMeasure: req.body.invConsumedMeasure,
                 date: req.body.date,
                 hourseId: req.body.hourseId,
-
               })
               .save()
               .then((docs) => {

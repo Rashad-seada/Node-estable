@@ -28,6 +28,7 @@ const menuItemRouter =require("./features/sales/caveteria/router/caveteria")
 const consumeRouter = require("./features/sales/consumeItem/router/consumeRoutes")
 const inventoryRouter = require("./features/sales/inventory/router/inventory")
 const InvConsumeRouter = require("./features/sales/invConsume/router/invConsum")
+const packageRouter = require("./features/sales/packages/router/package")
 
 // cors libyrary
 app.use(cors({
@@ -63,10 +64,11 @@ app.use("/api/membership-status",verifyTokenAndAdmin,membershipStatusRouter)
 app.use("/api/hourse-category",verifyTokenAndAdmin,hourseCategoryRouter)
 app.use("/api/instractor",verifyTokenAndAdmin,instractorRouter)
 app.use("/api/gender",verifyTokenAndAdmin,gendersRouter)
-app.use("/api/caveteria/menuitem",menuItemRouter)
-app.use("/api/caveteria/consume",consumeRouter)
-app.use("/api/inventory/inventoryitem",inventoryRouter)
-app.use("/api/inventory/InvConsume",InvConsumeRouter)
+app.use("/api/caveteria/menuitem",verifyTokenAndAdmin,menuItemRouter)
+app.use("/api/caveteria/consume",verifyTokenAndAdmin,consumeRouter)
+app.use("/api/inventory/inventoryitem",verifyTokenAndAdmin,inventoryRouter)
+app.use("/api/inventory/InvConsume",verifyTokenAndAdmin,InvConsumeRouter)
+app.use("/api/package",packageRouter)
 
 
 

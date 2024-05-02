@@ -49,8 +49,8 @@ function createInventoryItemValidation(obj){
         measure : joi.string().required(),
         date:joi.string().required()
     })
-    return schema.validate(obj)
-}
+    return schema.validate(obj);
+  }
 module.exports ={
     Inventory
 ,

@@ -56,7 +56,7 @@ function Input({
             {
                 label ? (
                     <label className={`${labelClassName ? labelClassName:""}`}>
-                        {label}
+                        <pre style={{fontFamily:"inherit"}}>{label}</pre>
                     </label>
                 ) : <></>
             }

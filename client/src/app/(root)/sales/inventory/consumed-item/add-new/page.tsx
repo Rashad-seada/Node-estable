@@ -1,9 +1,7 @@
 "use client"
 
 import AddNewInvConsumedItemPageContent from '@/components/content/sales/inventory/consumed-item/AddNewInvConsumedItemPageContent'
-import Avatar from '@/components/shared/all/Avatar'
-import BackButton from '@/components/shared/all/BackButton'
-import PageHeader from '@/components/shared/all/PageHeader'
+import PageHeader from '@/components/layout/PageHeader'
 import { inventoryConsumedItemsRoute } from '@/constants/api'
 import { useGetHorses } from '@/hooks/useGetHorses'
 import { usePopUp } from '@/hooks/usePopUp'
@@ -81,18 +79,15 @@ function AddNewConsumedItemPage() {
 
     return (
         <>
-            <PageHeader>
-                <div className='flex justify-between items-center w-full'>
-                    <div className='flex items-center gap-5'>
-                        <BackButton />
-                        <div className='text-smokey-white text-2xl'>
-                            <span>stable's inventory / </span>
-                            <span className='text-primary'> add new consumed item</span>
-                        </div>
-                    </div>
-                    <Avatar/>
-                </div>
-            </PageHeader>
+            <PageHeader
+                title={(
+                    <span>
+                        stable's inventory /
+                        <span className='text-primary'>add new item</span>
+                    </span>
+                )}
+                showBackButton={true}
+            />
             <AddNewInvConsumedItemPageContent
                 handleAddNewConsumedInventoryItem={mutate}
                 itemName={itemName}

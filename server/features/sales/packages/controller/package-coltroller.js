@@ -117,7 +117,6 @@ class packageController {
             })
           } else {
            await new Package({
-                clientName: req.body.clientName,
                 category: req.body.category,
                 lessons: req.body.lessons,
                 startDate: req.body.startDate,

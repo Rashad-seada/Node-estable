@@ -21,7 +21,7 @@ function InstructorsPageContent({isDataHere,response,refetch}:ClientsPageProps) 
             
                 {
                     isDataHere ? ( 
-                        <div className='grid w-full h-full p-10 gap-10 grid-cols-[repeat(auto-fit,minmax(250px,1fr))]'>
+                        <div className='grid w-full h-full p-10 gap-10 grid-cols-[repeat(auto-fill,250px)]'>
                             {
                                 instructors.map((instructor:any,idx:number) => (
                                     <ResourcesCard

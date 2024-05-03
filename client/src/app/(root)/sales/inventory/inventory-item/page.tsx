@@ -1,6 +1,6 @@
 "use client"
 
-import InventoryHeader from "@/components/content/sales/inventory/InventoryHeader";
+import PageHeader from "@/components/layout/PageHeader";
 import Loader from "@/components/shared/all/Loader";
 import NavigationTabs from "@/components/shared/all/NavigationTabs";
 import PageContent from "@/components/shared/all/PageContent";
@@ -55,7 +55,10 @@ function InventoryItemsPage() {
     ]
     return (
         <>
-            <InventoryHeader/>
+            <PageHeader
+                title={"stable's inventory"}
+                addNewButtonLabel='add new item'
+            />
             <div className='h-[calc(100%-80px)] w-full'>
                 <PageContent className='overflow-y-hidden pt-10'>
                     <NavigationTabs

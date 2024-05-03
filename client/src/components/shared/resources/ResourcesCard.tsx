@@ -68,25 +68,27 @@ function ResourcesCard({imgUrl,title,titles,_id,route,refetch}:ResourcesCardProp
     }
 
     return (
-        <div className='h-fit duration-300 hover:shadow-lg border-opacity-40 border border-dark-grey text-center items-center justify-between w-full flex flex-col  rounded-3xl'>
+        <div className='h-[380px] duration-300 hover:shadow-lg border-opacity-40 border border-dark-grey text-center items-center justify-between w-full flex flex-col  rounded-3xl'>
 
 
-            <div className='h-[175px] w-full p-4'>
-                {
-                    !imgUrl ? (<BiSolidImageAlt className='w-full text-4xl h-full text-dark-grey opacity-30' />) :(
-                        <img src={imgUrl} 
-                            className='w-full rounded-2xl h-[180px] object-cover' 
-                            alt="horse image"
-                        />)
-                }
+            <div className='h-[180px] w-full px-4 pt-4'>
+                <div className={`w-full h-full  rounded-2xl overflow-hidden ${!imgUrl && "bg-light-grey bg-opacity-40"}`}>
+                    {
+                        !imgUrl ? (<BiSolidImageAlt className='w-full text-4xl h-full text-dark-grey opacity-30' />) :(
+                            <img src={imgUrl} 
+                                className='w-full h-[180px] object-cover' 
+                                alt="horse image"
+                            />)
+                    }
+                </div>
             </div>
 
             <div className=' p-4'>
                 <div>
-                    <p className='my-3 truncate text-xl text-dark-grey font-semibold'>{title}</p>
+                    <p className='my-3 truncate text-lg text-dark-grey font-semibold'>{title}</p>
                 </div>
 
-                <div className='text-xl'>
+                <div className='text-lg'>
                     {
                         titlesKeys.map((key,idx)=> (
                             <p className='truncate' key={idx}>
@@ -98,16 +100,17 @@ function ResourcesCard({imgUrl,title,titles,_id,route,refetch}:ResourcesCardProp
                 </div>
             </div>
 
-            <div className='relative border-t p-4 border-dark-grey border-opacity-40 w-full flex justify-between items-center'>
+            <div className='h-[60px] relative border-t py-2 px-4 border-dark-grey border-opacity-40 w-full flex justify-between items-center'>
             
-                <div className='w-[70px] flex text-2xl items-center text-dark-grey h-[20px] justify-between'>
-                    <Link className='hover:text-primary duration-300' href={`${pathName}/${_id}/edit`}>
-                        <RiPencilFill />
-                    </Link>
-                    <span className='h-[35px] w-[1.5px] bg-dark-grey opacity-40'/>
+                <div className='w-fit gap-2 flex text-xl items-center text-dark-grey h-[20px] justify-between'>
+                   
                     <button className='hover:text-red-500 duration-300' onClick={handleDelete}>
                         <FaTrash/>
                     </button>
+                    <span className='h-[35px] w-[1.5px] bg-dark-grey opacity-40'/>
+                    <Link className='hover:text-primary text-2xl duration-300' href={`${pathName}/${_id}/edit`}>
+                        <RiPencilFill />
+                    </Link>
                 </div>
 
                 <button className='flex h-[35px] w-[130px] justify-center gap-2 capitalize items-center p-2 rounded-lg border text-primary border-primary duration-300 hover:bg-primary hover:text-smokey-white'>

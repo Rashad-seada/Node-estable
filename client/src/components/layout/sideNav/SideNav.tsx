@@ -8,7 +8,7 @@ function SideNav() {
 
 
     return (
-        <nav className='w-[250px] h-full  bg-smokey-white rounded-3xl'>
+        <nav className='w-[230px] h-full  bg-smokey-white rounded-3xl'>
             <div className='h-[100px]'>
                 <img className='w-[100px] mx-auto aspect-square block' src={'/svgs/logo.svg'} alt="logo" />
             </div>

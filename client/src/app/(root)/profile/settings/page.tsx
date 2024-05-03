@@ -1,8 +1,7 @@
 "use client"
 
 import SettingsPageContent from '@/components/content/profile/settings/SettingsPageContent'
-import Avatar from '@/components/shared/all/Avatar'
-import PageHeader from '@/components/shared/all/PageHeader'
+import PageHeader from '@/components/layout/PageHeader'
 import { getAdminRoute } from '@/constants/api'
 import { httpGetServices } from '@/services/httpGetService'
 import React, { useEffect, useState } from 'react'
@@ -34,12 +33,9 @@ function SettingsPage() {
 
     return (
         <>
-            <PageHeader>
-                <div className='flex w-full justify-between items-center'>
-                    <h4 className='text-smokey-white text-2xl'>settings</h4>
-                    <Avatar/>
-                </div>
-            </PageHeader>
+            <PageHeader
+                title={"settings"}
+            />
             <SettingsPageContent
                 fullName={fullName}
                 setAddress={setAddress}

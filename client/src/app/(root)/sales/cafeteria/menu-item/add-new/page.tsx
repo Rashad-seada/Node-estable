@@ -2,7 +2,6 @@
 import AddNewMenuItemPageContent from '@/components/content/sales/cafeteria/menu-item/AddNewMenuItemPageContent'
 import Avatar from '@/components/shared/all/Avatar'
 import BackButton from '@/components/shared/all/BackButton'
-import PageHeader from '@/components/shared/all/PageHeader'
 import React from 'react'
 import { usePopUp } from "@/hooks/usePopUp"
 import { useRouter } from "next/navigation"
@@ -13,6 +12,7 @@ import { httpPostService } from '@/services/httpPostService'
 import { IoMdCheckmarkCircleOutline } from 'react-icons/io'
 import { MdErrorOutline } from 'react-icons/md'
 import { statusCodeIndicator } from '@/utils/statusCodeIndicator'
+import PageHeader from '@/components/layout/PageHeader'
 
 function AddNewMenuItemPage() {
     const [itemName,setItemName] = useState<string>("")
@@ -68,18 +68,15 @@ function AddNewMenuItemPage() {
 
     return (
         <>
-            <PageHeader>
-                <div className='flex justify-between items-center w-full'>
-                    <div className='flex items-center gap-5'>
-                        <BackButton />
-                        <div className='text-smokey-white text-2xl'>
-                            <span>stable's cafeteria / </span>
-                            <span className='text-primary'> add new menu item</span>
-                        </div>
-                    </div>
-                    <Avatar/>
-                </div>
-            </PageHeader>
+            <PageHeader
+                title={(
+                    <span>
+                        stable's cafeteria / 
+                        <span className="text-primary"> add menu item</span> 
+                    </span>
+                )}
+                showBackButton={true}
+            />
             <AddNewMenuItemPageContent
                 handleAddNewMenuItem={mutate}
                 itemName={itemName}

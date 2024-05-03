@@ -1,9 +1,7 @@
 "use client"
 
 import AddConsumedItemPageContent from "@/components/content/sales/cafeteria/consumed-item/AddConsumedItemPageContent"
-import Avatar from "@/components/shared/all/Avatar"
-import BackButton from "@/components/shared/all/BackButton"
-import PageHeader from "@/components/shared/all/PageHeader"
+import PageHeader from "@/components/layout/PageHeader"
 import { cafeteriaConsumedItemRoute } from "@/constants/api"
 import { useGetClients } from "@/hooks/useGetClients"
 import { usePopUp } from "@/hooks/usePopUp"
@@ -87,18 +85,15 @@ function AddNewConsumedItemPage() {
 
     return (
         <>
-            <PageHeader>
-                <div className='flex justify-between items-center w-full'>
-                    <div className='flex items-center gap-5'>
-                        <BackButton />
-                        <div className='text-smokey-white text-2xl'>
-                            <span>stable's cafeteria / </span>
-                            <span className='text-primary'> add consumed item</span>
-                        </div>
-                    </div>
-                    <Avatar/>
-                </div>
-            </PageHeader>
+            <PageHeader
+                title={(
+                    <span>
+                        stable's cafeteria / 
+                        <span className="text-primary"> add consumed item</span> 
+                    </span>
+                )}
+                showBackButton={true}
+            />
             <AddConsumedItemPageContent
                 handleAddNewConsumedItem={mutate}
                 itemName={itemName}

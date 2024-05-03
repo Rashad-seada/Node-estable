@@ -1,7 +1,7 @@
 "use client"
 
 import InstructorsPageContent from '@/components/content/resources/instructors/InstructorsPageContent'
-import InstructorsPageHeader from '@/components/content/resources/instructors/InstructorsPageHeader'
+import PageHeader from '@/components/layout/PageHeader'
 import PaginationButtons from '@/components/shared/all/PaginationButtons'
 import { instructorsRoute } from '@/constants/api'
 import { httpGetServices } from '@/services/httpGetService'
@@ -30,10 +30,15 @@ function InstructorsPage() {
     return (
         <>
             <div className='w-full h-[calc(100%-80px)]'>
-                <InstructorsPageHeader 
-                    setDropDownListValue={setListValue} 
-                    dropDownListValue={listValue} 
-                    dropDownListOptions={listOptions}
+                <PageHeader
+                    title={"stable's instructors"}
+                    dropDown={{
+                        options:listOptions,
+                        listValue,
+                        setListValue,
+                        placeholder:"select instructor"
+                    }}
+                    addNewButtonLabel='add new instructor'
                 />
                 
                 <InstructorsPageContent

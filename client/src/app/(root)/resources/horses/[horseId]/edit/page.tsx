@@ -1,8 +1,6 @@
 "use client"
 import EditHorsePageContent from '@/components/content/resources/horses/edit/EditHorsePageContent'
-import Avatar from '@/components/shared/all/Avatar'
-import BackButton from '@/components/shared/all/BackButton'
-import PageHeader from '@/components/shared/all/PageHeader'
+import PageHeader from '@/components/layout/PageHeader'
 import { horseCategoriesRoute, horsesRoute } from '@/constants/api'
 import { useGetClients } from '@/hooks/useGetClients'
 import { useGetHorses } from '@/hooks/useGetHorses'
@@ -47,30 +45,37 @@ function HorseEditPage() {
         const fetchClient = async () => {
             const res = await httpGetServices(horseIdRoute)
             if (statusCodeIndicator(res.statusCode) === "success") {
+
                 const data = res.data
-                setName(data.hourseName)
-                setNote(data.note)
-                let category = await getHorseCategoryById(data.catigoryId[0])
-                category = Boolean(category) ? ({
-                    name:category.displayName,
-                    id:category._id
-                }) : null
-                setHorseCategory(category)
-                const client = await getClientById(data.clientId)
-                setClient({
-                    name:client.username,
-                    id:client._id
-                })
-                
-                let horse = await getHorseById(data.groom)
-                horse = horse ?( {
-                    name:horse.hourseName,
-                    id:horse._id
-                }) : null 
-                setGroom(horse)
-                setAge(data.age)
-                setGender(getGender(data?.gender))
-                setNote(data.note)
+                if (data) {
+                    setName(data.hourseName)
+                    setNote(data.note)
+                    let category = await getHorseCategoryById(data.catigoryId[0])
+                    category = Boolean(category) ? ({
+                        name:category.displayName,
+                        id:category._id
+                    }) : null
+                    setHorseCategory(category)
+                    
+                    let client = await getClientById(data.clientId)
+                    client = client ? ({
+                        name:client.username,
+                        id:client._id
+                    }) : null
+                    
+                    setClient(client)
+                    
+                    let horse = await getHorseById(data.groom)
+                    horse = horse ?( {
+                        name:horse?.hourseName,
+                        id:horse?._id
+                    }) : null 
+                    setGroom(horse)
+                    setAge(data.age)
+                    setGender(getGender(data?.gender))
+                    setNote(data.note)
+                }
+               
             }
             
         }
@@ -138,18 +143,15 @@ function HorseEditPage() {
 
     return (
         <>
-            <PageHeader>
-                <div className='flex justify-between items-center w-full'>
-                    <div className='flex items-center gap-5'>
-                        <BackButton/>
-                        <div className='text-smokey-white text-2xl'>
-                            <span>stable's horse / </span>
-                            <span className='text-primary'> Edit Horse information</span>
-                        </div>
-                    </div>
-                    <Avatar/>
-                </div>
-            </PageHeader>
+            <PageHeader
+                title={(
+                    <span>
+                        stable's horses / 
+                        <span className="text-primary">edit horse</span>
+                    </span>
+                )}
+                showBackButton={true}
+            />
             <EditHorsePageContent
                 isInputsValid={isInputsValid}
                 name={name}

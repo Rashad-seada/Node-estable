@@ -1,9 +1,7 @@
 "use client"
 
 import EditMenuItemPageContent from "@/components/content/sales/cafeteria/menu-item/EditMenuItemPageContent"
-import Avatar from "@/components/shared/all/Avatar"
-import BackButton from "@/components/shared/all/BackButton"
-import PageHeader from "@/components/shared/all/PageHeader"
+import PageHeader from "@/components/layout/PageHeader"
 import { cafeteriaMenuItemRoute } from "@/constants/api"
 import { usePopUp } from "@/hooks/usePopUp"
 import { httpGetServices } from "@/services/httpGetService"
@@ -92,18 +90,15 @@ function MenuItemEditPage() {
 
     return (
         <>
-            <PageHeader>
-                <div className='flex justify-between items-center w-full'>
-                    <div className='flex items-center gap-5'>
-                        <BackButton />
-                        <div className='text-smokey-white text-2xl'>
-                            <span>stable's cafeteria / </span>
-                            <span className='text-primary'>edit item</span>
-                        </div>
-                    </div>
-                    <Avatar/>
-                </div>
-            </PageHeader>
+            <PageHeader
+                title={(
+                    <span>
+                        stable's cafeteria / 
+                        <span className="text-primary"> edit consumed item</span> 
+                    </span>
+                )}
+                showBackButton={true}
+            />
             <EditMenuItemPageContent
                 itemName={itemName}
                 setItemName={setItemName}

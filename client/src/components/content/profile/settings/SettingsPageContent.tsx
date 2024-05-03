@@ -25,6 +25,14 @@ type SettingsPageContentProps = {
     setMobile:setInputState
 }
 
+
+type InputType = {
+    value:string,
+    placeholder:string,
+    type:"number" | "text" | "password" | "datetime-local",
+    label:string,
+    setValue:(newState:string) => void,
+}
 function SettingsPageContent({
     avatar,
     setAvatar,
@@ -72,6 +80,37 @@ function SettingsPageContent({
         updateAdminData()
     }
 
+    const inputs:InputType[] = [
+        {
+            value:fullName,
+            placeholder:"edit full name",
+            type:"text",
+            label:"full name   :",
+            setValue:setFullName,
+        },
+        {
+            value:email,
+            placeholder:"edit email",
+            type:"text",
+            label:"email           :",
+            setValue:setEmail,
+        },
+        {
+            value:address,
+            placeholder:"edit address",
+            type:"text",
+            label:"address      :",
+            setValue:setAddress,
+        },
+        {
+            value:mobile,
+            placeholder:"edit mobile",
+            type:"number",
+            label:"mobile         :",
+            setValue:setMobile,
+        },
+    ]
+
     return (
         <PageContent>
             <Loader size={300} isLoading={false}>
@@ -89,43 +128,24 @@ function SettingsPageContent({
                         <p className='font-bold text-dark-grey text-2xl'>{fullName}</p>
                     </div>
 
-                    <div className='w-full p-16 gap-x-20 gap-y-7 grid grid-cols-[repeat(auto-fit,minmax(380px,1fr))] flex-1'>
-                        <Input
-                            value={fullName} 
-                            placeholder="Edit Full Name"
-                            type='text'
-                            label='full name :'
-                            setValue={setFullName}
-                            labelClassName='text-2xl text-dark-grey font-semibold'
-                            className='border w-full border-solid placeholder:text-dark-grey placeholder:text-opacity-45 border-dark-grey border-opacity-40 rounded-lg text-xl h-[40px] bg-transparent p-3'
-                        />
-                        <Input
-                            value={email} 
-                            placeholder="Edit email"
-                            type='text'
-                            label='email :'
-                            setValue={setEmail}
-                            labelClassName='text-2xl text-dark-grey font-semibold'
-                            className='border w-full border-solid placeholder:text-dark-grey placeholder:text-opacity-45 border-dark-grey border-opacity-40 rounded-lg text-xl h-[40px] bg-transparent p-3'
-                        />
-                        <Input
-                            value={address} 
-                            placeholder="Edit address"
-                            type='text'
-                            label='address :'
-                            setValue={setAddress}
-                            labelClassName='text-2xl text-dark-grey font-semibold'
-                            className='border w-full border-solid placeholder:text-dark-grey placeholder:text-opacity-45 border-dark-grey border-opacity-40 rounded-lg text-xl h-[40px] bg-transparent p-3'
-                        />
-                        <Input
-                            value={mobile} 
-                            placeholder="Edit mobile"
-                            type='number'
-                            label='mobile :'
-                            setValue={setMobile}
-                            labelClassName='text-2xl text-dark-grey font-semibold'
-                            className='border w-full border-solid placeholder:text-dark-grey placeholder:text-opacity-45 border-dark-grey border-opacity-40 rounded-lg text-xl h-[40px] bg-transparent p-3'
-                        />
+                    <div className='w-full p-16 gap-x-20 gap-y-7 grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] flex-1'>
+                        
+
+                        {
+                            inputs.map((input,idx:number) => (
+                                <div key={idx}>
+                                    <Input
+                                        value={input.value} 
+                                        placeholder={input.placeholder}
+                                        type={input.type}
+                                        label={input.label}
+                                        setValue={input.setValue}
+                                        labelClassName='text-2xl text-dark-grey font-semibold'
+                                        className='border w-full border-solid placeholder:text-dark-grey placeholder:text-opacity-45 border-dark-grey border-opacity-40 rounded-lg text-xl h-[40px] bg-transparent p-3'
+                                    />
+                                </div>
+                            ))
+                        }
                     </div>
 
                     <button

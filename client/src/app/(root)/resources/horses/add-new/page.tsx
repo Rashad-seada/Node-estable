@@ -1,10 +1,8 @@
 "use client"
 
 import AddNewHorsePageContent from "@/components/content/resources/horses/add-new/AddNewHorsePageContent"
-import Avatar from "@/components/shared/all/Avatar"
-import BackButton from "@/components/shared/all/BackButton"
-import PageHeader from "@/components/shared/all/PageHeader"
-import { clientsRoute, horsesRoute, horseCategoriesRoute } from "@/constants/api"
+import PageHeader from "@/components/layout/PageHeader"
+import { horsesRoute, horseCategoriesRoute } from "@/constants/api"
 import { useGetClients } from "@/hooks/useGetClients"
 import { useGetHorses } from "@/hooks/useGetHorses"
 import { usePopUp } from "@/hooks/usePopUp"
@@ -96,18 +94,15 @@ function AddNewHorsePage() {
     })
     return (
         <>
-            <PageHeader>
-                <div className='flex justify-between items-center w-full'>
-                    <div className='flex items-center gap-5'>
-                        <BackButton />
-                        <div className='text-smokey-white text-2xl'>
-                            <span>stable's horse / </span>
-                            <span className='text-primary'> add new horse</span>
-                        </div>
-                    </div>
-                    <Avatar/>
-                </div>
-            </PageHeader>
+            <PageHeader
+                title={(
+                    <span>
+                        stable's horses / 
+                        <span className="text-primary">add new horse</span>
+                    </span>
+                )}
+                showBackButton={true}
+            />
             <AddNewHorsePageContent
                 isInputsValid={isInputsValid}
                 name={name}

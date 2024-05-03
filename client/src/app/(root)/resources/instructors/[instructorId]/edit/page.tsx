@@ -1,9 +1,7 @@
 "use client"
 
 import EditInstructorPageContent from '@/components/content/resources/instructors/edit/EditInstructorPageContent'
-import Avatar from '@/components/shared/all/Avatar'
-import BackButton from '@/components/shared/all/BackButton'
-import PageHeader from '@/components/shared/all/PageHeader'
+import PageHeader from '@/components/layout/PageHeader'
 import { instructorsRoute } from '@/constants/api'
 import { usePopUp } from '@/hooks/usePopUp'
 import { httpGetServices } from '@/services/httpGetService'
@@ -47,7 +45,6 @@ function InstructorEditPage() {
                 setAge(res.data.age)
                 setGender(getGender(res.data.gender))
             }
-            console.log(res);
             
         }
         fetchInstructor()
@@ -90,18 +87,15 @@ function InstructorEditPage() {
     })
     return (
         <>
-            <PageHeader>
-                <div className='flex justify-between items-center w-full'>
-                    <div className='flex items-center gap-5'>
-                        <BackButton />
-                        <div className='text-smokey-white text-2xl'>
-                            <span>stable's instructor / </span>
-                            <span className='text-primary'> edit instructor</span>
-                        </div>
-                    </div>
-                    <Avatar/>
-                </div>
-            </PageHeader>
+            <PageHeader
+                title={(
+                    <span>
+                        stable's instructors /
+                        <span className='text-primary'>edit instructor</span>
+                    </span>
+                )}
+                showBackButton={true}
+            />
             <EditInstructorPageContent
                 email={email}
                 setAge={setAge}

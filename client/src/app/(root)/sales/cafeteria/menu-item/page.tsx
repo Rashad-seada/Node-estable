@@ -5,13 +5,13 @@ import NavigationTabs from '@/components/shared/all/NavigationTabs';
 import PageContent from '@/components/shared/all/PageContent';
 import PaginationButtons from '@/components/shared/all/PaginationButtons';
 import Table from '@/components/shared/all/Table';
-import CafeteriaHeader from '@/components/content/sales/cafeteria/CafeteriaHeader';
 import { cafeteriaMenuItemRoute } from '@/constants/api';
 import { httpGetServices } from '@/services/httpGetService';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import React from 'react'
 import { useQuery } from 'react-query';
 import { getReadableDate } from '@/utils/getReadableDate';
+import PageHeader from '@/components/layout/PageHeader';
 
 function CafeteriaMenuItems() {
     
@@ -59,8 +59,10 @@ function CafeteriaMenuItems() {
     ]
     return (
         <>
-            <CafeteriaHeader/>
-        
+            <PageHeader
+                title={"stable's cafeteria"}
+                addNewButtonLabel='add new item'
+            />
             <div  className='h-[calc(100%-80px)] w-full'>
                 <PageContent className='overflow-y-hidden pt-10'>
 

@@ -1,6 +1,6 @@
 "use client"
 import ClientsPageContent from '@/components/content/resources/clients/ClientsPageContent'
-import ClientsPageHeader from '@/components/content/resources/clients/ClientsPageHeader'
+import PageHeader from '@/components/layout/PageHeader'
 import PaginationButtons from '@/components/shared/all/PaginationButtons'
 import { useGetClients } from '@/hooks/useGetClients'
 import { toNameAndId } from '@/utils/toNameAndId'
@@ -19,7 +19,6 @@ function ClientsPage() {
         queryKey:['page',pageNumber]
 
     })
-    console.log(response);
     
 
     const isDataHere = Boolean(response?.data?.client) && isSuccess
@@ -30,10 +29,15 @@ function ClientsPage() {
     return (
         <>
             <div className='w-full h-[calc(100%-80px)]'>
-                <ClientsPageHeader 
-                    dropDownListValue={listValue} 
-                    setDropDownListValue={setListValue} 
-                    dropDownListOptions={listOptions}
+                <PageHeader
+                    title={"stable's clients"}
+                    dropDown={{
+                        options: listOptions,
+                        setListValue,
+                        listValue,
+                        placeholder:"select client"
+                    }}
+                    addNewButtonLabel='add new instructor'
                 />
                 <ClientsPageContent 
                     refetch={refetch}

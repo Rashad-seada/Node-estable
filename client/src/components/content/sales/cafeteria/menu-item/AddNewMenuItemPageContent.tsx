@@ -64,8 +64,8 @@ function AddNewMenuItemPageContent({
                 <ResourcesInput
                     value={date} 
                     setValue={setDate}
-                    placeholder="Quantity"
-                    label='item name'
+                    placeholder="Date"
+                    label='Date'
                     type="datetime-local"
                 />
                 <ResourcesDropList

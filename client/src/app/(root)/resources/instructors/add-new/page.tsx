@@ -1,9 +1,9 @@
 "use client"
 
 import AddNewInstructorPageContent from "@/components/content/resources/instructors/add-new/AddNewInstructorPageContent"
+import PageHeader from "@/components/layout/PageHeader"
 import Avatar from "@/components/shared/all/Avatar"
 import BackButton from "@/components/shared/all/BackButton"
-import PageHeader from "@/components/shared/all/PageHeader"
 import { instructorsRoute } from "@/constants/api"
 import { usePopUp } from "@/hooks/usePopUp"
 import { httpPostService } from "@/services/httpPostService"
@@ -69,18 +69,15 @@ function AddNewInstructorPage() {
     })
     return (
         <>
-            <PageHeader>
-                <div className='flex justify-between items-center w-full'>
-                    <div className='flex items-center gap-5'>
-                        <BackButton />
-                        <div className='text-smokey-white text-2xl'>
-                            <span>stable's instructor / </span>
-                            <span className='text-primary'> add new instructor</span>
-                        </div>
-                    </div>
-                    <Avatar/>
-                </div>
-            </PageHeader>
+            <PageHeader
+                title={(
+                    <span>
+                        stable's instructors /
+                        <span className='text-primary'>add new instructor</span>
+                    </span>
+                )}
+                showBackButton={true}
+            />
         
             <AddNewInstructorPageContent
                 name={name}

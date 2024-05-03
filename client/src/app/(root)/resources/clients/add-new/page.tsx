@@ -1,11 +1,8 @@
 "use client"
 
 import AddNewClientPageContent from '@/components/content/resources/clients/add-new/AddNewClientPageContent'
-import Avatar from '@/components/shared/all/Avatar'
-import BackButton from '@/components/shared/all/BackButton'
-import PageHeader from '@/components/shared/all/PageHeader'
+import PageHeader from '@/components/layout/PageHeader'
 import { clientsRoute } from '@/constants/api'
-import { genders } from '@/constants/genders'
 import { usePopUp } from '@/hooks/usePopUp'
 import { httpPostService } from '@/services/httpPostService'
 import { statusCodeIndicator } from '@/utils/statusCodeIndicator'
@@ -77,18 +74,15 @@ function AddNewClientPage() {
     })
     return (
         <>
-            <PageHeader>
-                <div className='flex justify-between items-center w-full'>
-                    <div className='flex items-center gap-5'>
-                        <BackButton />
-                        <div className='text-smokey-white text-2xl'>
-                            <span>stable's client / </span>
-                            <span className='text-primary'> add new client</span>
-                        </div>
-                    </div>
-                    <Avatar/>
-                </div>
-            </PageHeader>
+            <PageHeader
+                title={(
+                    <span>
+                        stable's clients /
+                        <span className='text-primary'>add new client</span>
+                    </span>
+                )}
+                showBackButton={true}
+            />
             <AddNewClientPageContent
                 name={name}
                 setName={setName}

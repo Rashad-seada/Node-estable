@@ -94,7 +94,7 @@ export const SalesRoutes : DashboardRoute[] = [
         name:"medical"
     },
     {
-        href:"/sales/membership",
+        href:"/sales/membership/individual",
         iconComponent:<MdGroupAdd />,
         name:"membership"
     },

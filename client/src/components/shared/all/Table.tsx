@@ -82,7 +82,9 @@ function Table({tableHeadCells,tableBodyItems,isCrud,tableBodyItemCellKeys,route
                                 </th>
                             ))
                         }
-                        <th className="w-[100px] px-5"></th>
+                        {
+                            isCrud ? (<th className="w-[100px] px-5"></th>) :<></>
+                        }
                     </tr>
                 </thead>
 
@@ -98,10 +100,10 @@ function Table({tableHeadCells,tableBodyItems,isCrud,tableBodyItemCellKeys,route
                                             </td>
                                         ))
                                     }
+                                    {
+                                        isCrud ? (
+                                            <td className="px-5">
                                         
-                                    <td className="px-5">
-                                        {
-                                            isCrud ? (
                                                 <div className="flex w-fit gap-2 ml-auto h-[40px] items-center text-xl">
                                                     
                                                     <button className='text-red-500 ' onClick={()=>handleDelete(tableItem._id)}>
@@ -112,9 +114,10 @@ function Table({tableHeadCells,tableBodyItems,isCrud,tableBodyItemCellKeys,route
                                                         <RiPencilFill />
                                                     </Link>
                                                 </div>
-                                            ): <></>
-                                        }
-                                    </td>
+                                                    
+                                            </td>
+                                        ): <></>
+                                    }
                                 </tr>
                             )
                         })

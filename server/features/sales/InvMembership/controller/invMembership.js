@@ -1,6 +1,6 @@
 const {
   InvMembership,
-  createNewInvMembership,
+  createNewInvMembership,updateInvMembership
 } = require("../model/invMembership");
 const ApiErrorCode = require("../../../../core/errors/apiError");
 
@@ -149,58 +149,73 @@ class invMembershipController {
   }
 
   static async updateinvMembership(req, res) {
-    InvMembership.find({ id: req.params.id })
-      .then(async (docs) => {
-        if (docs) {
-          await InvMembership.findByIdAndUpdate(
-            req.params.id,
-            {
-              $set: {
-                // clientName: req.body.clientName,
-                clientId: req.body.clientId,
-                membershipType: req.body.membershipType,
-                startDate: req.body.startDate,
-                endDate: req.body.endDate,
-                status: req.body.status,
-              },
-            },
-            { new: true }
-          )
-            .then((docs) => {
-              if (docs) {
-                res.status(200).json({
-                  status_code: 0,
-                  message: "Updated Suvccess",
-                  data: docs,
-                });
-              } else {
-                res.status(400).json({
-                  status_code: ApiErrorCode.validation,
-                  message: "Cand update InvMembership",
-                  data: null,
-                });
-              }
-            })
-            .catch((error) => {
-              res.status(404).json({
-                status_code: ApiErrorCode.validation,
-                message: "InvMembership id is not found",
-                error: {
-                  error: error.message,
-                },
-              });
-            });
+   
+   const {error}=updateInvMembership(req.body)
+if(error){
+    res.status(400).json({
+        status_code: ApiErrorCode.validation,
+        message: "Validation Error",
+        data: null,
+        error:{
+            error:error.message
         }
-      })
-      .catch((error) => {
-        res.status(400).json({
-          status_code: ApiErrorCode.validation,
-          message: "internal server Down",
-          error: {
-            error: error.message,
-          },
-        });
       });
+}else{
+    InvMembership.find({ id: req.params.id })
+    .then(async (docs) => {
+      if (docs) {
+        await InvMembership.findByIdAndUpdate(
+          req.params.id,
+          {
+            $set: {
+              // clientName: req.body.clientName,
+              clientId: req.body.clientId,
+              membershipType: req.body.membershipType,
+              startDate: req.body.startDate,
+              endDate: req.body.endDate,
+              status: req.body.status,
+            },
+          },
+          { new: true }
+        )
+          .then((docs) => {
+            if (docs) {
+              res.status(200).json({
+                status_code: 0,
+                message: "Updated Suvccess",
+                data: docs,
+              });
+            } else {
+              res.status(400).json({
+                status_code: ApiErrorCode.validation,
+                message: "Cand update InvMembership",
+                data: null,
+              });
+            }
+          })
+          .catch((error) => {
+            res.status(404).json({
+              status_code: ApiErrorCode.validation,
+              message: "InvMembership id is not found",
+              error: {
+                error: error.message,
+              },
+            });
+          });
+      }
+    })
+    .catch((error) => {
+      res.status(400).json({
+        status_code: ApiErrorCode.validation,
+        message: "internal server Down",
+        error: {
+          error: error.message,
+        },
+      });
+    });
+}
+
+   
   }
 
   static async deleteinvMembership(req, res) {

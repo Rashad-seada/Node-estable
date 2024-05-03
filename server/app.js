@@ -29,6 +29,7 @@ const consumeRouter = require("./features/sales/consumeItem/router/consumeRoutes
 const inventoryRouter = require("./features/sales/inventory/router/inventory")
 const InvConsumeRouter = require("./features/sales/invConsume/router/invConsum")
 const packageRouter = require("./features/sales/packages/router/package")
+const invmembershipRouter = require("./features/sales/InvMembership//router/invMembership")
 
 // cors libyrary
 app.use(cors({
@@ -69,6 +70,7 @@ app.use("/api/caveteria/consume",verifyTokenAndAdmin,consumeRouter)
 app.use("/api/inventory/inventoryitem",verifyTokenAndAdmin,inventoryRouter)
 app.use("/api/inventory/InvConsume",verifyTokenAndAdmin,InvConsumeRouter)
 app.use("/api/package",packageRouter)
+app.use("/api/invmembership",invmembershipRouter)
 
 
 

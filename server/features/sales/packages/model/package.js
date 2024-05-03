@@ -2,10 +2,14 @@ const mongoose = require("mongoose");
 const joi = require("joi");
 
 const packageSchema = mongoose.Schema({
-  clientName: {
+  clientId: {
     type: mongoose.Types.ObjectId,
     ref: "Client",
     required: true,
+  },
+  clientName:{
+    type:String ,
+    required:true,
   },
   category: {
     type: String,
@@ -28,6 +32,7 @@ const packageSchema = mongoose.Schema({
     enum:["expired","unexpired"],
     required: true,
   }
+  
 });
 
 const Package = mongoose.model("Package", packageSchema);
@@ -40,7 +45,7 @@ function createNewPackage(obj) {
     startDate:joi.string().required(),
     endDate:joi.string().required(),
     status:joi.string().required().valid("expired","unexpired"),
-
+    clientId:joi.string().required()
   })
   return schema.validate(obj);
 }
@@ -52,7 +57,9 @@ function updatePackage(obj) {
     lessons:joi.number().required(),
     startDate:joi.string().required(),
     endDate:joi.string().required(),
-    status:joi.string().required().valid("expired","unexpired")
+    status:joi.string().required().valid("expired","unexpired"),
+    clientId:joi.string().required()
+
   });
   return schema.validate(obj);
 }

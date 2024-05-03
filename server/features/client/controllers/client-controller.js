@@ -7,8 +7,6 @@ const {
 } = require("../models/client");
 
 //import token
-const express = require("express");
-router = express.Router();
 const ApiErrorCode = require("../../../core/errors/apiError") 
 
 

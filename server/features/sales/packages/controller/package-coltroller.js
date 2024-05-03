@@ -18,6 +18,7 @@ class packageController {
     })
       .skip(skip) // Skip documents
       .limit(pageSize)
+      .populate("clientId")
       .then(async (docs) => {
         if (docs) {
           const totalRecords = await Package.countDocuments();
@@ -27,9 +28,7 @@ class packageController {
           res.status(200).json({
             status_code: 1,
             message: "Success To Get All Package ",
-            clientId :{
-              
-            },
+            
             Packages: {
               current_page: parseInt(req.query.page) || 1,
               max_pages: maxPages,
@@ -55,6 +54,47 @@ class packageController {
           },
         });
       });
+  }
+  static async getPackageById(req,res){
+
+    Package.findById(req.params.id)
+    .populate("clientId")
+
+    .then((docs)=>{
+      if(docs){
+        res.status(200).json({
+          status_code: 1,
+          message: "Success To Get All Package By Id ",
+          Packages: {
+            data: docs,
+           
+          },
+          error: null
+        });
+        
+
+      }else{
+        res.status(404).json({
+          status_code: 1,
+          message: "Cant do to  Package Id ",
+          Packages: {
+            data: null,
+          }
+        });
+      }
+    })
+    .catch((error)=>{
+      res.status(200).json({
+        status_code: 1,
+        message: "internal Server Error ",
+        Packages: {
+          data: null,
+        },
+        error: {
+          error:error.message
+        },
+      });
+    })
   }
   static async createNawPackage(req, res) {
     const { error } = createNewPackage(req.body);
@@ -84,8 +124,10 @@ class packageController {
                 startDate: req.body.startDate,
                 endDate: req.body.endDate,
                 status: req.body.status,
+                clientId:req.body.clientId
             })
               .save()
+              
               .then((docs) => {
                 res.status(200).json({
                   status_code: 1,
@@ -115,7 +157,6 @@ class packageController {
         });
     }
   }
-
   static async updatePackage(req, res) {
 
 
@@ -129,12 +170,13 @@ class packageController {
           req.params.id,
           {
             $set: {
-              clientName: req.body.clientName,
+              // clientName: req.body.clientName,
                 category: req.body.category,
                 lessons: req.body.lessons,
                 startDate: req.body.startDate,
                 endDate: req.body.endDate,
                 status: req.body.status,
+                clientId:req.body.clientId
             },
           },
           { new: true }

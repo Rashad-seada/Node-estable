@@ -1,9 +1,15 @@
 const mongoose = require("mongoose");
 const joi = require("joi");
+const { Schema } = mongoose;
 
 const packageSchema = mongoose.Schema({
-  clientName: {
-    type: mongoose.Types.ObjectId,
+
+  clientName:{
+    type:String ,
+    required:true
+  },
+  clientId: {
+    type: Schema.Types.ObjectId,
     ref: "Client",
     required: true,
   },
@@ -35,6 +41,7 @@ const Package = mongoose.model("Package", packageSchema);
 function createNewPackage(obj) {
   const schema = joi.object({
     clientName:joi.string().required(),
+    clientId:joi.string().required(),
     category:joi.string().required(),
     lessons:joi.number().required(),
     startDate:joi.string().required(),
@@ -48,6 +55,8 @@ function createNewPackage(obj) {
 function updatePackage(obj) {
   const schema = joi.object({
     clientName:joi.string().required(),
+    clientId:joi.string().required(),
+
     category:joi.string().required(),
     lessons:joi.number().required(),
     startDate:joi.string().required(),

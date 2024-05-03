@@ -158,9 +158,7 @@ class packageController {
   static async updatePackage(req, res) {
 
 
-    // const {error}=updatePackage(req.body)
-    // if(error){
-    // }else{}
+  
     Package.find({ id: req.params.id })
     .then(async (docs) => {
       if (docs) {

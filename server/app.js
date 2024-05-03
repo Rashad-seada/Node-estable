@@ -29,6 +29,8 @@ const consumeRouter = require("./features/sales/consumeItem/router/consumeRoutes
 const inventoryRouter = require("./features/sales/inventory/router/inventory")
 const InvConsumeRouter = require("./features/sales/invConsume/router/invConsum")
 const packageRouter = require("./features/sales/packages/router/package")
+const medicineRouter = require("./features/medicine/router/medicine-router")
+const consumedMedicineRouter = require("./features/consumed-medicine/router/consumed-medicine-router")
 
 // cors libyrary
 app.use(cors({
@@ -68,7 +70,9 @@ app.use("/api/caveteria/menuitem",verifyTokenAndAdmin,menuItemRouter)
 app.use("/api/caveteria/consume",verifyTokenAndAdmin,consumeRouter)
 app.use("/api/inventory/inventoryitem",verifyTokenAndAdmin,inventoryRouter)
 app.use("/api/inventory/InvConsume",verifyTokenAndAdmin,InvConsumeRouter)
-app.use("/api/package",packageRouter)
+app.use("/api/package",verifyTokenAndAdmin,packageRouter)
+app.use("/api/medicine",verifyTokenAndAdmin,medicineRouter)
+app.use("/api/consumed-medicine",verifyTokenAndAdmin,consumedMedicineRouter)
 
 
 

@@ -1,8 +1,8 @@
 "use client"
 import AddNewInvItemPageContent from '@/components/content/sales/inventory/inventory-item/AddNewInvItemPageContent'
+import PageHeader from '@/components/layout/PageHeader'
 import Avatar from '@/components/shared/all/Avatar'
 import BackButton from '@/components/shared/all/BackButton'
-import PageHeader from '@/components/shared/all/PageHeader'
 import { inventoryItemsRoute } from '@/constants/api'
 import { usePopUp } from '@/hooks/usePopUp'
 import { httpPostService } from '@/services/httpPostService'
@@ -72,18 +72,15 @@ function AddNewInventoryItemPage() {
 
     return (
         <>
-            <PageHeader>
-                <div className='flex justify-between items-center w-full'>
-                    <div className='flex items-center gap-5'>
-                        <BackButton />
-                        <div className='text-smokey-white text-2xl'>
-                            <span>stable's inventory / </span>
-                            <span className='text-primary'> add new item</span>
-                        </div>
-                    </div>
-                    <Avatar/>
-                </div>
-            </PageHeader>
+            <PageHeader
+                title={(
+                    <span>
+                        stable's inventory /
+                        <span className='text-primary'>add new item</span>
+                    </span>
+                )}
+                showBackButton={true}
+            />
             <AddNewInvItemPageContent
                 handleAddNewInventoryItem={mutate}
                 itemName={itemName}

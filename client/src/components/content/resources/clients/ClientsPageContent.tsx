@@ -22,7 +22,7 @@ function ClientsPageContent({ isDataHere, response ,refetch}:ClientsPageProps) {
             
                 {
                     isDataHere ? ( 
-                        <div className='grid w-full h-full p-10 gap-10 grid-cols-[repeat(auto-fit,minmax(250px,1fr))]'>
+                        <div className='grid w-full h-full p-10 gap-10 grid-cols-[repeat(auto-fill,250px)]'>
                             {
                                 client.map((client:any,idx:number) => (
                                     <ResourcesCard

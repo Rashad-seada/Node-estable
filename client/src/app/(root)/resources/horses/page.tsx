@@ -1,7 +1,7 @@
 "use client"
 
 import HorsesPageContent from '@/components/content/resources/horses/HorsesPageContent'
-import HorsesPageHeader from '@/components/content/resources/horses/HorsesPageHeader'
+import PageHeader from '@/components/layout/PageHeader'
 import PaginationButtons from '@/components/shared/all/PaginationButtons'
 import { useGetHorses } from '@/hooks/useGetHorses'
 import { toNameAndId } from '@/utils/toNameAndId'
@@ -13,7 +13,7 @@ function HorsesPage() {
     const searchParams = useSearchParams()
     const pageNumber = searchParams.get("page") || "1"
 
-    const [listValue,setListValue] = useState<any>(null)
+    const [listValue,setListValue] = useState<NameAndId>(null)
 
     const {response,isSuccess,refetch}:any = useGetHorses({
         pagination:`?page=${pageNumber}`,
@@ -27,10 +27,15 @@ function HorsesPage() {
     return (
         <>
             <div className='w-full h-[calc(100%-80px)]'>
-                <HorsesPageHeader 
-                    setDropDownListValue={setListValue} 
-                    dropDownListValue={listValue} 
-                    dropDownListOptions={listOptions}
+                <PageHeader
+                    title="stable's horses"
+                    addNewButtonLabel='add new horse'
+                    dropDown={{
+                        listValue,
+                        setListValue,
+                        placeholder:"select horse",
+                        options:listOptions
+                    }}
                 />
 
                 <HorsesPageContent 

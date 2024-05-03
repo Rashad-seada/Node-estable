@@ -72,18 +72,12 @@ function EditConsumedItemPageContent({
                 <ResourcesInput
                     value={date} 
                     setValue={setDate}
-                    placeholder="Quantity"
-                    label='item name'
+                    placeholder="date"
+                    label='date'
                     type="datetime-local"
                 />
+           
                 <ResourcesDropList
-                    listValue={type}
-                    setListValue={setType}
-                    options={cafeteriaItemsTypes}
-                    placeholder='Select Item Type'
-                    label='type'
-                />
-                  <ResourcesDropList
                     listValue={payment}
                     setListValue={setPayment}
                     options={cafeteriaPayments}

@@ -1,8 +1,4 @@
 "use client"
-
-import Avatar from '@/components/shared/all/Avatar';
-import BackButton from '@/components/shared/all/BackButton';
-import PageHeader from '@/components/shared/all/PageHeader';
 import { clientsRoute } from '@/constants/api';
 import { httpGetServices } from '@/services/httpGetService';
 import { getGender } from '@/utils/getGender';
@@ -18,6 +14,7 @@ import { useMutation } from 'react-query';
 import { MdErrorOutline } from 'react-icons/md';
 import { IoMdCheckmarkCircleOutline } from 'react-icons/io';
 import { useRouter } from 'next/navigation';
+import PageHeader from '@/components/layout/PageHeader';
 
 function ClientEditPage() {
 
@@ -105,18 +102,15 @@ function ClientEditPage() {
 
     return (
         <>
-            <PageHeader>
-                <div className='flex justify-between items-center w-full'>
-                    <div className='flex items-center gap-5'>
-                        <BackButton/>
-                        <div className='text-smokey-white text-2xl'>
-                            <span>stable's client / </span>
-                            <span className='text-primary'> Edit client information</span>
-                        </div>
-                    </div>
-                    <Avatar/>
-                </div>
-            </PageHeader>
+            <PageHeader
+                title={(
+                    <span>
+                        stable's clients /
+                        <span className='text-primary'>edit client</span>
+                    </span>
+                )}
+                showBackButton={true}
+            />
             <EditClientPageContent
             
                 handleClientUpdate={mutate}

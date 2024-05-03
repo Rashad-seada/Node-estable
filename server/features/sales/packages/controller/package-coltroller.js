@@ -59,7 +59,6 @@ class packageController {
 
     Package.findById(req.params.id)
     .populate("clientId")
-
     .then((docs)=>{
       if(docs){
         res.status(200).json({

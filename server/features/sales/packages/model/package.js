@@ -7,10 +7,7 @@ const packageSchema = mongoose.Schema({
     ref: "Client",
     required: true,
   },
-  clientName:{
-    type:String ,
-    required:true,
-  },
+
   category: {
     type: String,
     required: true,
@@ -32,14 +29,12 @@ const packageSchema = mongoose.Schema({
     enum:["expired","unexpired"],
     required: true,
   }
-  
 });
 
 const Package = mongoose.model("Package", packageSchema);
 
 function createNewPackage(obj) {
   const schema = joi.object({
-    clientName:joi.string().required(),
     category:joi.string().required(),
     lessons:joi.number().required(),
     startDate:joi.string().required(),
@@ -52,7 +47,6 @@ function createNewPackage(obj) {
 
 function updatePackage(obj) {
   const schema = joi.object({
-    clientName:joi.string().required(),
     category:joi.string().required(),
     lessons:joi.number().required(),
     startDate:joi.string().required(),

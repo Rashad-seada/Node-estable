@@ -29,7 +29,7 @@ function PackageEditPage() {
     const [client,setClient] = useState<NameAndId>(null)
     const [clients , setClients] = useState<NameAndId[]|[]>([])
 
-    const isInputsValid = Boolean( startDate && endDate && status && status && lessons)
+    const isInputsValid = Boolean(category && client && startDate && endDate && status && status && lessons)
 
     const popUp = usePopUp()
     const router = useRouter()
@@ -90,16 +90,17 @@ function PackageEditPage() {
             const res = await httpGetServices(packageIdRoute)
             
             const itemData = res?.Packages?.data
-            console.log(itemData);
+            console.log(res);
             
             if (Boolean(itemData)) {
                 setCategory(getPackageCategory(itemData.category))
                 setStatus(getPackageStatus(itemData.status))
                 
-                setClient({
+                const client = itemData.clientId ? ({
                     name:itemData.clientId.username,
                     id:itemData.clientId._id
-                })
+                }) : null
+                setClient(client)
                 setStartDate(getIsoDate(itemData.startDate))
                 setEndDate(getIsoDate(itemData.endDate))
                 setLessons(itemData.lessons)

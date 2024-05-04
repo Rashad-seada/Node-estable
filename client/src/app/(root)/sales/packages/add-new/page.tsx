@@ -25,7 +25,7 @@ function AddNewPackagePage() {
     const [client,setClient] = useState<NameAndId>(null)
     const [clients , setClients] = useState<NameAndId[]|[]>([])
 
-    const isInputsValid = Boolean(category && startDate && endDate && status && status && lessons)
+    const isInputsValid = Boolean(category && client && startDate && endDate && status && status && lessons)
 
     const popUp = usePopUp()
     const router = useRouter()

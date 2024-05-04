@@ -5,26 +5,30 @@ import PageHeader from "@/components/layout/PageHeader"
 import { familyMembershipRoute } from "@/constants/api"
 import { useGetClients } from "@/hooks/useGetClients"
 import { usePopUp } from "@/hooks/usePopUp"
+import { httpGetServices } from "@/services/httpGetService"
 import { httpPatchService } from "@/services/httpPatchService"
+import { getIsoDate } from "@/utils/getIsoDate"
+import { getMembershipStatus } from "@/utils/getMembershipStatus"
+import { getMembershipType } from "@/utils/getMembershipType"
 import { statusCodeIndicator } from "@/utils/statusCodeIndicator"
 import { toNameAndId } from "@/utils/toNameAndId"
 import { useParams, useRouter } from "next/navigation"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { IoMdCheckmarkCircleOutline } from "react-icons/io"
 import { MdErrorOutline } from "react-icons/md"
 import { useMutation } from "react-query"
 
 function EditFamilyMembershipPage() {
-    const [client,setClient] = useState<NameAndId>(null)
     const [clients,setClients] = useState<NameAndId[]|[]>([])
     const [startDate,setStartDate] = useState<string>("")
     const [endDate,setEndDate] = useState<string>("")
     const [familyName,setFamilyName] = useState<string>("")
+    const [members,setMembers] = useState<string>("")
 
     const [status,setStatus] = useState<NameAndId>(null)
     const [membershipType,setMembershipType] = useState<NameAndId>(null)
 
-    const isInputsValid = Boolean(client && startDate && endDate && status && membershipType)
+    const isInputsValid = Boolean( startDate && endDate && status && membershipType)
     const popUp = usePopUp()
     const router = useRouter()
     const {membershipId} = useParams()
@@ -32,13 +36,12 @@ function EditFamilyMembershipPage() {
 
     const {mutate} = useMutation({
         mutationFn:async () => httpPatchService(familyMembershipIdRoute,JSON.stringify({
-            // clientId:client?.id,
-            // membershipType:membershipType?.name,
-            // status:status?.name,
-            // startDate,
-            // endDate
-
-            //STILL NOT FINiSHED YET
+            famillyName:familyName,
+            membershipTtpe:membershipType?.name,
+            status:status?.name,
+            startDate,
+            endDate,
+            members
            
         })),
         onSuccess:(res) => {
@@ -52,7 +55,7 @@ function EditFamilyMembershipPage() {
                     showPopUp:true,
                     popUpType:"alert"
                 })
-                router.push("/sales/membership/individual")
+                router.push("/sales/membership/family")
             }else {
                 popUp({
                     popUpMessage:res.message,
@@ -79,6 +82,24 @@ function EditFamilyMembershipPage() {
             setClients(clients)
         }
     })
+
+    useEffect(()=>{
+        const fetchMembershipData = async () => {
+            const membershipData = await httpGetServices(familyMembershipIdRoute) 
+            const data = membershipData.data
+            if (Boolean(data)) {
+                console.log(data);
+                setFamilyName(data.famillyName)
+                setMembers(data.members)
+                setStatus(getMembershipStatus(data.status))
+                setMembershipType(getMembershipType(data.membershipTtpe))
+                setStartDate(getIsoDate(data.startDate))
+                setEndDate(getIsoDate(data.endDate))
+            }
+            
+        }
+        fetchMembershipData()
+    },[])
     return (
         <>
             <PageHeader
@@ -91,8 +112,7 @@ function EditFamilyMembershipPage() {
                 )}
             />
             <EditFamilyMembershipPageContent
-                client={client}
-                setClient={setClient}
+           
                 clients={clients}
                 startDate={startDate}
                 setStartDate={setStartDate}
@@ -106,7 +126,8 @@ function EditFamilyMembershipPage() {
                 isInputsValid={isInputsValid}
                 familyName={familyName}
                 setFamilyName={setFamilyName}
-
+                members={members}
+                setMembers={setMembers}
             />
         </>
     )

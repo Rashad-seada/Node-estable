@@ -26,13 +26,7 @@ type SettingsPageContentProps = {
 }
 
 
-type InputType = {
-    value:string,
-    placeholder:string,
-    type:"number" | "text" | "password" | "datetime-local",
-    label:string,
-    setValue:(newState:string) => void,
-}
+
 function SettingsPageContent({
     avatar,
     setAvatar,
@@ -80,7 +74,7 @@ function SettingsPageContent({
         updateAdminData()
     }
 
-    const inputs:InputType[] = [
+    const inputs:Input[] = [
         {
             value:fullName,
             placeholder:"edit full name",
@@ -132,7 +126,7 @@ function SettingsPageContent({
                         
 
                         {
-                            inputs.map((input,idx:number) => (
+                            inputs.map((input:Input,idx:number) => (
                                 <div key={idx}>
                                     <Input
                                         value={input.value} 

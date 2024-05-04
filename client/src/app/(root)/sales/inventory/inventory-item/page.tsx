@@ -8,6 +8,7 @@ import PaginationButtons from "@/components/shared/all/PaginationButtons";
 import Table from "@/components/shared/all/Table";
 import { inventoryConsumedItemsRoute, inventoryItemsRoute } from "@/constants/api";
 import { httpGetServices } from "@/services/httpGetService";
+import { priceFormatter } from "@/utils/priceFormatter";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useQuery } from "react-query";
 
@@ -41,7 +42,12 @@ function InventoryItemsPage() {
         "price",
         "measure"
     ]
-    const tableBodyItems = response?.inventoryItems?.data
+    const tableBodyItems = response?.inventoryItems?.data.map((item:any)=> ({
+        ...item,
+        price:(<span className="w-full block text-right">
+            {priceFormatter(String(item.price))}
+        </span>)
+    }))
     
     const navigationTabs = [
         {

@@ -24,3 +24,24 @@ type QueryReqParameters = {
     onError?:((data:any)=>any)|null,
     queryKey?:any[]
 } 
+
+
+
+
+type Input = {
+    value:string,
+    placeholder:string,
+    type:"number" | "text" | "password" | "datetime-local",
+    label:string,
+    setValue:(newState:string) => void,
+}
+
+type DropDownList = {
+    options:NameAndId[]|[],
+    listValue:NameAndId,
+    placeholder:string,
+    setListValue:(newListValue:NameAndId)=>void,
+    placeholderClassName?:string,
+    listClassName?:string,
+    label?:string
+}

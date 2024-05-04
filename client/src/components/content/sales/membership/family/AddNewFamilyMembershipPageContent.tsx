@@ -4,7 +4,7 @@ import ResourcesInput from "@/components/shared/resources/ResourcesInput"
 import { memberShipStatuses } from "@/constants/memberShipStatuses"
 import { memberShipTypes } from "@/constants/memberShipTypes"
 
-type EditIndividualMembershipPageContentProps = {
+type AddNewFamilyMembershipPageContentProps = {
     client:NameAndId,
     setClient:(newState:NameAndId)=> void,
     clients:NameAndId[]|[],
@@ -16,11 +16,13 @@ type EditIndividualMembershipPageContentProps = {
     setStatus:(newState:NameAndId)=> void,
     membershipType:NameAndId,
     setMembershipType:(newState:NameAndId)=> void,
-    handleUpdateIndividualMembershipItem:()=> void,
-    isInputsValid:boolean
+    handleAddIndividualMembershipItem:()=> void,
+    isInputsValid:boolean,
+    familyName:string,
+    setFamilyName:(newState:string)=> void
 }
 
-function EditIndividualMembershipPageContent({
+function AddNewFamilyMembershipPageContent({
     client,
     setClient,
     clients,
@@ -32,20 +34,29 @@ function EditIndividualMembershipPageContent({
     setStatus,
     membershipType,
     setMembershipType,
-    handleUpdateIndividualMembershipItem,
-    isInputsValid
-}:EditIndividualMembershipPageContentProps) {
+    handleAddIndividualMembershipItem,
+    isInputsValid,
+    familyName,
+    setFamilyName
+}:AddNewFamilyMembershipPageContentProps) {
     return (
         <PageContent>
             <div className='max-w-[600px] flex flex-col gap-10 my-16 mx-8'>
-
+                <ResourcesInput
+                    value={familyName} 
+                    setValue={setFamilyName}
+                    placeholder="enter family name"
+                    label='family name'
+                    type='text'
+                />
+                {/* 
                 <ResourcesDropList
                     listValue={client} 
                     setListValue={setClient}
                     placeholder="Enter Item Name"
                     label='item name'
                     options={clients}
-                />
+                /> */}
                 <ResourcesDropList
                     listValue={status} 
                     setListValue={setStatus}
@@ -78,12 +89,12 @@ function EditIndividualMembershipPageContent({
    
             </div>
             <div className='w-full flex justify-center'>
-                <button onClick={()=> isInputsValid && handleUpdateIndividualMembershipItem()} disabled={!isInputsValid} className='w-[350px] text-primary duration-300 hover:bg-primary hover:text-smokey-white font-semibold text-2xl capitalize rounded-2xl h-[60px] border border-primary'>
-                    save item
+                <button onClick={()=> isInputsValid && handleAddIndividualMembershipItem()} disabled={!isInputsValid} className='w-[350px] text-primary duration-300 hover:bg-primary hover:text-smokey-white font-semibold text-2xl capitalize rounded-2xl h-[60px] border border-primary'>
+                    add item
                 </button>
             </div>
         </PageContent>
     )
 }
 
-export default EditIndividualMembershipPageContent
+export default AddNewFamilyMembershipPageContent

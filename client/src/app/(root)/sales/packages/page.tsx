@@ -7,7 +7,8 @@ import PaginationButtons from "@/components/shared/all/PaginationButtons"
 import Table from "@/components/shared/all/Table"
 import { packagesRoute } from "@/constants/api"
 import { httpGetServices } from "@/services/httpGetService"
-import { usePathname, useSearchParams } from "next/navigation"
+import { getReadableDate } from "@/utils/getReadableDate"
+import { useSearchParams } from "next/navigation"
 import { useQuery } from "react-query"
 
 function PackagesPage() {
@@ -44,7 +45,8 @@ function PackagesPage() {
     const tableBodyItems = response?.Packages?.data.map((item:any) => ({
         ...item,
         clientId:item.clientId?.username || "no-client",
-        status:(<span className="text-green-600">{item.status}</span>)
+        startDate:getReadableDate(item.startDate),
+        endDate:getReadableDate(item.endDate),
     }))
     
     

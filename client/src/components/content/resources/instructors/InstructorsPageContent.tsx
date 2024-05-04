@@ -28,8 +28,8 @@ function InstructorsPageContent({isDataHere,response,refetch}:ClientsPageProps) 
                                         key={idx}
                                         refetch={refetch}
                                         titles={{
-                                            age:instructor.age,
-                                            gender:instructor.gender
+                                            email:instructor.email,
+                                            mobile:instructor.phoneNumber
                                         }}
                                         title={instructor.instractorName}
                                         _id={instructor._id}

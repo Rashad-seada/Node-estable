@@ -30,8 +30,8 @@ function ClientsPageContent({ isDataHere, response ,refetch}:ClientsPageProps) {
                                         refetch={refetch}
                                         route={clientsRoute}
                                         titles={{
-                                            age:client.age,
-                                            gender:client.gender
+                                            email:client.email,
+                                            mobile:client.phone
                                         }}
                                         title={client.username}
                                         _id={client._id}

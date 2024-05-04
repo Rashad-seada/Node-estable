@@ -1,7 +1,7 @@
 import PageContent from '@/components/shared/all/PageContent'
 import ResourcesDropList from '@/components/shared/resources/ResourcesDropList'
 import ResourcesInput from '@/components/shared/resources/ResourcesInput'
-import { cafeteriaItemsTypes } from '@/constants/cafeteriaItemsTypes'
+import { inventoryTypes } from '@/constants/inventoryTypes'
 import React from 'react'
 
 type EditInvItemPageContentProps = {
@@ -76,13 +76,13 @@ function EditInvItemPageContent({
                     label='description'
                     type='text'
                 />  
-                {/* <ResourcesDropList
+                <ResourcesDropList
                     listValue={type}
                     setListValue={setType}
-                    options={cafeteriaItemsTypes}
+                    options={inventoryTypes}
                     placeholder='Select Item Type'
                     label='type'
-                /> */}
+                />
             </div>
             <div className='w-full flex justify-center'>
                 <button onClick={()=> isInputsValid && handleEditInventoryItem()} disabled={!isInputsValid} className='w-[350px] text-primary duration-300 hover:bg-primary hover:text-smokey-white font-semibold text-2xl capitalize rounded-2xl h-[60px] border border-primary'>

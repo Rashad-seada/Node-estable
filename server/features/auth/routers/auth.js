@@ -93,7 +93,7 @@ router.post("/login", async (req, res ,next) => {
 });
 
 router.patch("/update-admin", verifyTokenAndAdmin, async (req, res) => {
-  
+
   User.findByIdAndUpdate(
     req.user.id,
     {

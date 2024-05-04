@@ -17,14 +17,13 @@ import { useMutation } from "react-query"
 function AddNewConsumedItemPage() {
     const [itemName,setItemName] = useState<string>("")
     const [quantity,setQuantity] = useState<string>("")
-    const [type,setType] = useState<NameAndId>(null)
     const [price,setPrice] = useState<string>("")
     const [payment,setPayment] = useState<NameAndId>(null)
     const [client,setClient] = useState<NameAndId>(null)
     const [date,setDate] = useState<string>("")
     const [clients,setClients] = useState<NameAndId[]|[]>([])
 
-    const isInputsValid = Boolean(itemName && quantity && type && price && date)
+    const isInputsValid = Boolean(itemName && quantity && price && date)
 
     const popUp = usePopUp()
     const router = useRouter()
@@ -44,9 +43,9 @@ function AddNewConsumedItemPage() {
         mutationFn:async () => httpPostService(cafeteriaConsumedItemRoute,JSON.stringify({
             consumedItemName:itemName,
             consumedQuantity:quantity,
-            type:type?.name,
             consumedPrice:price,
             date,
+            type:"not-type",
             clientId:client?.id,
             consumedPayment:payment?.name
         })),
@@ -104,8 +103,6 @@ function AddNewConsumedItemPage() {
                 setPrice={setPrice}
                 date={date}
                 setDate={setDate}
-                type={type}
-                setType={setType}
                 isInputsValid={isInputsValid} 
                 client={client}
                 setClient={setClient}

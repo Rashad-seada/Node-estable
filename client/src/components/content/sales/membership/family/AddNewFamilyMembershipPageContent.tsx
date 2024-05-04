@@ -5,8 +5,6 @@ import { memberShipStatuses } from "@/constants/memberShipStatuses"
 import { memberShipTypes } from "@/constants/memberShipTypes"
 
 type AddNewFamilyMembershipPageContentProps = {
-    client:NameAndId,
-    setClient:(newState:NameAndId)=> void,
     clients:NameAndId[]|[],
     startDate:string,
     setStartDate:(newState:string)=> void,
@@ -19,12 +17,12 @@ type AddNewFamilyMembershipPageContentProps = {
     handleAddIndividualMembershipItem:()=> void,
     isInputsValid:boolean,
     familyName:string,
-    setFamilyName:(newState:string)=> void
+    setFamilyName:(newState:string)=> void,
+    members:string,
+    setMembers:(newState:string)=> void
 }
 
 function AddNewFamilyMembershipPageContent({
-    client,
-    setClient,
     clients,
     startDate,
     setStartDate,
@@ -37,7 +35,9 @@ function AddNewFamilyMembershipPageContent({
     handleAddIndividualMembershipItem,
     isInputsValid,
     familyName,
-    setFamilyName
+    setFamilyName,
+    members,
+    setMembers
 }:AddNewFamilyMembershipPageContentProps) {
     return (
         <PageContent>
@@ -47,6 +47,13 @@ function AddNewFamilyMembershipPageContent({
                     setValue={setFamilyName}
                     placeholder="enter family name"
                     label='family name'
+                    type='text'
+                />
+                <ResourcesInput
+                    value={members} 
+                    setValue={setMembers}
+                    placeholder="enter family members"
+                    label='members'
                     type='text'
                 />
                 {/* 

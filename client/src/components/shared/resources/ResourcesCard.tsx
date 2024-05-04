@@ -83,18 +83,18 @@ function ResourcesCard({imgUrl,title,titles,_id,route,refetch}:ResourcesCardProp
                 </div>
             </div>
 
-            <div className=' p-4'>
+            <div className='w-full p-4'>
                 <div>
                     <p className='my-3 truncate text-lg text-dark-grey font-semibold'>{title}</p>
                 </div>
 
-                <div className='text-lg'>
+                <div className='text-lg w-full'>
                     {
                         titlesKeys.map((key,idx)=> (
-                            <p className='truncate' key={idx}>
-                                <span className='text-zinc-400'>{key} : </span>
-                                <span className='text-dark-grey'>{titles[key]}</span>
-                            </p>
+                            <div className='overflow-hidden flex justify-center gap-1' key={idx}>
+                                <div className='text-zinc-400 w-max'>{key} : </div>
+                                <span className='text-dark-grey truncate  max-w-[130px]'> {titles[key]}</span>
+                            </div>
                         ))
                     }
                 </div>

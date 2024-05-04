@@ -6,6 +6,7 @@ import { inventoryItemsRoute } from "@/constants/api"
 import { usePopUp } from "@/hooks/usePopUp"
 import { httpGetServices } from "@/services/httpGetService"
 import { httpPatchService } from "@/services/httpPatchService"
+import { getInventoryType } from "@/utils/getInventoryType"
 import { statusCodeIndicator } from "@/utils/statusCodeIndicator"
 import { useParams, useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
@@ -80,7 +81,7 @@ function EditInventoryItemPage() {
                 const data = inventoryItemData.data                
                 setItemName(data.itemName)
                 setQuantity(data.quantity)
-                setType(data.type)
+                setType(getInventoryType(data.type))
                 setPrice(data.price)
                 //setDate(data.date)
                 setDescription(data.itemDescription)

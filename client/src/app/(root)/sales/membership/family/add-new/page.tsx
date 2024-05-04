@@ -14,28 +14,28 @@ import { MdErrorOutline } from 'react-icons/md'
 import { useMutation } from 'react-query'
 
 function AddNewFamilyMembershipPage() {
-    const [client,setClient] = useState<NameAndId>(null)
     const [clients,setClients] = useState<NameAndId[]|[]>([])
     const [startDate,setStartDate] = useState<string>("")
     const [endDate,setEndDate] = useState<string>("")
     const [familyName,setFamilyName] = useState<string>("")
+    const [members,setMembers] = useState<string>("")
 
     const [status,setStatus] = useState<NameAndId>(null)
     const [membershipType,setMembershipType] = useState<NameAndId>(null)
 
-    const isInputsValid = Boolean(client && startDate && endDate && status && membershipType)
+    const isInputsValid = Boolean(startDate && endDate && status && membershipType)
     const popUp = usePopUp()
     const router = useRouter()
 
     const {mutate} = useMutation({
         mutationFn:async () => httpPostService(familyMembershipRoute,JSON.stringify({
-            // clientId:client?.id,
-            // membershipType:membershipType?.name,
-            // status:status?.name,
-            // startDate,
-            // endDate
+            famillyName:familyName,
+            membershipTtpe:membershipType?.name,
+            status:status?.name,
+            startDate,
+            endDate,
+            members
 
-            //STILL NOT FINiSHED YET
            
         })),
         onSuccess:(res) => {
@@ -49,7 +49,7 @@ function AddNewFamilyMembershipPage() {
                     showPopUp:true,
                     popUpType:"alert"
                 })
-                router.push("/sales/membership/individual")
+                router.push("/sales/membership/family")
             }else {
                 popUp({
                     popUpMessage:res.message,
@@ -88,8 +88,6 @@ function AddNewFamilyMembershipPage() {
                 )}
             />
             <AddNewFamilyMembershipPageContent
-                client={client}
-                setClient={setClient}
                 clients={clients}
                 startDate={startDate}
                 setStartDate={setStartDate}
@@ -103,6 +101,8 @@ function AddNewFamilyMembershipPage() {
                 isInputsValid={isInputsValid}
                 familyName={familyName}
                 setFamilyName={setFamilyName}
+                members={members}
+                setMembers={setMembers}
 
             />
         </>

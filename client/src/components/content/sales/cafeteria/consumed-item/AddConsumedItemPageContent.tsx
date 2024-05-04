@@ -1,7 +1,6 @@
 import PageContent from '@/components/shared/all/PageContent'
 import ResourcesDropList from '@/components/shared/resources/ResourcesDropList'
 import ResourcesInput from '@/components/shared/resources/ResourcesInput'
-import { cafeteriaItemsTypes } from '@/constants/cafeteriaItemsTypes'
 import { cafeteriaPayments } from '@/constants/cafeteriaPayments'
 import React from 'react'
 
@@ -16,8 +15,6 @@ type AddConsumedItemPageContentProps = {
     setPrice: (newState: string) => void,
     date:string,
     setDate: (newState:string) => void,
-    type:NameAndId,
-    setType: (newState:NameAndId) => void,
     isInputsValid:boolean,
     client:NameAndId,
     setClient:(newState:NameAndId) => void,
@@ -36,8 +33,6 @@ function AddConsumedItemPageContent({
     setPrice,
     date,
     setDate,
-    type,
-    setType,
     isInputsValid,
     client,
     setClient,

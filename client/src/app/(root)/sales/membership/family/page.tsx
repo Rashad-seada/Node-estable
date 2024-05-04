@@ -8,46 +8,49 @@ import PaginationButtons from "@/components/shared/all/PaginationButtons"
 import Table from "@/components/shared/all/Table"
 import { familyMembershipRoute } from "@/constants/api"
 import { httpGetServices } from "@/services/httpGetService"
-import { usePathname, useSearchParams } from "next/navigation"
+import { useSearchParams } from "next/navigation"
 import { useQuery } from "react-query"
 
 function FamilyMembershipPage() {
     const searchParams = useSearchParams()
     const pageNumber = searchParams.get("page") || "1"
-    const pathname = usePathname()
 
     const {data:response,isSuccess,refetch}:any = useQuery({
         queryFn:async () => httpGetServices(`${familyMembershipRoute}?page=${pageNumber}`),
         queryKey:["inventory","consumedItems",'page',pageNumber]
     })
+        console.log(response);
         
-    const isDataHere = Boolean(response?.invConsumeItems?.data) && isSuccess
+    const isDataHere = Boolean(response?.familyMembership?.data) && isSuccess
 
 
     const tableHeadCells = [
-        "horse name",
-        "item name",
-        "quantity",
-        "price",
-        "measure"
+        "family name",
+        "members",
+        "membership type",
+        "start date",
+        "end date",
+        "status"
         // THIS IS NOT THE REAL KEYS
     ]
 
     const tableBodyItemCellKeys = [
-        "hourseId",
-        "invConsumedItemName",
-        "invConsumedQuantity",
-        "invConsumedPrice",
-        "invConsumedMeasure"
+        "famillyName",
+        "members",
+        "membershipTtpe",
+        "startDate",
+        "endDate",
+        "status"
                 // THIS IS NOT THE REAL KEYS
 
     ]
-        // STILL YA BRO
 
-    const tableBodyItems = response?.invConsumeItems?.data//.map((item:any) => ({
-    //     ...item,
-    //     hourseId:item.hourseId?.hourseName || "no-horse"
-    // }))
+    const tableBodyItems = response?.familyMembership?.data.map((item:any) => ({
+        ...item,
+        status:(<span className={item.status.toLowerCase() === "active" ? "text-green-500" : "text-red-500"}>
+            {item.status}
+        </span>)
+    }))
     
     
     const navigationTabs = [
@@ -86,8 +89,8 @@ function FamilyMembershipPage() {
                 {
                     isDataHere ? (
                         <PaginationButtons
-                            maxPages={response.invConsumeItems.max_pages}
-                            currentPage={response.invConsumeItems.current_page}
+                            maxPages={response.familyMembership.max_pages}
+                            currentPage={response.familyMembership.current_page}
 
                         />
                     ): <></>

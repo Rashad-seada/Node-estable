@@ -5,8 +5,7 @@ import { memberShipStatuses } from "@/constants/memberShipStatuses"
 import { memberShipTypes } from "@/constants/memberShipTypes"
 
 type EditFamilyMembershipPageContentProps = {
-    client:NameAndId,
-    setClient:(newState:NameAndId)=> void,
+
     clients:NameAndId[]|[],
     startDate:string,
     setStartDate:(newState:string)=> void,
@@ -19,12 +18,13 @@ type EditFamilyMembershipPageContentProps = {
     handleAddIndividualMembershipItem:()=> void,
     isInputsValid:boolean,
     familyName:string,
-    setFamilyName:(newState:string)=> void
+    setFamilyName:(newState:string)=> void,
+    members:string,
+    setMembers:(newState:string)=> void
 }
 
 function EditFamilyMembershipPageContent({
-    client,
-    setClient,
+
     clients,
     startDate,
     setStartDate,
@@ -37,7 +37,9 @@ function EditFamilyMembershipPageContent({
     handleAddIndividualMembershipItem,
     isInputsValid,
     familyName,
-    setFamilyName
+    setFamilyName,
+    members,
+    setMembers
 }:EditFamilyMembershipPageContentProps) {
     return (
         <PageContent>
@@ -47,6 +49,13 @@ function EditFamilyMembershipPageContent({
                     setValue={setFamilyName}
                     placeholder="enter family name"
                     label='family name'
+                    type='text'
+                />
+                <ResourcesInput
+                    value={members} 
+                    setValue={setMembers}
+                    placeholder="enter family members"
+                    label='members'
                     type='text'
                 />
                 {/* 
@@ -90,7 +99,7 @@ function EditFamilyMembershipPageContent({
             </div>
             <div className='w-full flex justify-center'>
                 <button onClick={()=> isInputsValid && handleAddIndividualMembershipItem()} disabled={!isInputsValid} className='w-[350px] text-primary duration-300 hover:bg-primary hover:text-smokey-white font-semibold text-2xl capitalize rounded-2xl h-[60px] border border-primary'>
-                    add item
+                    save item
                 </button>
             </div>
         </PageContent>

@@ -32,6 +32,8 @@ const packageRouter = require("./features/sales/packages/router/package")
 const invmembershipRouter = require("./features/sales/InvMembership/router/invMembership")
 
 const familymembershipRouter = require("./features/sales/familyMembership/router/familyMembership")
+const medicineRouter = require("./features/medicine/router/medicine-router")
+const consumedMedicineRouter = require("./features/consumed-medicine/router/consumed-medicine-router")
 
   
 // cors libyrary
@@ -75,6 +77,8 @@ app.use("/api/inventory/InvConsume",verifyTokenAndAdmin,InvConsumeRouter)
 app.use("/api/package",verifyTokenAndAdmin,packageRouter)
 app.use("/api/invmembership",verifyTokenAndAdmin,invmembershipRouter)
 app.use("/api/familymembership",verifyTokenAndAdmin,familymembershipRouter)
+app.use("/api/medicine",verifyTokenAndAdmin,medicineRouter)
+app.use("/api/consumed-medicine",verifyTokenAndAdmin,consumedMedicineRouter)
 
 
 

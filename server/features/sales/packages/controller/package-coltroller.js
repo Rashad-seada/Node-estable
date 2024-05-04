@@ -96,6 +96,8 @@ class packageController {
     })
   }
   static async createNawPackage(req, res) {
+
+    try {
     const { error } = createNewPackage(req.body);
     if (error) {
       res.status(400).json({
@@ -107,15 +109,6 @@ class packageController {
         },
       });
     } else {
-      Package.findOne({ clientName: req.body.clientName })
-        .then(async(docs) => {
-          if (docs) {
-            res.status(400).json({
-              status_code: ApiErrorCode.validation,
-              message: "clientName is already found",
-              data: null,
-            })
-          } else {
            await new Package({
                 category: req.body.category,
                 lessons: req.body.lessons,
@@ -142,17 +135,16 @@ class packageController {
                   },
                 });
               });
-          }
-        })
-        .catch((error) => {
-          res.status(500).json({
-            status_code: 1,
-            message: "internal server error",
-            error: {
-              error: error.message,
-            },
-          });
-        });
+          
+        
+    }} catch(error){
+      res.status(500).json({
+        status_code: ApiErrorCode.internalError,
+        message: "Package  Already Found",
+        error: {
+          error: error.message,
+        },
+      });
     }
   }
   static async updatePackage(req, res) {

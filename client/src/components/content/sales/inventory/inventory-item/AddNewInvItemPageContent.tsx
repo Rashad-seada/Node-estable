@@ -1,7 +1,7 @@
 import PageContent from '@/components/shared/all/PageContent'
 import ResourcesDropList from '@/components/shared/resources/ResourcesDropList'
 import ResourcesInput from '@/components/shared/resources/ResourcesInput'
-import { cafeteriaItemsTypes } from '@/constants/cafeteriaItemsTypes'
+import { inventoryTypes } from '@/constants/inventoryTypes'
 import React from 'react'
 
 type AddNewInvItemPageContentProps = {
@@ -79,7 +79,7 @@ function AddNewInvItemPageContent({
                 <ResourcesDropList
                     listValue={type}
                     setListValue={setType}
-                    options={cafeteriaItemsTypes}
+                    options={inventoryTypes}
                     placeholder='Select Item Type'
                     label='type'
                 />

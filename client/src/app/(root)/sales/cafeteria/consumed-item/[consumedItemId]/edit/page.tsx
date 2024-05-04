@@ -24,14 +24,13 @@ function EditMenuItemPage() {
 
     const [itemName,setItemName] = useState<string>("")
     const [quantity,setQuantity] = useState<string>("")
-    const [type,setType] = useState<NameAndId>(null)
     const [price,setPrice] = useState<string>("")
     const [payment,setPayment] = useState<NameAndId>(null)
     const [client,setClient] = useState<NameAndId>(null)
     const [date,setDate] = useState<string>("")
     const [clients,setClients] = useState<NameAndId[]|[]>([])
 
-    const isInputsValid = Boolean(itemName && quantity && type && price && date)
+    const isInputsValid = Boolean(itemName && quantity && price && date)
 
     const popUp = usePopUp()
     const router = useRouter()
@@ -46,7 +45,6 @@ function EditMenuItemPage() {
                 setItemName(itemData.consumedItemName)
                 setQuantity(itemData.consumedQuantity)
                 setPayment(getCafeteriaPayment(itemData.consumedPayment))
-                setType(getCafeteriaItemType(itemData.type))
                 
                 setDate(getIsoDate(itemData.date))
                 setPrice(itemData.consumedPrice)
@@ -74,7 +72,7 @@ function EditMenuItemPage() {
         mutationFn:async () => httpPatchService(consumedItemIdRoute,JSON.stringify({
             consumedItemName:itemName,
             consumedQuantity:quantity,
-            type:type?.name,
+            type:"no-type",
             consumedPrice:price,
             date,
             clientId:client?.id,
@@ -133,8 +131,6 @@ function EditMenuItemPage() {
                 setPrice={setPrice}
                 date={date}
                 setDate={setDate}
-                type={type}
-                setType={setType}
                 isInputsValid={isInputsValid} 
                 client={client}
                 setClient={setClient}

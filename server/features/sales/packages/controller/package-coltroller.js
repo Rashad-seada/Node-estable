@@ -1,5 +1,9 @@
 const ApiErrorCode = require("../../../../core/errors/apiError");
-const { Package, createNewPackage,updatePackage } = require("../model/package");
+const {
+  Package,
+  createNewPackage,
+  updatePackage,
+} = require("../model/package");
 class packageController {
   static async getAllpackages(req, res) {
     // Pagination parameters
@@ -12,8 +16,8 @@ class packageController {
 
     Package.find({
       $or: [
-        { type: { $regex: regexQuery } },
         { category: { $regex: regexQuery } },
+        { status: { $regex: regexQuery } },
       ],
     })
       .skip(skip) // Skip documents
@@ -28,7 +32,7 @@ class packageController {
           res.status(200).json({
             status_code: 1,
             message: "Success To Get All Package ",
-            
+
             Packages: {
               current_page: parseInt(req.query.page) || 1,
               max_pages: maxPages,
@@ -55,89 +59,82 @@ class packageController {
         });
       });
   }
-  static async getPackageById(req,res){
-
+  static async getPackageById(req, res) {
     Package.findById(req.params.id)
-    .populate("clientId")
-    .then((docs)=>{
-      if(docs){
+      .populate("clientId")
+      .then((docs) => {
+        if (docs) {
+          res.status(200).json({
+            status_code: 1,
+            message: "Success To Get All Package By Id ",
+            Packages: {
+              data: docs,
+            },
+            error: null,
+          });
+        } else {
+          res.status(404).json({
+            status_code: 1,
+            message: "Cant do to  Package Id ",
+            Packages: {
+              data: null,
+            },
+          });
+        }
+      })
+      .catch((error) => {
         res.status(200).json({
           status_code: 1,
-          message: "Success To Get All Package By Id ",
-          Packages: {
-            data: docs,
-           
-          },
-          error: null
-        });
-        
-
-      }else{
-        res.status(404).json({
-          status_code: 1,
-          message: "Cant do to  Package Id ",
+          message: "internal Server Error ",
           Packages: {
             data: null,
-          }
+          },
+          error: {
+            error: error.message,
+          },
         });
-      }
-    })
-    .catch((error)=>{
-      res.status(200).json({
-        status_code: 1,
-        message: "internal Server Error ",
-        Packages: {
-          data: null,
-        },
-        error: {
-          error:error.message
-        },
       });
-    })
   }
   static async createNawPackage(req, res) {
-
     try {
-    const { error } = createNewPackage(req.body);
-    if (error) {
-      res.status(400).json({
-        status_code: ApiErrorCode,
-        message: "Error input Validation ",
-        data: null,
-        error: {
-          error: error.message,
-        },
-      });
-    } else {
-           await new Package({
-                category: req.body.category,
-                lessons: req.body.lessons,
-                startDate: req.body.startDate,
-                endDate: req.body.endDate,
-                status: req.body.status,
-                clientName:req.body.clientName
-            })
-              .save()
-              
-              .then((docs) => {
-                res.status(200).json({
-                  status_code: 1,
-                  message: "Package is created successfuly",
-                  data: docs,
-                });
-              })
-              .catch((error) => {
-                res.status(500).json({
-                  status_code: ApiErrorCode.internalError,
-                  message: "Package  Already Found",
-                  error: {
-                    error: error.message,
-                  },
-                });
-              });
-          
-        
-    }} catch(error){
+      const { error } = createNewPackage(req.body);
+      if (error) {
+        res.status(400).json({
+          status_code: ApiErrorCode,
+          message: "Error input Validation ",
+          data: null,
+          error: {
+            error: error.message,
+          },
+        });
+      } else {
+        await new Package({
+          category: req.body.category,
+          lessons: req.body.lessons,
+          startDate: req.body.startDate,
+          endDate: req.body.endDate,
+          status: req.body.status,
+          clientName: req.body.clientName,
+        })
+          .save()
+          .then((docs) => {
+            res.status(200).json({
+              status_code: 1,
+              message: "Package is created successfuly",
+              data: docs,
+            });
+          })
+          .catch((error) => {
+            res.status(500).json({
+              status_code: ApiErrorCode.internalError,
+              message: "Package  Already Found",
+              error: {
+                error: error.message,
+              },
+            });
+          });
+      }
+    } catch (error) {
       res.status(500).json({
         status_code: ApiErrorCode.internalError,
         message: "Package  Already Found",
@@ -147,96 +144,102 @@ class packageController {
       });
     }
   }
+
   static async updatePackage(req, res) {
-
-
-  
-    Package.find({ id: req.params.id })
-    .then(async (docs) => {
-      if (docs) {
-        await Package.findByIdAndUpdate(
-          req.params.id,
-          {
-            $set: {
-              // clientName: req.body.clientName,
-                category: req.body.category,
-                lessons: req.body.lessons,
-                startDate: req.body.startDate,
-                endDate: req.body.endDate,
-                status: req.body.status,
-                clientName:req.body.clientName
-            },
-          },
-          { new: true }
-        )
-          .then((docs) => {
-            if (docs) {
-              res.status(200).json({
-                status_code:0,
-                message: "Updated Suvccess",
-                data: docs,
-              });
-            } else {
-              res.status(400).json({
-                status_code: ApiErrorCode.validation,
-                message: "Cand update package",
-                data: null,
-              });
-            }
-          })
-          .catch((error) => {
-            res.status(404).json({
-              status_code: ApiErrorCode.validation,
-              message: "id is not found",
-              error: {
-                error:error.message
+    const { error } = updatePackage(req.body);
+    if (error) {
+      res.status(200).json({
+        status_code: 0,
+        message: "Validation error",
+        data: null,
+        error: error.message,
+      });
+    } else {
+      Package.find({ id: req.params.id })
+        .then(async (docs) => {
+          if (docs) {
+            await Package.findByIdAndUpdate(
+              req.params.id,
+              {
+                $set: {
+                  // clientName: req.body.clientName,
+                  category: req.body.category,
+                  lessons: req.body.lessons,
+                  startDate: req.body.startDate,
+                  endDate: req.body.endDate,
+                  status: req.body.status,
+                  clientName: req.body.clientName,
+                },
               },
-            });
+              { new: true }
+            )
+              .then((docs) => {
+                if (docs) {
+                  res.status(200).json({
+                    status_code: 0,
+                    message: "Updated Suvccess",
+                    data: docs,
+                  });
+                } else {
+                  res.status(400).json({
+                    status_code: ApiErrorCode.validation,
+                    message: "Cand update package",
+                    data: null,
+                  });
+                }
+              })
+              .catch((error) => {
+                res.status(404).json({
+                  status_code: ApiErrorCode.validation,
+                  message: "id is not found",
+                  error: {
+                    error: error.message,
+                  },
+                });
+              });
+          }
+        })
+        .catch((error) => {
+          res.status(400).json({
+            status_code: ApiErrorCode.validation,
+            message: "internal server Down",
+            error: {
+              error: error.message,
+            },
           });
-      }
-    })
-    .catch((error) => {
-      res.status(400).json({
-        status_code: ApiErrorCode.validation,
-        message: "internal server Down",
-        error: {
-          error:error.message
-        },
-      });
-    });
+        });
+    }
   }
-  static async deletePackage(req,res){
-
+  static async deletePackage(req, res) {
     Package.findByIdAndDelete(req.params.id)
-    .then((docs)=>{
-      if(docs){
+      .then((docs) => {
+        if (docs) {
+          res.status(500).json({
+            status_code: 1,
+            message: "Package Deleted Successfully",
+            data: [],
+            error: null,
+          });
+        } else {
+          res.status(500).json({
+            status_code: 1,
+            message: "Package Id Is Not Found",
+            data: null,
+          });
+        }
+      })
+      .catch((error) => {
         res.status(500).json({
           status_code: 1,
-          message: "Package Deleted Successfully",
-          data:[],
-          error: null
+          message: "internal server error",
+          error: {
+            error: error.message,
+          },
         });
-      }else{
-        res.status(500).json({
-          status_code: 1,
-          message: "Package Id Is Not Found",
-          data:null,
-          
-        });
-      }
-
-    })
-    .catch((error)=>{
-      res.status(500).json({
-        status_code: 1,
-        message: "internal server error",
-        error: {
-          error: error.message,
-        },
       });
-    })
   }
 }
+
 module.exports = {
   packageController,
 };

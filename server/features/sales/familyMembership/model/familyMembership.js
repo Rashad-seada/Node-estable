@@ -13,7 +13,7 @@ const familyMembershipSchema = mongoose.Schema({
   membershipTtpe: {
     type: String,
     require: true,
-    enum:["familymembership"]
+    enum:["family"]
   },
   endDate: {
     type: String,

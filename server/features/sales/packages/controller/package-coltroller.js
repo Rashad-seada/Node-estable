@@ -22,7 +22,7 @@ class packageController {
     })
       .skip(skip) // Skip documents
       .limit(pageSize)
-      .populate("clientName")
+      .populate("clientId")
       .then(async (docs) => {
         if (docs) {
           const totalRecords = await Package.countDocuments();

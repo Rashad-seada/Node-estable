@@ -37,7 +37,7 @@ function ClientsPage() {
                         listValue,
                         placeholder:"select client"
                     }}
-                    addNewButtonLabel='add new instructor'
+                    addNewButtonLabel='add new client'
                 />
                 <ClientsPageContent 
                     refetch={refetch}

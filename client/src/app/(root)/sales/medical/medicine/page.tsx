@@ -6,6 +6,7 @@ import NavigationTabs from "@/components/shared/all/NavigationTabs"
 import PageContent from "@/components/shared/all/PageContent"
 import PaginationButtons from "@/components/shared/all/PaginationButtons"
 import Table from "@/components/shared/all/Table"
+import { medicineMedicalRoute } from "@/constants/api"
 import { httpGetServices } from "@/services/httpGetService"
 import { priceFormatter } from "@/utils/priceFormatter"
 import { useSearchParams } from "next/navigation"
@@ -16,7 +17,7 @@ function MedicineMedicalPage() {
     const pageNumber = searchParams.get("page") || "1"
 
     const {data:response,isSuccess,refetch}:any = useQuery({
-        queryFn:async () => httpGetServices(`${inventoryItemsRoute}?page=${pageNumber}`),
+        queryFn:async () => httpGetServices(`${medicineMedicalRoute}?page=${pageNumber}`),
         queryKey:["inventory","items",'page',pageNumber]
     })
         
@@ -75,7 +76,7 @@ function MedicineMedicalPage() {
                             tableHeadCells={tableHeadCells} 
                             isCrud={true}
                             refetch={refetch}
-                            route={inventoryItemsRoute}
+                            route={medicineMedicalRoute}
                         />
                     </Loader>
                 </PageContent>

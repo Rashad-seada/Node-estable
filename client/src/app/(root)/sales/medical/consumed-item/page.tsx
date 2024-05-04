@@ -1,9 +1,9 @@
 import React from 'react'
 
-function page() {
-  return (
-    <div>page</div>
-  )
+function ConsumedMedicalItemsPage() {
+    return (
+      <div>ConsumedMedicalItemsPage</div>
+    )
 }
 
-export default page
+export default ConsumedMedicalItemsPage

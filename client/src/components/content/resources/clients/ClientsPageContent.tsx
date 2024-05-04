@@ -3,6 +3,7 @@ import Loader from '@/components/shared/all/Loader'
 import ResourcesCard from '@/components/shared/resources/ResourcesCard'
 import React from 'react'
 import { clientsRoute } from '@/constants/api'
+import NoDataFound from '@/components/shared/all/NoDataFound'
 
 type ClientsPageProps = {
     isDataHere: boolean,
@@ -22,24 +23,31 @@ function ClientsPageContent({ isDataHere, response ,refetch}:ClientsPageProps) {
             
                 {
                     isDataHere ? ( 
-                        <div className='grid w-full h-full p-10 gap-10 grid-cols-[repeat(auto-fill,250px)]'>
+                        <>
                             {
-                                client.map((client:any,idx:number) => (
-                                    <ResourcesCard
-                                        key={idx}
-                                        refetch={refetch}
-                                        route={clientsRoute}
-                                        titles={{
-                                            email:client.email,
-                                            mobile:client.phone
-                                        }}
-                                        title={client.username}
-                                        _id={client._id}
-                                        imgUrl=''
-                                    />
-                                ))
+                                client.length ? (
+                                    <div  className='grid w-full h-full p-10 gap-10 grid-cols-[repeat(auto-fill,250px)]'>
+                                    
+                                        {    
+                                            client.map((client:any,idx:number) => (
+                                                <ResourcesCard
+                                                    key={idx}
+                                                    refetch={refetch}
+                                                    route={clientsRoute}
+                                                    titles={{
+                                                        email:client.email,
+                                                        mobile:client.phone
+                                                    }}
+                                                    title={client.username}
+                                                    _id={client._id}
+                                                    imgUrl=''
+                                                />
+                                            ))
+                                        }
+                                    </div>
+                                ) : <NoDataFound message='no client to show , add clients to show here'/>
                             }
-                        </div>
+                        </>
                     ) :<></>
                 } 
             

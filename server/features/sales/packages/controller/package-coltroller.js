@@ -13,7 +13,7 @@ class packageController {
     Package.find({
       $or: [
         { type: { $regex: regexQuery } },
-        { clientName: { $regex: regexQuery } },
+        { category: { $regex: regexQuery } },
       ],
     })
       .skip(skip) // Skip documents

@@ -3,7 +3,6 @@ const {
     createNewfamilyMembership,updatefamilyMembership
   } = require("../model/familyMembership");
   const ApiErrorCode = require("../../../../core/errors/apiError");
-  
   class familyMembershipController {
     static async getAllfamilyMembership(req, res) {
       // Pagination parameters
@@ -57,7 +56,6 @@ const {
           });
         });
     }
-  
     static async getfamilyMembershipById(req, res) {
       await familyMembership.findById(req.params.id)
         // .populate("clientId")
@@ -86,7 +84,6 @@ const {
           });
         });
     }
-  
     static async createNewfamilyMembership(req, res) {
       const { error } = createNewfamilyMembership(req.body);
       if (error) {
@@ -147,7 +144,6 @@ const {
           });
       }
     }
-
     static async updatefamilyMembership(req, res) {
      const {error}=updatefamilyMembership(req.body)
   if(error){
@@ -216,7 +212,6 @@ const {
   
      
     }
-  
     static async deletefamilyMembership(req, res) {
       await familyMembership.findByIdAndDelete(req.params.id)
         .then((docs) => {
@@ -246,6 +241,5 @@ const {
         });
     }
   }
-  
-  module.exports = { familyMembershipController };
-  
+
+module.exports = { familyMembershipController };

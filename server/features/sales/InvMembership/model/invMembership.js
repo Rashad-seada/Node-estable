@@ -20,7 +20,7 @@ endDate:{type:String,
     require:true},
 status:{
     type:String,
-    enum :["Active","inActive"] ,
+    enum :["active","inactive"] ,
     require:true
 }
 })
@@ -34,7 +34,7 @@ function createNewInvMembership(obj){
         membershipType:joi.string().required(),
         startDate:joi.string().required(),
         endDate:joi.string().required(),
-        status:joi.string().required().valid("Active","inActive")
+        status:joi.string().required().valid("active","inactive")
 
     })
     return schema.validate(obj)
@@ -46,7 +46,7 @@ function updateInvMembership(obj){
         membershipType:joi.string().required(),
         startDate:joi.string().required(),
         endDate:joi.string().required(),
-        status:joi.string().required().valid("Active","inActive")
+        status:joi.string().required().valid("active","inactive")
 
     })
     return schema.validate(obj)

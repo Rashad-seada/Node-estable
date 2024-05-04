@@ -85,10 +85,11 @@ function EditInvConsumedItemPage() {
                 setQuantity(itemData.invConsumedQuantity)
                 setPrice(itemData.invConsumedPrice)
                 setMeasure(itemData.invConsumedMeasure)
-                setHorse({
+                const horse =  Boolean(itemData.hourseId) ? ({
                     name:itemData.hourseId.hourseName,
                     id:itemData.hourseId._id
-                })
+                }) : null
+                setHorse(horse)
                 
             }
         }
@@ -108,7 +109,7 @@ function EditInvConsumedItemPage() {
                 title={(
                     <span>
                         stable's inventory /
-                        <span className='text-primary'>edit item</span>
+                        <span className='text-primary'>edit consumed item</span>
                     </span>
                 )}
                 showBackButton={true}

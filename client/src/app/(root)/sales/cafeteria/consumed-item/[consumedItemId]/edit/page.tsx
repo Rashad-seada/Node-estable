@@ -19,7 +19,7 @@ import { IoMdCheckmarkCircleOutline } from "react-icons/io"
 import { MdErrorOutline } from "react-icons/md"
 import { useMutation } from "react-query"
 
-function EditMenuItemPage() {
+function EditConsumedItemPage() {
 
 
     const [itemName,setItemName] = useState<string>("")
@@ -30,7 +30,7 @@ function EditMenuItemPage() {
     const [date,setDate] = useState<string>("")
     const [clients,setClients] = useState<NameAndId[]|[]>([])
 
-    const isInputsValid = Boolean(itemName && quantity && price && date)
+    const isInputsValid = Boolean(itemName && client && quantity && price && date)
 
     const popUp = usePopUp()
     const router = useRouter()
@@ -48,10 +48,11 @@ function EditMenuItemPage() {
                 
                 setDate(getIsoDate(itemData.date))
                 setPrice(itemData.consumedPrice)
-                setClient({
+                const client = Boolean(itemData.clientId) ? ({
                     name:itemData.clientId.username,
                     id:itemData.clientId._id
-                })
+                }) : null      
+                setClient(client)
             }
             
         }
@@ -142,4 +143,4 @@ function EditMenuItemPage() {
     )
 }
 
-export default EditMenuItemPage
+export default EditConsumedItemPage

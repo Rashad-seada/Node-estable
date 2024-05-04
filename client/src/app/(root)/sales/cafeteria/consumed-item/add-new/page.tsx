@@ -23,7 +23,7 @@ function AddNewConsumedItemPage() {
     const [date,setDate] = useState<string>("")
     const [clients,setClients] = useState<NameAndId[]|[]>([])
 
-    const isInputsValid = Boolean(itemName && quantity && price && date)
+    const isInputsValid = Boolean(itemName && client && quantity && price && date)
 
     const popUp = usePopUp()
     const router = useRouter()

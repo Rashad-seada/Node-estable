@@ -84,13 +84,13 @@ function EditIndividualMembershipPage() {
         const fetchMembershipData = async () => {
             const membership = await httpGetServices(individualMembershipIdRoute)
             const data = membership.data
-            console.log(data);
             
             if (Boolean(data)) {
-                setClient({
+                const client = Boolean(data.clientId) ? ({
                     name:data.clientId.username,
                     id:data.clientId._id
-                })
+                }) : null
+                setClient(client)
                 setStartDate(getIsoDate(data.startDate))
                 setEndDate(getIsoDate(data.endDate))
                 setStatus(getMembershipStatus(data.status))

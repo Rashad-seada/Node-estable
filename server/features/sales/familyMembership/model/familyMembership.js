@@ -39,7 +39,7 @@ function createNewfamilyMembership(obj) {
   const schema = joi.object({
     famillyName: joi.string().required(),
     members: joi.string().required(),
-    membershipTtpe: joi.string().required().valid("familymembership"),
+    membershipTtpe: joi.string().required().valid("family"),
     startDate: joi.string().required(),
     endDate: joi.string().required(),
     status: joi.string().required().valid("active", "inactive"),
@@ -51,7 +51,7 @@ function updatefamilyMembership(obj) {
   const schema = joi.object({
     famillyName: joi.string().required(),
     members: joi.string().required(),
-    membershipTtpe: joi.string().required().valid("familymembership"),
+    membershipTtpe: joi.string().required().valid("family"),
     startDate: joi.string().required(),
     endDate: joi.string().required(),
     status: joi.string().required().valid("active", "inactive"),

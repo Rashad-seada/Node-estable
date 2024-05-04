@@ -13,7 +13,6 @@ class invMembershipController {
     const skip = (req.query.page - 1) * pageSize;
 
     const regexQuery = new RegExp(req.query.query, "i"); // Case-insensitive regex query
-//6623e8dfc6ecdbd7296efa54  client
     InvMembership.find({
       $or: [
         { type: { $regex: regexQuery } },

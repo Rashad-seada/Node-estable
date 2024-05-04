@@ -29,8 +29,11 @@ const consumeRouter = require("./features/sales/consumeItem/router/consumeRoutes
 const inventoryRouter = require("./features/sales/inventory/router/inventory")
 const InvConsumeRouter = require("./features/sales/invConsume/router/invConsum")
 const packageRouter = require("./features/sales/packages/router/package")
-const invmembershipRouter = require("./features/sales/InvMembership//router/invMembership")
+const invmembershipRouter = require("./features/sales/InvMembership/router/invMembership")
 
+const familymembershipRouter = require("./features/sales/familyMembership/router/familyMembership")
+
+  
 // cors libyrary
 app.use(cors({
     origin: 'http://localhost:3000',
@@ -71,6 +74,7 @@ app.use("/api/inventory/inventoryitem",verifyTokenAndAdmin,inventoryRouter)
 app.use("/api/inventory/InvConsume",verifyTokenAndAdmin,InvConsumeRouter)
 app.use("/api/package",packageRouter)
 app.use("/api/invmembership",invmembershipRouter)
+app.use("/api/familymembership",familymembershipRouter)
 
 
 

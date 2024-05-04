@@ -10,15 +10,10 @@ class packageController {
 
     const regexQuery = new RegExp(req.query.query, "i"); // Case-insensitive regex query
 
-    Package.find({
-      $or: [
-        { type: { $regex: regexQuery } },
-        { clientName: { $regex: regexQuery } },
-      ],
-    })
+    Package.find()
       .skip(skip) // Skip documents
       .limit(pageSize)
-      .populate("clientId")
+      .populate("clientName")
       .then(async (docs) => {
         if (docs) {
           const totalRecords = await Package.countDocuments();
@@ -115,7 +110,7 @@ class packageController {
                 startDate: req.body.startDate,
                 endDate: req.body.endDate,
                 status: req.body.status,
-                clientId:req.body.clientId
+                clientName:req.body.clientName
             })
               .save()
               
@@ -164,7 +159,7 @@ class packageController {
                 startDate: req.body.startDate,
                 endDate: req.body.endDate,
                 status: req.body.status,
-                clientId:req.body.clientId
+                clientName:req.body.clientName
             },
           },
           { new: true }

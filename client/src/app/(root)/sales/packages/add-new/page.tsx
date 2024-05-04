@@ -37,7 +37,6 @@ function AddNewPackagePage() {
             startDate,
             endDate,
             status:status?.name,
-            clientName:client?.name,
             clientId:client?.id
         })),
         onSuccess:(res) => {

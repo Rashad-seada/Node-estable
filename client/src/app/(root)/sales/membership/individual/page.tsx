@@ -8,45 +8,47 @@ import PaginationButtons from "@/components/shared/all/PaginationButtons"
 import Table from "@/components/shared/all/Table"
 import { individualMembershipRoute } from "@/constants/api"
 import { httpGetServices } from "@/services/httpGetService"
-import { usePathname, useSearchParams } from "next/navigation"
+import { getReadableDate } from "@/utils/getReadableDate"
+import { useSearchParams } from "next/navigation"
 import { useQuery } from "react-query"
 
 function IndividualMembershipPage() {
     const searchParams = useSearchParams()
     const pageNumber = searchParams.get("page") || "1"
-    const pathname = usePathname()
 
     const {data:response,isSuccess,refetch}:any = useQuery({
         queryFn:async () => httpGetServices(`${individualMembershipRoute}?page=${pageNumber}`),
         queryKey:["inventory","consumedItems",'page',pageNumber]
     })
         
-    const isDataHere = Boolean(response?.invConsumeItems?.data) && isSuccess
+    const isDataHere = Boolean(response?.InvMembership?.data) && isSuccess
 
 
     const tableHeadCells = [
-        "horse name",
-        "item name",
-        "quantity",
-        "price",
-        "measure"
-        // THIS IS NOT THE REAL KEYS
+        "client name",
+        "membership type",
+        "start date",
+        "end date",
+        "status"
     ]
 
     const tableBodyItemCellKeys = [
-        "hourseId",
-        "invConsumedItemName",
-        "invConsumedQuantity",
-        "invConsumedPrice",
-        "invConsumedMeasure"
-                // THIS IS NOT THE REAL KEYS
+        "clientId",
+        "membershipType",
+        "startDate",
+        "endDate",
+        "status"
 
     ]
-    // STILL YA BRO
-    const tableBodyItems = response?.invConsumeItems?.data//.map((item:any) => ({
-    //     ...item,
-    //     hourseId:item.hourseId?.hourseName || "no-horse"
-    // }))
+    const tableBodyItems = response?.InvMembership?.data.map((item:any) => ({
+        ...item,
+        clientId:item.clientId?.username || "no-client",
+        status:(<span className="text-green-500">
+            {item.status}
+        </span>),
+        startDate:getReadableDate(item.startDate),
+        endDate:getReadableDate(item.endDate)
+    }))
     
     
     const navigationTabs = [
@@ -85,8 +87,8 @@ function IndividualMembershipPage() {
                 {
                     isDataHere ? (
                         <PaginationButtons
-                            maxPages={response.invConsumeItems.max_pages}
-                            currentPage={response.invConsumeItems.current_page}
+                            maxPages={response.InvMembership.max_pages}
+                            currentPage={response.InvMembership.current_page}
 
                         />
                     ): <></>

@@ -8,6 +8,7 @@ import PaginationButtons from "@/components/shared/all/PaginationButtons"
 import Table from "@/components/shared/all/Table"
 import { inventoryConsumedItemsRoute } from "@/constants/api"
 import { httpGetServices } from "@/services/httpGetService"
+import { priceFormatter } from "@/utils/priceFormatter"
 import { usePathname, useSearchParams } from "next/navigation"
 import { useQuery } from "react-query"
 
@@ -41,7 +42,10 @@ function ConsumedItemsInventoryPage() {
     ]
     const tableBodyItems = response?.invConsumeItems?.data.map((item:any) => ({
         ...item,
-        hourseId:item.hourseId?.hourseName || "no-horse"
+        hourseId:item.hourseId?.hourseName || "no-horse",
+        invConsumedPrice:(<span className="w-full block text-right">
+            {priceFormatter(String(item.invConsumedPrice))}
+        </span>)
     }))
     
     

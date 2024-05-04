@@ -1,20 +1,38 @@
 "use client"
 
+import AddNewIndividualMembershipPageContent from "@/components/content/sales/membership/individual/AddNewIndividualMembershipPageContent"
+import PageHeader from "@/components/layout/PageHeader"
 import { individualMembershipRoute } from "@/constants/api"
+import { useGetClients } from "@/hooks/useGetClients"
 import { usePopUp } from "@/hooks/usePopUp"
 import { httpPostService } from "@/services/httpPostService"
 import { statusCodeIndicator } from "@/utils/statusCodeIndicator"
+import { toNameAndId } from "@/utils/toNameAndId"
 import { useRouter } from "next/navigation"
+import { useState } from "react"
 import { IoMdCheckmarkCircleOutline } from "react-icons/io"
 import { MdErrorOutline } from "react-icons/md"
 import { useMutation } from "react-query"
 
 function AddNewIndividualMembershipPage() {
+    const [client,setClient] = useState<NameAndId>(null)
+    const [clients,setClients] = useState<NameAndId[]|[]>([])
+    const [startDate,setStartDate] = useState<string>("")
+    const [endDate,setEndDate] = useState<string>("")
+    const [status,setStatus] = useState<NameAndId>(null)
+    const [membershipType,setMembershipType] = useState<NameAndId>(null)
+
+    const isInputsValid = Boolean(client && startDate && endDate && status && membershipType)
     const popUp = usePopUp()
     const router = useRouter()
 
     const {mutate} = useMutation({
         mutationFn:async () => httpPostService(individualMembershipRoute,JSON.stringify({
+            clientId:client?.id,
+            membershipType:membershipType?.name,
+            status:status?.name,
+            startDate,
+            endDate
            
         })),
         onSuccess:(res) => {
@@ -28,7 +46,7 @@ function AddNewIndividualMembershipPage() {
                     showPopUp:true,
                     popUpType:"alert"
                 })
-                router.push("/sales/inventory/consumed-item")
+                router.push("/sales/membership/individual")
             }else {
                 popUp({
                     popUpMessage:res.message,
@@ -49,8 +67,40 @@ function AddNewIndividualMembershipPage() {
             })
         }
     })
+    useGetClients({
+        onSuccess:(res)=>{
+            const clients = toNameAndId(res?.data?.client,"username","_id")            
+            setClients(clients)
+        }
+    })
     return (
-        <div>AddNewIndividualMembershipPage</div>
+        <>
+            <PageHeader
+                showBackButton={true}
+                title={(
+                    <span>
+                        stable's membership /
+                        <span className='text-primary'>add individual membership</span>
+                    </span>
+                )}
+            />
+            <AddNewIndividualMembershipPageContent
+                client={client}
+                setClient={setClient}
+                clients={clients}
+                startDate={startDate}
+                setStartDate={setStartDate}
+                endDate={endDate}
+                setEndDate={setEndDate}
+                status={status}
+                setStatus={setStatus}
+                membershipType={membershipType}
+                setMembershipType={setMembershipType}
+                handleAddIndividualMembershipItem={mutate}
+                isInputsValid={isInputsValid}
+
+            />
+        </>
     )
 }
 

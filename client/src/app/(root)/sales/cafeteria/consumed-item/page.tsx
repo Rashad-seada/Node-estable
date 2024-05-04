@@ -12,6 +12,7 @@ import React from 'react'
 import { useQuery } from "react-query";
 import { getReadableDate } from '@/utils/getReadableDate'
 import PageHeader from '@/components/layout/PageHeader'
+import { priceFormatter } from '@/utils/priceFormatter'
 
 function CafeteriaConsumedItems() {
 
@@ -47,7 +48,10 @@ function CafeteriaConsumedItems() {
     const tableBodyItems = response?.caveteriaItems?.data.map((item:any) => ({
         ...item,
         clientId:item.clientId?.username || "no-client",
-        date:getReadableDate(item.date)
+        date:getReadableDate(item.date),
+        consumedPrice:(<span className='w-full block text-right'>
+            {priceFormatter(String(item.consumedPrice))}
+        </span>)
     }))
     
     const navigationTabs = [

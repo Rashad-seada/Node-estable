@@ -72,9 +72,12 @@ app.use("/api/caveteria/menuitem",verifyTokenAndAdmin,menuItemRouter)
 app.use("/api/caveteria/consume",verifyTokenAndAdmin,consumeRouter)
 app.use("/api/inventory/inventoryitem",verifyTokenAndAdmin,inventoryRouter)
 app.use("/api/inventory/InvConsume",verifyTokenAndAdmin,InvConsumeRouter)
-app.use("/api/package",packageRouter)
-app.use("/api/invmembership",invmembershipRouter)
-app.use("/api/familymembership",familymembershipRouter)
+app.use("/api/package",verifyTokenAndAdmin,packageRouter)
+app.use("/api/invmembership",verifyTokenAndAdmin,invmembershipRouter)
+app.use("/api/familymembership",verifyTokenAndAdmin,familymembershipRouter)
+
+
+
 
 
 

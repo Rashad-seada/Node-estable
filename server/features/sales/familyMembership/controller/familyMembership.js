@@ -108,7 +108,7 @@ const {
               new familyMembership({
                 famillyName: req.body.famillyName,
                 members: req.body.members,
-                membershipTtpe: req.body.stmembershipTtpeartDate,
+                membershipTtpe: req.body.membershipTtpe,
                 endDate: req.body.endDate,
                 startDate: req.body.startDate,
                 status: req.body.status,
@@ -165,7 +165,7 @@ const {
               $set: {
                 famillyName: req.body.famillyName,
                 members: req.body.members,
-                membershipTtpe: req.body.stmembershipTtpeartDate,
+                membershipTtpe: req.body.membershipTtpe,
                 endDate: req.body.endDate,
                 startDate: req.body.startDate,
                 status: req.body.status,

@@ -2,6 +2,7 @@ const { User, validationLoginUser } = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const ApiErrorCode = require("../../../core/errors/apiError") 
+const upload = require("../../../core/utils/upload");
 
 const {
   verifyTokenAndAdmin,
@@ -178,5 +179,24 @@ router.get("/get-password", async (req, res) => {
     },
   });
 });
+
+router.post("/upload",upload.single('image'),(req,res) => {
+const imageUrl = `http://localhost:8000/${req.file.path}`
+
+res.status(200).json({
+  status_code: 1,
+  message: "This is a hashed password",
+  data: {
+    imageUrl: imageUrl,
+  },
+});
+})
+
+router.get("/:filename",(req,res) => {
+  const fileName = req.params.fileName;
+  res.sendFile(
+    __dirname+"uploads"+fileName
+  )
+})
 
 module.exports = router;

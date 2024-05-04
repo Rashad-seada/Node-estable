@@ -42,8 +42,8 @@ function EditIndividualMembershipPageContent({
                 <ResourcesDropList
                     listValue={client} 
                     setListValue={setClient}
-                    placeholder="Enter Item Name"
-                    label='item name'
+                    placeholder="Enter client Name"
+                    label='client name'
                     options={clients}
                 />
                 <ResourcesDropList

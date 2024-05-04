@@ -55,7 +55,7 @@ function AddNewHorsePageContent({
                 <ResourcesInput
                     value={name} 
                     setValue={setName}
-                    placeholder="Enter Client Name"
+                    placeholder="Enter horse Name"
                     label='horse name'
                     type='text'
                 />
@@ -69,7 +69,7 @@ function AddNewHorsePageContent({
                 <ResourcesInput
                     value={age} 
                     setValue={setAge}
-                    placeholder="Enter Client Age"
+                    placeholder="Enter horse Age"
                     label='age'
                     type='number'
                 />
@@ -77,7 +77,7 @@ function AddNewHorsePageContent({
                     listValue={gender}
                     setListValue={setGender}
                     options={genders}
-                    placeholder='Select Client Gender'
+                    placeholder='Select horse Gender'
                     label='gender'
                 />
                 <ResourcesDropList

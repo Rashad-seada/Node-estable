@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const joi = require("joi");
 
 const packageSchema = mongoose.Schema({
-  clientName: {
+  clientId: {
     type: mongoose.Types.ObjectId,
     ref: "Client",
     required: true,
@@ -40,7 +40,7 @@ function createNewPackage(obj) {
     startDate:joi.string().required(),
     endDate:joi.string().required(),
     status:joi.string().required().valid("expired","unexpired"),
-    clientName:joi.string().required()
+    clientId:joi.string().required()
   })
   return schema.validate(obj);
 }
@@ -52,7 +52,7 @@ function updatePackage(obj) {
     startDate:joi.string().required(),
     endDate:joi.string().required(),
     status:joi.string().required().valid("expired","unexpired"),
-    clientName:joi.string().required()
+    clientId:joi.string().required()
 
   });
   return schema.validate(obj);

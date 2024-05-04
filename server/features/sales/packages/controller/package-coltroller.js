@@ -10,7 +10,12 @@ class packageController {
 
     const regexQuery = new RegExp(req.query.query, "i"); // Case-insensitive regex query
 
-    Package.find()
+    Package.find({
+      $or: [
+        { type: { $regex: regexQuery } },
+        { clientName: { $regex: regexQuery } },
+      ],
+    })
       .skip(skip) // Skip documents
       .limit(pageSize)
       .populate("clientName")

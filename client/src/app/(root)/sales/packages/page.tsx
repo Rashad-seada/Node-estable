@@ -19,7 +19,6 @@ function PackagesPage() {
         queryFn:async () => httpGetServices(`${packagesRoute}?page=${pageNumber}`),
         queryKey:["inventory","consumedItems",'page',pageNumber]
     })
-        console.log(response);
         
     const isDataHere = Boolean(response?.Packages?.data) && isSuccess
 

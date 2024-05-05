@@ -12,6 +12,10 @@ const ConsumedMedicineSchema = mongoose.Schema({
     medicineId: {
         type: Schema.Types.ObjectId,
         ref: "Medicine",
+        required: false,
+    },
+    medicineName: {
+        type: String,
         required: true,
     },
     discription:{
@@ -29,6 +33,10 @@ const ConsumedMedicineSchema = mongoose.Schema({
         type : Number,
         required: true,
     },
+    quantity : {
+        type : Number,
+        required: true,
+    },
 
 })
 
@@ -37,10 +45,13 @@ const ConsumedMedicine = mongoose.model("ConsumedMedicine",ConsumedMedicineSchem
 function consumedMedicineValidation(obj){
     const schema = joi.object({
         hourseId : joi.string().required().min(3),
-        medicineId : joi.string().required().min(3),
+        medicineId : joi.string().min(3),
+        medicineName: joi.string().required().min(3),
         discription : joi.string().required().min(4),
         price : joi.number().required(),
         dosage : joi.number().required(),
+        quantity : joi.number().required(),
+
     })
     return schema.validate(obj);
 }
@@ -49,9 +60,12 @@ function updateConsumedMedicineValidation(obj){
     const schema = joi.object({
         hourseId : joi.string().min(3),
         medicineId : joi.string().min(3),
+        medicineName: joi.string().min(3),
         discription : joi.string().min(4),
         price : joi.number(),
         dosage : joi.number(),
+        quantity : joi.number(),
+
     })
     return schema.validate(obj);
 }

@@ -38,7 +38,7 @@ class MedicineController {
 
                     res.status(200).json({
                         status_code: 1,
-                        message: error.message,
+                        message: "Created the medicine successfuly",
                         data: {
                             ...other
                         },
@@ -78,7 +78,7 @@ class MedicineController {
 
                 res.status(200).json({
                     status_code: 1,
-                    message: error.message,
+                    message: "got the medicine successfully",
                     data: {
                         ...other
                     },
@@ -149,7 +149,7 @@ class MedicineController {
                       data: {
                         current_page: parseInt(req.query.page) || 1,
                         max_pages: maxPages,
-                        client: docs,
+                        medicine: docs,
                       },
                     });
                   })
@@ -209,7 +209,7 @@ class MedicineController {
 
                     res.status(200).json({
                         status_code: 1,
-                        message: error.message,
+                        message: "updated medicine successfully",
                         data: {
                             ...other
                         },

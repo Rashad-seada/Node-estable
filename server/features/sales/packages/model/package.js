@@ -35,11 +35,11 @@ const Package = mongoose.model("Package", packageSchema);
 
 function createNewPackage(obj) {
   const schema = joi.object({
-    category:joi.string().required(),
-    lessons:joi.number().required(),
-    startDate:joi.string().required(),
-    endDate:joi.string().required(),
-    status:joi.string().required().valid("expired","unexpired"),
+    category:joi.string().required().min(1).max(20),
+    lessons:joi.number().required().min(1).max(20),
+    startDate:joi.string().required().min(1).max(20),
+    endDate:joi.string().required().min(1).max(20),
+    status:joi.string().required().valid("expired","unexpired").min(1).max(20),
     clientId:joi.string().required()
   })
   return schema.validate(obj);
@@ -47,11 +47,11 @@ function createNewPackage(obj) {
 
 function updatePackage(obj) {
   const schema = joi.object({
-    category:joi.string().required(),
-    lessons:joi.number().required(),
-    startDate:joi.string().required(),
-    endDate:joi.string().required(),
-    status:joi.string().required().valid("expired","unexpired"),
+    category:joi.string().required().min(1).max(20),
+    lessons:joi.number().required().min(1).max(20),
+    startDate:joi.string().required().min(1).max(20),
+    endDate:joi.string().required().min(1).max(20),
+    status:joi.string().required().valid("expired","unexpired").min(1).max(20),
     clientId:joi.string().required()
 
   });

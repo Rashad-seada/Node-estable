@@ -141,7 +141,7 @@ class ConsumedMedicineController {
                   .skip(skip) // Skip documents
                   .limit(pageSize)
                   .then(async (docs) => {
-                    const totalRecords = await Medicine.countDocuments();
+                    const totalRecords = await ConsumedMedicine.countDocuments();
           
                     const maxPages = Math.ceil(totalRecords / pageSize);
           

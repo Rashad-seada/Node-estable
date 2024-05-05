@@ -15,7 +15,8 @@ export function useGetClients({
     }
     Boolean(onSuccess) ? queryOptions.onSuccess = onSuccess : null
     Boolean(onError) ? queryOptions.onError = onError : null
-    Boolean(queryKey) ? queryOptions.queryKey = [...queryKey,queryOptions.queryKey] : null
+
+    if(queryKey) Boolean(queryKey) ? queryOptions.queryKey = [...queryKey,queryOptions.queryKey] : null
 
     const {data:response,isSuccess,refetch} = useQuery(queryOptions)
     return {response,isSuccess,refetch}

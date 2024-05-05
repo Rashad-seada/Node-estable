@@ -14,7 +14,8 @@ function PopUp() {
 
     const resolveFunc = () => {
         const isResolve = Boolean(popUpData?.popUp?.resolveFunc)
-        isResolve && popUpData?.popUp?.resolveFunc()
+
+        if(popUpData?.popUp?.resolveFunc) isResolve && popUpData?.popUp?.resolveFunc()
         
         closeFunc()
     }

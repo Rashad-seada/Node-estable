@@ -33,6 +33,10 @@ const ConsumedMedicineSchema = mongoose.Schema({
         type : Number,
         required: true,
     },
+    quantity : {
+        type : Number,
+        required: true,
+    },
 
 })
 
@@ -46,6 +50,8 @@ function consumedMedicineValidation(obj){
         discription : joi.string().required().min(4),
         price : joi.number().required(),
         dosage : joi.number().required(),
+        quantity : joi.number().required(),
+
     })
     return schema.validate(obj);
 }
@@ -58,6 +64,8 @@ function updateConsumedMedicineValidation(obj){
         discription : joi.string().min(4),
         price : joi.number(),
         dosage : joi.number(),
+        quantity : joi.number(),
+
     })
     return schema.validate(obj);
 }

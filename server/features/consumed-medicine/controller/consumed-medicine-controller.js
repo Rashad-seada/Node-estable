@@ -31,7 +31,8 @@ class ConsumedMedicineController {
                     discription : req.body.discription,
                     price : req.body.price,
                     dosage : req.body.dosage,
-                    medicineName : req.body.medicineName
+                    medicineName : req.body.medicineName,
+                    quantity : req.body.quantity
                 }).save()
                 .then((docs)=> {
 
@@ -201,7 +202,9 @@ class ConsumedMedicineController {
                         discription : req.body.discription,
                         price : req.body.price,
                         dosage : req.body.dosage,
-                        medicineName : req.body.medicineName
+                        medicineName : req.body.medicineName,
+                        quantity : req.body.quantity
+
                     } },
                     { new: true }
                 ).then((docs)=> {

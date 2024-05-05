@@ -40,7 +40,7 @@ class ConsumedMedicineController {
 
                     res.status(200).json({
                         status_code: 1,
-                        message: error.message,
+                        message: "created consummed medicine successfully",
                         data: {
                             ...other
                         },
@@ -213,7 +213,7 @@ class ConsumedMedicineController {
 
                     res.status(200).json({
                         status_code: 1,
-                        message: error.message,
+                        message: "updated consummed item successfully",
                         data: {
                             ...other
                         },

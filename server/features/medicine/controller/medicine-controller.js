@@ -209,7 +209,7 @@ class MedicineController {
 
                     res.status(200).json({
                         status_code: 1,
-                        message: error.message,
+                        message: "updated medicine successfully",
                         data: {
                             ...other
                         },

@@ -144,7 +144,6 @@ class packageController {
       });
     }
   }
-
   static async updatePackage(req, res) {
     const { error } = updatePackage(req.body);
     if (error) {

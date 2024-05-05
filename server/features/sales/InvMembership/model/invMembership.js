@@ -31,10 +31,10 @@ const InvMembership = mongoose.model("Membership",membershipSchema)
 function createNewInvMembership(obj){
     const schema = joi.object({
         clientId:joi.string().required(),
-        membershipType:joi.string().required(),
-        startDate:joi.string().required(),
-        endDate:joi.string().required(),
-        status:joi.string().required().valid("active","inactive")
+        membershipType:joi.string().required().min(1).max(40),
+        startDate:joi.string().required().min(1).max(40),
+        endDate:joi.string().required().min(1).max(40),
+        status:joi.string().required().valid("active","inactive").min(1).max(40)
 
     })
     return schema.validate(obj)
@@ -42,11 +42,11 @@ function createNewInvMembership(obj){
 
 function updateInvMembership(obj){
     const schema = joi.object({
-        clientId:joi.string().required(),
-        membershipType:joi.string().required(),
-        startDate:joi.string().required(),
-        endDate:joi.string().required(),
-        status:joi.string().required().valid("active","inactive")
+        clientId:joi.string().required().min(1).max(40),
+        membershipType:joi.string().required().min(1).max(40),
+        startDate:joi.string().required().min(1).max(40),
+        endDate:joi.string().required().min(1).max(40),
+        status:joi.string().required().valid("active","inactive").min(1).max(40)
 
     })
     return schema.validate(obj)

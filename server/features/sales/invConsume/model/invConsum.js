@@ -38,7 +38,7 @@ function createInvConsumeValidation(obj){
     invConsumedQuantity:joi.number().required(),
     invConsumedPrice : joi.number().required(),
     invConsumedMeasure :joi.string().required(),
-    date: joi.string().required(),
+    date: joi.string().required(), 
     hourseId : joi.string().required(),
 
   })

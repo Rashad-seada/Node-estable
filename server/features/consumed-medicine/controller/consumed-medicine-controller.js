@@ -81,7 +81,7 @@ class ConsumedMedicineController {
 
                     res.status(200).json({
                         status_code: 1,
-                        message: error.message,
+                        message: "got consumed medicine successfully",
                         data: {
                             ...other
                         },

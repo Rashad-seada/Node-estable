@@ -76,6 +76,7 @@ class ConsumedMedicineController {
             .populate("hourseId")
             .then((docs)=> {
 
+              
                 if(docs){
                     const { __v, ...other } = docs._doc;
 

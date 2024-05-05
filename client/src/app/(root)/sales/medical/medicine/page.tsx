@@ -18,30 +18,29 @@ function MedicineMedicalPage() {
 
     const {data:response,isSuccess,refetch}:any = useQuery({
         queryFn:async () => httpGetServices(`${medicineMedicalRoute}?page=${pageNumber}`),
-        queryKey:["inventory","items",'page',pageNumber]
+        queryKey:["medical","medicine",'page',pageNumber]
     })
         
-    const isDataHere = Boolean(response?.inventoryItems?.data) && isSuccess
+    const isDataHere = Boolean(response?.data?.medicine) && isSuccess
 
 
     const tableHeadCells = [
+        "horse name",
         "item name",
         "quantity",
-        "item description",
-        "type",
         "price",
-        "measure"
+        "dosage"
     ]
 
     const tableBodyItemCellKeys = [
-        "itemName",
+        "name",
         "quantity",
-        "itemDescription",
+        "discription",
         "type",
         "price",
-        "measure"
+        "dosage"
     ]
-    const tableBodyItems = response?.inventoryItems?.data.map((item:any)=> ({
+    const tableBodyItems = response?.data?.medicine.map((item:any)=> ({
         ...item,
         price:(<span className="w-full block text-right">
             {priceFormatter(String(item.price))}
@@ -50,8 +49,8 @@ function MedicineMedicalPage() {
     
     const navigationTabs = [
         {
-            href:`medical`,
-            label:"medical"
+            href:`medicine`,
+            label:"medicine"
         },
         {
             href:`consumed-item`,
@@ -83,8 +82,8 @@ function MedicineMedicalPage() {
                 {
                     isDataHere ? (
                         <PaginationButtons
-                            maxPages={response.inventoryItems.max_pages}
-                            currentPage={response.inventoryItems.current_page}
+                            maxPages={response.data.max_pages}
+                            currentPage={response.data.current_page}
 
                         />
                     ): <></>

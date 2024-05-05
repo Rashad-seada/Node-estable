@@ -17,7 +17,7 @@ function FamilyMembershipPage() {
 
     const {data:response,isSuccess,refetch}:any = useQuery({
         queryFn:async () => httpGetServices(`${familyMembershipRoute}?page=${pageNumber}`),
-        queryKey:["inventory","consumedItems",'page',pageNumber]
+        queryKey:["membership","family",'page',pageNumber]
     })
         console.log(response);
         

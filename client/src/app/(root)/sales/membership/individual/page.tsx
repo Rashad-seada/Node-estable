@@ -18,7 +18,7 @@ function IndividualMembershipPage() {
 
     const {data:response,isSuccess,refetch}:any = useQuery({
         queryFn:async () => httpGetServices(`${individualMembershipRoute}?page=${pageNumber}`),
-        queryKey:["inventory","consumedItems",'page',pageNumber]
+        queryKey:["membership","individual",'page',pageNumber]
     })
         
     const isDataHere = Boolean(response?.InvMembership?.data) && isSuccess

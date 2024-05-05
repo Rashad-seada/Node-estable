@@ -9,13 +9,12 @@ import Table from "@/components/shared/all/Table"
 import { inventoryConsumedItemsRoute } from "@/constants/api"
 import { httpGetServices } from "@/services/httpGetService"
 import { priceFormatter } from "@/utils/priceFormatter"
-import { usePathname, useSearchParams } from "next/navigation"
+import { useSearchParams } from "next/navigation"
 import { useQuery } from "react-query"
 
 function ConsumedItemsInventoryPage() {
     const searchParams = useSearchParams()
     const pageNumber = searchParams.get("page") || "1"
-    const pathname = usePathname()
 
     const {data:response,isSuccess,refetch}:any = useQuery({
         queryFn:async () => httpGetServices(`${inventoryConsumedItemsRoute}?page=${pageNumber}`),

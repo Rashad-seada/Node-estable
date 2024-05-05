@@ -89,7 +89,7 @@ export const SalesRoutes : DashboardRoute[] = [
         name:"inventory"
     },
     {
-        href:"/sales/medical",
+        href:"/sales/medical/medicine",
         iconComponent:<FaBriefcaseMedical />,
         name:"medical"
     },

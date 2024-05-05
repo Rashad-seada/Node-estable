@@ -21,3 +21,4 @@ export const individualMembershipRoute = `/invmembership`
 export const familyMembershipRoute = `/familymembership`
 export const packagesRoute = "/package"
 export const medicineMedicalRoute = "/medicine"
+export const consumedMedicalRoute = "/consumed-medicine"

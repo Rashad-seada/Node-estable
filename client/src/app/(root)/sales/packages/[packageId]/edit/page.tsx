@@ -90,7 +90,6 @@ function PackageEditPage() {
             const res = await httpGetServices(packageIdRoute)
             
             const itemData = res?.Packages?.data
-            console.log(res);
             
             if (Boolean(itemData)) {
                 setCategory(getPackageCategory(itemData.category))

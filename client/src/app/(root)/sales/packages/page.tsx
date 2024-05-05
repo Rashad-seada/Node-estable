@@ -17,7 +17,7 @@ function PackagesPage() {
 
     const {data:response,isSuccess,refetch}:any = useQuery({
         queryFn:async () => httpGetServices(`${packagesRoute}?page=${pageNumber}`),
-        queryKey:["inventory","consumedItems",'page',pageNumber]
+        queryKey:["packages",'page',pageNumber]
     })
         
     const isDataHere = Boolean(response?.Packages?.data) && isSuccess

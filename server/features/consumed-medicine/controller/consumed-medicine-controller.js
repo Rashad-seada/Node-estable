@@ -73,6 +73,7 @@ class ConsumedMedicineController {
     static getConsumedMedicineById(req,res){
         try{
             ConsumedMedicine.findById(req.params.id)
+            .populate("hourseId")
             .then((docs)=> {
 
                 if(docs){
@@ -137,6 +138,7 @@ class ConsumedMedicineController {
                     { discription: { $regex: regexQuery } },
                   ]
                 })
+                  .populate("hourseId")
                   .select("-__v")
                   .skip(skip) // Skip documents
                   .limit(pageSize)

@@ -149,7 +149,7 @@ class MedicineController {
                       data: {
                         current_page: parseInt(req.query.page) || 1,
                         max_pages: maxPages,
-                        client: docs,
+                        medicine: docs,
                       },
                     });
                   })

@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const ApiErrorCode = require("../../../core/errors/apiError") 
 const upload = require("../../../core/utils/upload");
-
+const path = require('path')
 const {
   verifyTokenAndAdmin,
 } = require("../../../core/middleware/verify-token");
@@ -93,7 +93,7 @@ router.post("/login", async (req, res ,next) => {
 });
 
 router.patch("/update-admin", verifyTokenAndAdmin, async (req, res) => {
-
+  
   User.findByIdAndUpdate(
     req.user.id,
     {
@@ -102,7 +102,6 @@ router.patch("/update-admin", verifyTokenAndAdmin, async (req, res) => {
         email: req.body.email,
         mobile: req.body.mobile,
         address: req.body.address,
-        avatar: req.body.avatar,
         password: req.body.password,
       },
     },
@@ -180,22 +179,56 @@ router.get("/get-password", async (req, res) => {
   });
 });
 
-router.post("/upload",upload.single('image'),(req,res) => {
-const imageUrl = `http://localhost:8000/${req.file.path}`
+router.post("/upload",verifyTokenAndAdmin,upload.single('image'),async (req,res) => {
 
-res.status(200).json({
-  status_code: 1,
-  message: "This is a hashed password",
-  data: {
-    imageUrl: imageUrl,
-  },
-});
+
+await User.findByIdAndUpdate(
+  { _id: req.user.id },
+  { avatar : "/"+req.file.path.replace(/\\/g, '/') },
+  { new: true } // Return the updated document
+)
+.then((docs)=> {
+  if(docs){
+
+    const {password,__v,token,...other} = docs._doc
+
+    res.status(200).json({
+      status_code: 1,
+      message: "This is a hashed password",
+      data: {
+        ...other,
+      },
+    });
+  }else {
+    res.status(404).json({
+      status_code: ApiErrorCode.notFound,
+      message: "User not found",
+      data: null,
+      error : {
+        message : "didn't find the user you are looking for"
+      }
+    });
+  }
+})
+.catch((error)=> {
+  res.status(500).json({
+    status_code: ApiErrorCode.internalError,
+    message: error.message,
+    data: null,
+    error : {
+      message : error.message
+    }
+  });
 })
 
-router.get("/:filename",(req,res) => {
-  const fileName = req.params.fileName;
+})
+
+router.get("/upload/:filename",(req,res) => {
+  const fileName = req.params.filename;
+  // Define the directory where the uploads directory is located
+  const uploadsDirectory = path.join(__dirname, '..', '..', '..', 'uploads',fileName);
   res.sendFile(
-    __dirname+"uploads"+fileName
+    uploadsDirectory
   )
 })
 

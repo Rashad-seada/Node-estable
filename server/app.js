@@ -4,7 +4,7 @@ const {connectingDataBase} =require("./core/infrastructure/db")
 const morgan = require("morgan")
 const app = express();
 const { verifyTokenAndAdmin, } = require("./core/middleware/verify-token")
-// const cors = require('cors');
+const cors = require('cors');
 
 // Connecting to database
 connectingDataBase()
@@ -36,10 +36,11 @@ const medicineRouter = require("./features/medicine/router/medicine-router")
 const consumedMedicineRouter = require("./features/consumed-medicine/router/consumed-medicine-router")
 
   
-// // cors libyrary
-// app.use(cors({
-//     allowedHeaders: ['Content-Type', 'Authorization', 'token'] // Add 'token' to the allowed headers
-// }));
+// cors libyrary
+app.use(cors({
+    origin: true,
+    credentials: true
+}));
 
 // Error handling
 app.use((req, res, next) => {

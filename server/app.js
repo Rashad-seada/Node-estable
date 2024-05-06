@@ -38,7 +38,7 @@ const consumedMedicineRouter = require("./features/consumed-medicine/router/cons
   
 // cors libyrary
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: 'https://node-estable.onrender.com',
     allowedHeaders: ['Content-Type', 'Authorization', 'token'] // Add 'token' to the allowed headers
 }));
 

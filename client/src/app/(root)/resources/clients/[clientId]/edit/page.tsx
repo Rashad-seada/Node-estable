@@ -74,7 +74,7 @@ function ClientEditPage() {
                 popUp({
                     popUpMessage:"client updated successfully",
                     popUpTitle:"client updated ",
-                    popUpIcon:<IoMdCheckmarkCircleOutline />,
+                    popUpIcon: <IoMdCheckmarkCircleOutline/>,
                     showPopUp:true,
                     popUpType:"alert"
                 })

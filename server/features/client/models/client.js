@@ -40,6 +40,11 @@ const ClientSchema = mongoose.Schema({
         type : [String],
         required : false,
         default : []
+    },
+    avatar : {
+        type : String || null,
+        required : false,
+        default : null
     }
 })
 

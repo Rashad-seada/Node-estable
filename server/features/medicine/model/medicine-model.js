@@ -38,7 +38,7 @@ function medicineValidation(obj){
     const schema = joi.object({
         name : joi.string().required().min(3).max(20),
         quantity : joi.number().required().min(1),
-        discription : joi.string().required().min(4),
+        discription : joi.string().required().min(2),
         type : joi.string().valid('bottle', 'bill').required(),
         price : joi.number().required(),
         dosage : joi.number().required(),
@@ -50,7 +50,7 @@ function updateMedicineValidation(obj){
     const schema = joi.object({
         name : joi.string().min(3).max(20),
         quantity : joi.number().min(1),
-        discription : joi.string().min(4),
+        discription : joi.string().min(2),
         type : joi.string().valid('bottle', 'bill'),
         price : joi.number(),
         dosage : joi.number(),

@@ -4,16 +4,12 @@ const {
     updateConsumedMedicineValidation
 } = require("../model/consumed-medicine-model");
 
-//import token
 const ApiErrorCode = require("../../../core/errors/apiError") 
-
-
 class ConsumedMedicineController {
 
     static createNewConsumedMedicine(req,res){
         try {
             const {error} = consumedMedicineValidation(req.body)
-
             if(error){
                 res.status(400).json({
                     status_code: ApiErrorCode.validation,
@@ -76,7 +72,6 @@ class ConsumedMedicineController {
             .populate("hourseId")
             .then((docs)=> {
 
-              
                 if(docs){
                     const { __v, ...other } = docs._doc;
 

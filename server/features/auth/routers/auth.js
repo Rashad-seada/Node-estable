@@ -129,7 +129,7 @@ router.patch("/update-admin", verifyTokenAndAdmin, async (req, res) => {
     .catch((error) => {
       res.status(500).json({
         status_code: ApiErrorCode.internalError,
-        message: "Can`t update ",
+        message: "Can`t update admin details",
         data: null,
         error: {
           message: error.message,
@@ -151,9 +151,9 @@ router.get("/get-admin", verifyTokenAndAdmin, async (req, res) => {
       } else {
         res.status(404).json({
           status_code: ApiErrorCode.notFound,
-          message: "Can`t git Data",
+          message: "Can`t get admin details",
           data: null,
-          error: error.message,
+          error: "didn't find the admin in the database",
         });
       }
     })
@@ -179,7 +179,7 @@ router.get("/get-password", async (req, res) => {
   });
 });
 
-router.post("/upload",verifyTokenAndAdmin,upload.single('image'),async (req,res) => {
+router.post("/uploads",verifyTokenAndAdmin,upload.single('image'),async (req,res) => {
 
 
 await User.findByIdAndUpdate(
@@ -223,7 +223,7 @@ await User.findByIdAndUpdate(
 
 })
 
-router.get("/upload/:filename",(req,res) => {
+router.get("/uploads/:filename",(req,res) => {
   const fileName = req.params.filename;
   // Define the directory where the uploads directory is located
   const uploadsDirectory = path.join(__dirname, '..', '..', '..', 'uploads',fileName);

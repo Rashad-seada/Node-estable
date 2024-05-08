@@ -1,6 +1,8 @@
 const express = require("express");
 const { instractor } = require("../model/instractor");
 const ApiErrorCode = require("../../../core/errors/apiError");
+const upload = require("../../../core/utils/upload");
+const path = require('path')
 
 router = express.Router();
 
@@ -214,5 +216,57 @@ router
         });
       });
   });
+
+router.post(
+  "/upload-image/:id",
+  upload.single('image'),
+  async (req,res) => {
+    try{
+      instractor.findByIdAndUpdate(
+        { _id: req.params.id },
+        { avatar : "/"+req.file.path.replace(/\\/g, '/') },
+        { new: true } )
+        .select("-__v")
+        .then((docs)=> {
+          if(docs){
+            res.status(200).json({
+              status_code: 1,
+              message: "Got the Hourse successfuly",
+              data: docs,
+            });
+          }else {
+            res.status(404).json({
+              status_code: ApiErrorCode.notFound,
+              message: "Didnt found the Hourse in our records",
+              data: null,
+              error: {
+                message: "Didnt found the Hourse in our records",
+              },
+            });
+          }
+        })
+        .catch((error)=> {
+          res.status(500).json({
+            status_code: ApiErrorCode.internalError,
+            message: error.message,
+            data: null,
+            error: {
+              message: error.message,
+            },
+          });
+        })
+    } catch(error){
+      res.status(500).json({
+        status_code: ApiErrorCode.internalError,
+        message: error.message,
+        data: null,
+        error: {
+          message: error.message,
+        },
+      });
+    }
+    
+  }
+);
 
 module.exports = router;

@@ -39,6 +39,11 @@ const hourseSchema = mongoose.Schema({
     required: false,
     default : []
   },
+  avatar: {
+    type: null || String,
+    required: false,
+    value: null
+  },
 });
 const Hourse = mongoose.model("Hourse", hourseSchema);
 function pageValidation(obj){

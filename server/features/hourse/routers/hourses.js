@@ -1,10 +1,6 @@
 //const hourseController = require("../controller/horses-controller")
-const { Error } = require("mongoose");
-const {
-  Hourse,
-  createHourseValidation,
-  pageValidation,
-} = require("../models/hourse");
+
+const upload = require("../../../core/utils/upload");
 
 const HourseController =require("../controller/horses-controller")
 const express = require("express");
@@ -53,5 +49,16 @@ router.patch("/:id",HourseController.updateHourse)
  */
 router.delete("/:id",HourseController.deleteHourse)
 
+/**
+* @desc Get all Clients
+* @route api/Client/
+* @method Get
+* @access private
+*/
+router.post(
+  "/upload-image/:id",
+  upload.single('image'),
+  HourseController.uploadHourseImage
+);
 
 module.exports = router;

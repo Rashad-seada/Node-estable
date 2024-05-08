@@ -91,11 +91,11 @@ class invMembershipController {
     const { error } = createNewInvMembership(req.body);
     if (error) {
       res.status(400).json({
-        status_code: ApiErrorCode,
-        message: "Error Validation",
+        status_code: ApiErrorCode.validation,
+        message: error.message,
         data: null,
         error: {
-          error: error.message,
+          message: error.message,
         },
       });
     } else {
@@ -151,14 +151,14 @@ class invMembershipController {
    
    const {error}=updateInvMembership(req.body)
 if(error){
-    res.status(400).json({
-        status_code: ApiErrorCode.validation,
-        message: "Validation Error",
-        data: null,
-        error:{
-            error:error.message
-        }
-      });
+  res.status(400).json({
+    status_code: ApiErrorCode.validation,
+    message: error.message,
+    data: null,
+    error: {
+      message: error.message,
+    },
+  });
 }else{
     InvMembership.find({ id: req.params.id })
     .then(async (docs) => {

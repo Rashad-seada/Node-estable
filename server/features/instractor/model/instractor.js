@@ -24,10 +24,10 @@ const instractorSchema = mongoose.Schema({
         required:true,
         enum:["male","female"]
     },
-    photo:{
-        type:[String],
-        required:true,
-        default : []
+    avatar :{
+        type: String || null,
+        required:false,
+        default : null
     }
 })
 

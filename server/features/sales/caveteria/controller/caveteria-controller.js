@@ -84,11 +84,11 @@ class caveteriaController {
     const { error } = createMenueItemValidation(req.body);
     if (error) {
       res.status(400).json({
-        status_code: ApiErrorCode,
-        message: "Error Validation",
+        status_code: ApiErrorCode.validation,
+        message: error.message,
         data: null,
         error: {
-          error: error.message,
+          message: error.message,
         },
       });
     } else {

@@ -1,6 +1,7 @@
 //import token
 const express = require("express");
 router = express.Router();
+const upload = require("../../../core/utils/upload");
 
 const ClientController = require("../controllers/client-controller")
 
@@ -81,5 +82,17 @@ router.patch(
    ClientController.updateClientMembershipStatus
 );
 
+
+/**
+* @desc Get all Clients
+* @route api/Client/
+* @method Get
+* @access private
+*/
+router.post(
+  "/upload-image/:id",
+  upload.single('image'),
+  ClientController.uploadClientImage
+);
 
 module.exports = router;

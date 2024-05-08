@@ -100,11 +100,11 @@ class packageController {
       const { error } = createNewPackage(req.body);
       if (error) {
         res.status(400).json({
-          status_code: ApiErrorCode,
-          message: "Error input Validation ",
+          status_code: ApiErrorCode.validation,
+          message: error.message,
           data: null,
           error: {
-            error: error.message,
+            message: error.message,
           },
         });
       } else {
@@ -147,11 +147,13 @@ class packageController {
   static async updatePackage(req, res) {
     const { error } = updatePackage(req.body);
     if (error) {
-      res.status(200).json({
-        status_code: 0,
-        message: "Validation error",
+      res.status(400).json({
+        status_code: ApiErrorCode.validation,
+        message: error.message,
         data: null,
-        error: error.message,
+        error: {
+          message: error.message,
+        },
       });
     } else {
       Package.find({ id: req.params.id })
@@ -221,7 +223,7 @@ class packageController {
           });
         } else {
           res.status(500).json({
-            status_code: 1,
+            status_code: ApiErrorCode.validation,
             message: "Package Id Is Not Found",
             data: null,
           });

@@ -39,7 +39,7 @@ const {
             });
           } else {
             res.status(404).json({
-              status_code: ApiErrorCode,
+              status_code: ApiErrorCode.notFound,
               message: "Can`t Found Menu familyMembership ",
               data: null,
             });
@@ -62,13 +62,13 @@ const {
         .then((docs) => {
           if (docs) {
             res.status(200).json({
-              status_code: 0,
+              status_code: 1,
               message: "Success to get familyMembership By Id",
               data: docs,
             });
           } else {
             res.status(404).json({
-              status_code: ApiErrorCode,
+              status_code: ApiErrorCode.notFound,
               message: "Can`t Found familyMembership  ",
               data: null,
             });
@@ -79,7 +79,7 @@ const {
             status_code: ApiErrorCode,
             message: "internal server error",
             error: {
-              error: error.message,
+              message: error.message,
             },
           });
         });
@@ -88,11 +88,11 @@ const {
       const { error } = createNewfamilyMembership(req.body);
       if (error) {
         res.status(400).json({
-          status_code: ApiErrorCode,
+          status_code: ApiErrorCode.validation,
           message: "Error Validation",
           data: null,
           error: {
-            error: error.message,
+            message: error.message,
           },
         });
       } else {
@@ -127,7 +127,7 @@ const {
                     status_code: ApiErrorCode.internalError,
                     message: "familyMembership  Already Found",
                     error: {
-                      error: error.message,
+                      message: error.message,
                     },
                   });
                 });
@@ -135,10 +135,10 @@ const {
           })
           .catch((error) => {
             res.status(500).json({
-              status_code: 1,
+              status_code: ApiErrorCode.internalError,
               message: "internal server error",
               error: {
-                error: error.message,
+                message: error.message,
               },
             });
           });
@@ -151,9 +151,9 @@ const {
           status_code: ApiErrorCode.validation,
           message: "Validation Error",
           data: null,
-          error:{
-              error:error.message
-          }
+          error: {
+            message: error.message,
+          },
         });
   }else{
       familyMembership.find({ id: req.params.id })
@@ -176,7 +176,7 @@ const {
             .then((docs) => {
               if (docs) {
                 res.status(200).json({
-                  status_code: 0,
+                  status_code: 1,
                   message: "Updated Suvccess",
                   data: docs,
                 });
@@ -190,21 +190,21 @@ const {
             })
             .catch((error) => {
               res.status(404).json({
-                status_code: ApiErrorCode.validation,
+                status_code: ApiErrorCode.notFound,
                 message: "familyMembership id is not found",
                 error: {
-                  error: error.message,
+                  message: error.message,
                 },
               });
             });
         }
       })
       .catch((error) => {
-        res.status(400).json({
-          status_code: ApiErrorCode.validation,
+        res.status(500).json({
+          status_code: ApiErrorCode.internalError,
           message: "internal server Down",
           error: {
-            error: error.message,
+            message: error.message,
           },
         });
       });
@@ -217,7 +217,7 @@ const {
         .then((docs) => {
           if (docs) {
               res.status(200).json({
-                status_code: 0,
+                status_code: 1,
                 message: "Deleted  Successfully",
                 data: [],
               });
@@ -230,13 +230,13 @@ const {
             }
         })
         .catch((error) => {
-          res.status(400).json({
-              status_code: ApiErrorCode.validation,
+          res.status(500).json({
+              status_code: ApiErrorCode.internalError,
               message: "internal server error , please try again",
               data: null,
-              error:{
-                  error:error.message
-              }
+              error: {
+                message: error.message,
+              },
             });
         });
     }

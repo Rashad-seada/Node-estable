@@ -38,7 +38,6 @@ class packageController {
               max_pages: maxPages,
               data: docs,
             },
-            error: null,
           });
         } else {
           res.status(404).json({
@@ -67,8 +66,8 @@ class packageController {
           res.status(200).json({
             status_code: 1,
             message: "Success To Get All Package By Id ",
-            Packages: {
-              data: docs,
+            data: {
+              packages: docs,
             },
             error: null,
           });
@@ -76,9 +75,7 @@ class packageController {
           res.status(404).json({
             status_code:  ApiErrorCode.notFound,
             message: "Cant do to  Package Id ",
-            Packages: {
-              data: null,
-            },
+            data: null
           });
         }
       })
@@ -88,7 +85,7 @@ class packageController {
           message: "internal Server Error ",
           data: null,
           error: {
-            error: error.message,
+            message: error.message,
           },
         });
       });
@@ -128,7 +125,7 @@ class packageController {
               message: "Package  Already Found",
               data: null,
               error: {
-                error: error.message,
+                message: error.message,
               },
             });
           });
@@ -139,7 +136,7 @@ class packageController {
         message: "Package  Already Found",
         data : null,
         error: {
-          error: error.message,
+          message: error.message,
         },
       });
     }
@@ -194,7 +191,7 @@ class packageController {
                   status_code: ApiErrorCode.internalError,
                   message: "id is not found",
                   error: {
-                    error: error.message,
+                    message: error.message,
                   },
                 });
               });
@@ -205,7 +202,7 @@ class packageController {
             status_code: ApiErrorCode.internalError,
             message: "internal server Down",
             error: {
-              error: error.message,
+              message: error.message,
             },
           });
         });
@@ -234,7 +231,7 @@ class packageController {
           status_code: 1,
           message: "internal server error",
           error: {
-            error: error.message,
+            message: error.message,
           },
         });
       });

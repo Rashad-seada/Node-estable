@@ -36,7 +36,6 @@ class invMembershipController {
               max_pages: maxPages,
               data: docs,
             },
-            error: null,
           });
         } else {
           res.status(404).json({
@@ -81,7 +80,7 @@ class invMembershipController {
           status_code:  ApiErrorCode.internalError,
           message: "internal server error",
           error: {
-            error: error.message,
+            message: error.message,
           },
         });
       });
@@ -129,7 +128,7 @@ class invMembershipController {
                   status_code: ApiErrorCode.internalError,
                   message: "InvMembership  Already Found",
                   error: {
-                    error: error.message,
+                    message: error.message,
                   },
                 });
               });
@@ -140,7 +139,7 @@ class invMembershipController {
             status_code: 1,
             message: "internal server error",
             error: {
-              error: error.message,
+              message: error.message,
             },
           });
         });
@@ -197,7 +196,7 @@ if(error){
               status_code: ApiErrorCode.internalError,
               message: "InvMembership id is not found",
               error: {
-                error: error.message,
+                message: error.message,
               },
             });
           });
@@ -208,7 +207,7 @@ if(error){
         status_code: ApiErrorCode.internalError,
         message: "internal server Down",
         error: {
-          error: error.message,
+          message: error.message,
         },
       });
     });
@@ -239,9 +238,9 @@ if(error){
             status_code: ApiErrorCode.validation,
             message: "internal server error , please try again",
             data: null,
-            error:{
-                error:error.message
-            }
+            error: {
+              message: error.message,
+            },
           });
       });
   }

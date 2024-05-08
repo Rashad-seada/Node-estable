@@ -36,7 +36,7 @@ class caveteriaController {
           });
         } else {
           res.status(404).json({
-            status_code: ApiErrorCode,
+            status_code: ApiErrorCode.notFound,
             message: "Can1t Found Menu Item Name",
             data: null,
           });
@@ -58,13 +58,13 @@ class caveteriaController {
       .then((docs) => {
         if (docs) {
           res.status(200).json({
-            status_code: 0,
+            status_code: 1,
             message: "Success to get MenuItem By Id",
             data: docs,
           });
         } else {
           res.status(404).json({
-            status_code: ApiErrorCode,
+            status_code: ApiErrorCode.notFound,
             message: "Can`t Found Menu Item Name",
             data: null,
           });
@@ -72,10 +72,10 @@ class caveteriaController {
       })
       .catch((error) => {
         res.status(500).json({
-          status_code: ApiErrorCode,
+          status_code: ApiErrorCode.internalError,
           message: "internal server error",
           error: {
-            error: message.error,
+            message: error.message,
           },
         });
       });
@@ -121,7 +121,7 @@ class caveteriaController {
                   status_code: ApiErrorCode.internalError,
                   message: "menue item Already Found",
                   error: {
-                    error: error.message,
+                    message: error.message,
                   },
                 });
               });
@@ -129,10 +129,10 @@ class caveteriaController {
         })
         .catch((error) => {
           res.status(500).json({
-            status_code: 1,
+            status_code: ApiErrorCode.internalError,
             message: "internal server error",
             error: {
-              error: error.message,
+              message: error.message,
             },
           });
         });
@@ -158,7 +158,7 @@ class caveteriaController {
             .then((docs) => {
               if (docs) {
                 res.status(200).json({
-                  status_code: 0,
+                  status_code: 1,
                   message: "success",
                   data: docs,
                 });
@@ -171,22 +171,22 @@ class caveteriaController {
               }
             })
             .catch((error) => {
-              res.status(404).json({
-                status_code: ApiErrorCode.validation,
+              res.status(500).json({
+                status_code: ApiErrorCode.internalError,
                 message: "id is not found",
                 error: {
-                  error: error.message,
+                  message: error.message,
                 },
               });
             });
         }
       })
       .catch((error) => {
-        res.status(400).json({
-          status_code: ApiErrorCode.validation,
+        res.status(500).json({
+          status_code: ApiErrorCode.internalError,
           message: "internal server Down",
           error: {
-            error: error.message,
+            message: error.message,
           },
         });
       });
@@ -196,13 +196,13 @@ class caveteriaController {
       .then((docs) => {
         if (docs) {
           res.status(200).json({
-            status_code: 0,
+            status_code: 1,
             message: "Menu item is deleted",
             data: [],
           });
         } else {
           res.status(404).json({
-            status_code: ApiErrorCode,
+            status_code: ApiErrorCode.notFound,
             message: "Can`t Found Menu Item Id",
             data: null,
           });
@@ -210,7 +210,7 @@ class caveteriaController {
       })
       .catch((error) => {
         res.status(500).json({
-          status_code: ApiErrorCode,
+          status_code: ApiErrorCode.internalError,
           message: "Internal server Error",
           error: {
             error: error.message,

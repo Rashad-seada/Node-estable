@@ -77,7 +77,7 @@ class InventoryController {
         status_code:  ApiErrorCode.internalError,
         message: "internal server error",
         error: {
-          error:message.error
+          message: error.message,
         },
       });
 
@@ -128,7 +128,7 @@ class InventoryController {
                   status_code: ApiErrorCode.internalError,
                   message: "Inventory item Already Found",
                   error: {
-                    error: error.message,
+                    message: error.message,
                   },
                 });
               });
@@ -139,7 +139,7 @@ class InventoryController {
             status_code: 1,
             message: "internal server error",
             error: {
-              error: error.message,
+              message: error.message,
             },
           });
         });
@@ -167,35 +167,35 @@ class InventoryController {
             .then((docs) => {
               if (docs) {
                 res.status(200).json({
-                  status_code:0,
+                  status_code: 1,
                   message: "success",
                   data: docs,
                 });
               } else {
-                res.status(400).json({
-                  status_code: ApiErrorCode.validation,
+                res.status(404).json({
+                  status_code: ApiErrorCode.notFound,
                   message: "Cand update ",
                   data: null,
                 });
               }
             })
             .catch((error) => {
-              res.status(404).json({
+              res.status(500).json({
                 status_code: ApiErrorCode.validation,
                 message: "id is not found",
                 error: {
-                  error:error.message
+                  message: error.message,
                 },
               });
             });
         }
       })
       .catch((error) => {
-        res.status(400).json({
-          status_code: ApiErrorCode.validation,
+        res.status(500).json({
+          status_code: ApiErrorCode.internalError,
           message: "internal server Down",
           error: {
-            error:error.message
+            message: error.message,
           },
         });
       });
@@ -205,7 +205,7 @@ class InventoryController {
     .then((docs)=>{
       if(docs){
         res.status(200).json({
-          status_code: 0,
+          status_code: 1,
           message: "itemDescription item is deleted",
           data: [],
         });
@@ -222,9 +222,9 @@ class InventoryController {
       res.status(500).json({
         status_code:  ApiErrorCode.internalError,
         message: "Internal server Error",
-        error:{
-          error:error.message
-        }
+        error: {
+          message: error.message,
+        },
       });
     })
   }

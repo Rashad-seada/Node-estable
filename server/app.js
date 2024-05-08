@@ -36,11 +36,11 @@ const medicineRouter = require("./features/medicine/router/medicine-router")
 const consumedMedicineRouter = require("./features/consumed-medicine/router/consumed-medicine-router")
 
   
-// cors libyrary
-app.use(cors({
-    origin: 'http://localhost:3000',
-    allowedHeaders: ['Content-Type', 'Authorization', 'token'] // Add 'token' to the allowed headers
-}));
+// // cors libyrary
+// app.use(cors({
+//     origin: 'http://localhost:3000',
+//     allowedHeaders: ['Content-Type', 'Authorization', 'token'] // Add 'token' to the allowed headers
+// }));
 
 // Error handling
 app.use((req, res, next) => {

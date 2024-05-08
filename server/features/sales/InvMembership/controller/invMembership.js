@@ -40,7 +40,7 @@ class invMembershipController {
           });
         } else {
           res.status(404).json({
-            status_code: ApiErrorCode,
+            status_code:  ApiErrorCode.notFound,
             message: "Can`t Found Menu InvMembership ",
             data: null,
           });
@@ -70,7 +70,7 @@ class invMembershipController {
           });
         } else {
           res.status(404).json({
-            status_code: ApiErrorCode,
+            status_code:  ApiErrorCode.notFound,
             message: "Can`t Found InvMembership  ",
             data: null,
           });
@@ -78,7 +78,7 @@ class invMembershipController {
       })
       .catch((error) => {
         res.status(500).json({
-          status_code: ApiErrorCode,
+          status_code:  ApiErrorCode.internalError,
           message: "internal server error",
           error: {
             error: error.message,
@@ -194,7 +194,7 @@ if(error){
           })
           .catch((error) => {
             res.status(404).json({
-              status_code: ApiErrorCode.validation,
+              status_code: ApiErrorCode.internalError,
               message: "InvMembership id is not found",
               error: {
                 error: error.message,
@@ -205,7 +205,7 @@ if(error){
     })
     .catch((error) => {
       res.status(400).json({
-        status_code: ApiErrorCode.validation,
+        status_code: ApiErrorCode.internalError,
         message: "internal server Down",
         error: {
           error: error.message,

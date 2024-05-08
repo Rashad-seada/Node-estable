@@ -36,7 +36,7 @@ class InventoryController {
           });
         } else {
           res.status(404).json({
-            status_code: ApiErrorCode,
+            status_code:  ApiErrorCode.notFound,
             message: "Can`t Found Menu Inventory Item",
             data: null,
           });
@@ -66,7 +66,7 @@ class InventoryController {
 
       }else{
         res.status(404).json({
-          status_code: ApiErrorCode,
+          status_code:  ApiErrorCode.notFound,
           message: "Can`t Found Inventory Item Name",
           data: null,
         });
@@ -74,7 +74,7 @@ class InventoryController {
     })
     .catch((error)=>{
       res.status(500).json({
-        status_code: ApiErrorCode,
+        status_code:  ApiErrorCode.internalError,
         message: "internal server error",
         error: {
           error:message.error
@@ -211,7 +211,7 @@ class InventoryController {
         });
       }else{
         res.status(404).json({
-          status_code: ApiErrorCode,
+          status_code:  ApiErrorCode.notFound,
           message: "Can`t Found Menu Item Id",
           data: null,
         });
@@ -220,7 +220,7 @@ class InventoryController {
     })
     .catch((error)=>{
       res.status(500).json({
-        status_code: ApiErrorCode,
+        status_code:  ApiErrorCode.internalError,
         message: "Internal server Error",
         error:{
           error:error.message

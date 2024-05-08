@@ -42,7 +42,7 @@ class packageController {
           });
         } else {
           res.status(404).json({
-            status_code: ApiErrorCode,
+            status_code: ApiErrorCode.notFound,
             message: "Can`t Found Menu Packages ",
             data: null,
           });
@@ -74,7 +74,7 @@ class packageController {
           });
         } else {
           res.status(404).json({
-            status_code: 1,
+            status_code:  ApiErrorCode.notFound,
             message: "Cant do to  Package Id ",
             Packages: {
               data: null,
@@ -83,12 +83,10 @@ class packageController {
         }
       })
       .catch((error) => {
-        res.status(200).json({
-          status_code: 1,
+        res.status(500).json({
+          status_code:  ApiErrorCode.internalError,
           message: "internal Server Error ",
-          Packages: {
-            data: null,
-          },
+          data: null,
           error: {
             error: error.message,
           },
@@ -128,6 +126,7 @@ class packageController {
             res.status(500).json({
               status_code: ApiErrorCode.internalError,
               message: "Package  Already Found",
+              data: null,
               error: {
                 error: error.message,
               },
@@ -138,6 +137,7 @@ class packageController {
       res.status(500).json({
         status_code: ApiErrorCode.internalError,
         message: "Package  Already Found",
+        data : null,
         error: {
           error: error.message,
         },
@@ -177,21 +177,21 @@ class packageController {
               .then((docs) => {
                 if (docs) {
                   res.status(200).json({
-                    status_code: 0,
-                    message: "Updated Suvccess",
+                    status_code: 1,
+                    message: "Updated Success",
                     data: docs,
                   });
                 } else {
-                  res.status(400).json({
-                    status_code: ApiErrorCode.validation,
+                  res.status(404).json({
+                    status_code: ApiErrorCode.notFound,
                     message: "Cand update package",
                     data: null,
                   });
                 }
               })
               .catch((error) => {
-                res.status(404).json({
-                  status_code: ApiErrorCode.validation,
+                res.status(500).json({
+                  status_code: ApiErrorCode.internalError,
                   message: "id is not found",
                   error: {
                     error: error.message,
@@ -201,8 +201,8 @@ class packageController {
           }
         })
         .catch((error) => {
-          res.status(400).json({
-            status_code: ApiErrorCode.validation,
+          res.status(500).json({
+            status_code: ApiErrorCode.internalError,
             message: "internal server Down",
             error: {
               error: error.message,
@@ -215,14 +215,14 @@ class packageController {
     Package.findByIdAndDelete(req.params.id)
       .then((docs) => {
         if (docs) {
-          res.status(500).json({
+          res.status(200).json({
             status_code: 1,
             message: "Package Deleted Successfully",
             data: [],
             error: null,
           });
         } else {
-          res.status(500).json({
+          res.status(400).json({
             status_code: ApiErrorCode.validation,
             message: "Package Id Is Not Found",
             data: null,

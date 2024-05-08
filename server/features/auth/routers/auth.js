@@ -181,36 +181,46 @@ router.get("/get-password", async (req, res) => {
 
 router.post("/uploads",verifyTokenAndAdmin,upload.single('image'),async (req,res) => {
 
-
-await User.findByIdAndUpdate(
-  { _id: req.user.id },
-  { avatar : "/"+req.file.path.replace(/\\/g, '/') },
-  { new: true } // Return the updated document
-)
-.then((docs)=> {
-  if(docs){
-
-    const {password,__v,token,...other} = docs._doc
-
-    res.status(200).json({
-      status_code: 1,
-      message: "This is a hashed password",
-      data: {
-        ...other,
-      },
-    });
-  }else {
-    res.status(404).json({
-      status_code: ApiErrorCode.notFound,
-      message: "User not found",
+try {
+  await User.findByIdAndUpdate(
+    { _id: req.user.id },
+    { avatar : "/"+req.file.path.replace(/\\/g, '/') },
+    { new: true } // Return the updated document
+  )
+  .then((docs)=> {
+    if(docs){
+  
+      const {password,__v,token,...other} = docs._doc
+  
+      res.status(200).json({
+        status_code: 1,
+        message: "This is a hashed password",
+        data: {
+          ...other,
+        },
+      });
+    }else {
+      res.status(404).json({
+        status_code: ApiErrorCode.notFound,
+        message: "User not found",
+        data: null,
+        error : {
+          message : "didn't find the user you are looking for"
+        }
+      });
+    }
+  })
+  .catch((error)=> {
+    res.status(500).json({
+      status_code: ApiErrorCode.internalError,
+      message: error.message,
       data: null,
       error : {
-        message : "didn't find the user you are looking for"
+        message : error.message
       }
     });
-  }
-})
-.catch((error)=> {
+  })
+}catch (error){
   res.status(500).json({
     status_code: ApiErrorCode.internalError,
     message: error.message,
@@ -219,7 +229,8 @@ await User.findByIdAndUpdate(
       message : error.message
     }
   });
-})
+}
+
 
 })
 
